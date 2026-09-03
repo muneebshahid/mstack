@@ -34,7 +34,7 @@ User state lives outside the managed plugin at `~/.config/mstack/models.toml`, o
 - `skills/setup-mstack/scripts/test_models.py`
 - `skills/setup-mstack/references/runtime-resolution.md`
 
-All three profiles resolve, partial overrides preserve unspecified fields, invalid roles and unsupported Fast combinations fail, and configuration writes are validated before replacement. A Luna low/Fast read-only smoke run loaded `setup-mstack`, executed profile resolution, and caught and then verified a correction to external Claude runner detection.
+All three profiles resolve, partial overrides preserve unspecified fields, invalid roles and unsupported Fast combinations fail, and configuration writes are validated before replacement. A Luna low/Fast read-only smoke run loaded `setup-mstack`, executed profile resolution, and caught and then verified a correction to external Claude runner detection. Clean Codex and Claude Code marketplace installations of version `0.2.0` both contained the packaged profiles and successfully resolved roles from their managed cache paths.
 
 A Claude Code plan-mode smoke run loaded `mstack:setup-mstack` and located the packaged resolver, but the requested `haiku` alias was served as `claude-sonnet-5`. Follow-up non-plan runs verified `claude-haiku-4-5` provenance and the same skill-loading path, but their deliberately narrow Bash allowlists denied the resolver commands when Claude alternated between absolute and relative paths. No broader permission was granted. Claude resolver execution therefore remains a named validation gap rather than a claimed pass.
 
