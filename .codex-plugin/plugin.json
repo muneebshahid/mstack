@@ -1,0 +1,44 @@
+{
+  "name": "mstack",
+  "version": "0.1.0",
+  "description": "Rigorous engineering workflows, reusable principles, and multi-model review for coding agents.",
+  "author": {
+    "name": "Muneeb",
+    "email": "5444273+muneebshahid@users.noreply.github.com",
+    "url": "https://github.com/muneebshahid"
+  },
+  "homepage": "https://github.com/muneebshahid/mstack",
+  "repository": "https://github.com/muneebshahid/mstack",
+  "license": "MIT",
+  "keywords": [
+    "engineering",
+    "skills",
+    "multi-model",
+    "architecture",
+    "implementation",
+    "code-review"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "MStack",
+    "shortDescription": "Rigorous multi-model engineering workflows",
+    "longDescription": "Design consequential changes, implement them in verifiable units, investigate rationale, challenge code with independent models, and apply reusable engineering principles.",
+    "developerName": "Muneeb",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/muneebshahid/mstack",
+    "privacyPolicyURL": "https://github.com/muneebshahid/mstack/blob/main/PRIVACY.md",
+    "termsOfServiceURL": "https://github.com/muneebshahid/mstack/blob/main/TERMS.md",
+    "defaultPrompt": [
+      "Use $implement to make this change in small, verified units.",
+      "Use $architect to design this change without implementing it.",
+      "Use $interrogate to run an adversarial review of these changes."
+    ],
+    "brandColor": "#315C91",
+    "screenshots": []
+  }
+}

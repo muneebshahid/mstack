@@ -1,16 +1,32 @@
-# Skills
+# MStack
 
-An opinionated engineering skill stack for Codex. It combines small, reusable engineering principles with explicit workflows for investigation, architecture, implementation, review, evaluation, and technical communication.
+An opinionated engineering skill stack for Codex and Claude Code. It combines small, reusable engineering principles with explicit workflows for investigation, architecture, implementation, review, evaluation, and technical communication.
 
 The stack is designed around one rule: the parent agent keeps lead-engineer judgment. Specialist agents gather evidence, produce alternatives, write bounded implementation units, or challenge a result. They do not silently take over the final decision.
 
-## Install
+## Install in Codex
 
-Install one skill by asking Codex to install its GitHub directory, for example:
+Add the repository marketplace and install MStack:
 
-> Install the skill from `https://github.com/muneebshahid/skills/tree/main/skills/how`.
+```text
+codex plugin marketplace add muneebshahid/mstack
+codex plugin add mstack@mstack
+```
 
-To install the complete stack manually, clone this repository and copy the directories under `skills/` into your Codex skills directory. Install the complete set when you want cross-skill links such as `implement` → `architect` → `arena` to work.
+Start a new task after installation so Codex loads the plugin catalog. The official OpenAI plugin-directory submission is pending.
+
+## Install in Claude Code
+
+Add the repository marketplace, then install MStack:
+
+```text
+/plugin marketplace add muneebshahid/mstack
+/plugin install mstack@mstack
+```
+
+Start a new Claude Code session after installation. Claude-specific runtime validation is still in progress; the current orchestration defaults describe the Codex runtime.
+
+To inspect or install one skill without the plugin, use its directory under `https://github.com/muneebshahid/mstack/tree/main/skills/`.
 
 Some workflows have optional external dependencies:
 
@@ -66,4 +82,4 @@ Durable decisions live in [`.agents/logbook/`](.agents/logbook/). The first reco
 
 This stack adapts and extends work from Cursor's [PStack](https://github.com/cursor/plugins/tree/main/pstack) and draws workflow inspiration from Jesse Vincent's [Superpowers](https://github.com/obra/superpowers). See [THIRD_PARTY.md](THIRD_PARTY.md) and the per-skill license files.
 
-No repository-wide license has been selected for original material yet. Upstream-derived material remains subject to its preserved upstream license.
+MStack is available under the MIT License. Upstream-derived material remains subject to its preserved upstream notices; see [THIRD_PARTY.md](THIRD_PARTY.md).
