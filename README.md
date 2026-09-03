@@ -26,6 +26,14 @@ Add the repository marketplace, then install MStack:
 
 Start a new Claude Code session after installation.
 
+To verify the repository before publishing or installing it, run:
+
+```bash
+python3 scripts/validate.py
+```
+
+The same validation runs in GitHub Actions. Marketplace installation tests remain explicit release checks because they require the Codex or Claude Code CLI and network access.
+
 ## Configure models
 
 Run `$setup-mstack` in Codex or `/mstack:setup-mstack` in Claude Code. MStack ships three complete profiles:
