@@ -1,6 +1,5 @@
 schema_version = 1
-default_profile = "multimodel"
-profiles = ["multimodel", "codex", "claude-code"]
+profiles = ["codex-multimodel", "claude-multimodel"]
 roles = [
   "implement_worker",
   "arena_candidate_a",
@@ -21,3 +20,6 @@ roles = [
   "consultant_default",
 ]
 
+[default_profile]
+codex = "codex-multimodel"
+claude-code = "claude-multimodel"

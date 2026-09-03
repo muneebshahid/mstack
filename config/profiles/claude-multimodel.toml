@@ -1,106 +1,105 @@
 schema_version = 1
-name = "codex"
-description = "Codex-only topology for installations without Claude Code"
+name = "claude-multimodel"
+description = "Claude Code-led topology with native Claude workers and external GPT judgment"
 
 [roles.implement_worker]
-runner = "codex-native"
-model = "gpt-5.6-luna"
+runner = "claude-native"
+model = "sonnet"
 effort = "high"
-fast = true
+fast = false
 
 [roles.arena_candidate_a]
-runner = "codex-native"
-model = "gpt-5.6-terra"
+runner = "claude-native"
+model = "claude-fable-5-1"
 effort = "xhigh"
 fast = false
 
 [roles.arena_candidate_b]
-runner = "codex-native"
+runner = "codex"
 model = "gpt-5.6-sol"
 effort = "xhigh"
 fast = false
 
 [roles.arena_cross_judge]
-runner = "codex-native"
-model = "gpt-5.6-sol"
+runner = "claude-native"
+model = "claude-fable-5-1"
 effort = "xhigh"
 fast = false
 
 [roles.how_explorer]
-runner = "codex-native"
-model = "gpt-5.6-luna"
-effort = "xhigh"
-fast = true
+runner = "claude-native"
+model = "sonnet"
+effort = "high"
+fast = false
 
 [roles.how_simple_explainer]
-runner = "codex-native"
-model = "gpt-5.6-sol"
+runner = "claude-native"
+model = "sonnet"
 effort = "medium"
 fast = false
 
 [roles.how_complex_explainer]
-runner = "codex-native"
-model = "gpt-5.6-sol"
+runner = "claude-native"
+model = "claude-fable-5-1"
 effort = "high"
 fast = false
 
 [roles.how_critic_a]
-runner = "codex-native"
-model = "gpt-5.6-terra"
+runner = "claude-native"
+model = "claude-fable-5-1"
 effort = "xhigh"
 fast = false
 
 [roles.how_critic_b]
-runner = "codex-native"
+runner = "codex"
 model = "gpt-5.6-sol"
 effort = "xhigh"
 fast = false
 
 [roles.why_investigator]
-runner = "codex-native"
-model = "gpt-5.6-luna"
-effort = "xhigh"
-fast = true
-
-[roles.why_synthesizer]
-runner = "codex-native"
-model = "gpt-5.6-sol"
+runner = "claude-native"
+model = "sonnet"
 effort = "high"
 fast = false
 
+[roles.why_synthesizer]
+runner = "claude-native"
+model = "claude-fable-5-1"
+effort = "xhigh"
+fast = false
+
 [roles.interrogate_reviewer_a]
-runner = "codex-native"
-model = "gpt-5.6-terra"
+runner = "claude-native"
+model = "claude-fable-5-1"
 effort = "max"
 fast = false
 
 [roles.interrogate_reviewer_b]
-runner = "codex-native"
+runner = "codex"
 model = "gpt-5.6-sol"
 effort = "max"
 fast = false
 
 [roles.skill_eval_quality_judge]
-runner = "codex-native"
-model = "gpt-5.6-sol"
+runner = "claude-native"
+model = "claude-fable-5-1"
 effort = "xhigh"
 fast = false
 
 [roles.skill_eval_smoke_candidate]
-runner = "codex-native"
-model = "gpt-5.6-luna"
+runner = "claude-native"
+model = "haiku"
 effort = "low"
-fast = true
+fast = false
 
 [roles.skill_eval_smoke_judge]
-runner = "codex-native"
-model = "gpt-5.6-luna"
+runner = "claude-native"
+model = "haiku"
 effort = "low"
-fast = true
+fast = false
 
 [roles.consultant_default]
-runner = "codex-native"
+runner = "codex"
 model = "gpt-5.6-sol"
 effort = "xhigh"
 fast = false
-

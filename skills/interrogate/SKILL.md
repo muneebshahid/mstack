@@ -64,7 +64,7 @@ Before launching, record the repository's current `git status --short` so unexpe
 
 Confirm that both configured runners are callable before describing the panel as started. An absent mechanism means that reviewer failed to launch.
 
-1. Launch each reviewer immediately through its resolved runner with no inherited conversation context and the exact same filled prompt. For a `claude-code` assignment, read [the Claude Code skill](../claude-code/SKILL.md) in full, write artifacts outside the repository, and pass the resolved model and effort explicitly.
+1. Launch each reviewer immediately through its resolved runner with no inherited conversation context and the exact same filled prompt. For an external assignment (`claude-code` or `codex`), read the matching launcher skill, [Claude Code](../claude-code/SKILL.md) or [Codex](../codex/SKILL.md), in full, write artifacts outside the repository, and pass the resolved model, effort, and Fast setting explicitly.
 2. Retain every returned process, session, or native reviewer identifier before claiming that reviewer is running. A native spawn call must appear in the trace and return a non-empty identifier; surface it in the next progress update.
 3. Let both reviewers run concurrently. Monitor and wait through each configured boundary. Never issue an empty wait, infer an orphaned reviewer, or treat an attempted launch as a running reviewer. Avoid repeated unchanged polls.
 4. Capture each complete result and available model provenance before closing native reviewers.

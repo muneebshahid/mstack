@@ -88,7 +88,7 @@ Wait for all investigators needed by the synthesis, retaining null results and t
 
 ## 4. Synthesize Evidence
 
-Launch `why_synthesizer` through its resolved runner under the same read-only boundary. If the assignment uses `claude-code`, read and use [Claude Code](../claude-code/SKILL.md) and follow its process boundary.
+Launch `why_synthesizer` through its resolved runner under the same read-only boundary. If the assignment uses an external runner, read and use the matching launcher skill, [Claude Code](../claude-code/SKILL.md) or [Codex](../codex/SKILL.md), and follow its process boundary.
 
 Create a self-contained synthesizer prompt from [references/synthesizer-prompt.md](references/synthesizer-prompt.md). Include:
 

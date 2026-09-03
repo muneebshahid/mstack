@@ -29,7 +29,7 @@ The repository provides self-hosted marketplace metadata for both harnesses. MSt
 - `skills/`
 - `README.md`
 
-Both Codex and Claude Code successfully added the public GitHub marketplace and installed the current `mstack@mstack` version `0.2.0`. The temporary installations and marketplace registrations were removed after verification. These checks establish package discovery and installation, not full cross-harness workflow compatibility.
+Both Codex and Claude Code successfully added the public GitHub marketplace and installed the current `mstack@mstack` version `0.2.0`. The temporary installations and marketplace registrations were removed after verification. These checks establish package discovery and installation. Claude Code became a full orchestrating host once the `codex` launcher and the `claude-multimodel` profile existed; see [Codex Runs as an Independent Consultant](2026-09-03-codex-as-independent-consultant.md).
 
 ## Consequences
 

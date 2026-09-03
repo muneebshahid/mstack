@@ -2,7 +2,7 @@
 
 All project code writing in Implement goes through one persistent configured worker for the active task. Read [MStack runtime model resolution](../../setup-mstack/references/runtime-resolution.md) completely and resolve `implement_worker` before launch.
 
-- Use the resolved runner, model, effort, and Fast setting exactly.
+- Use the resolved runner, model, effort, and Fast setting exactly. The worker must be a native runner; the external `claude-code` and `codex` launchers are read-only consultants and the resolver rejects them for this role.
 - Start without inherited conversation history.
 - Permit edits only within the active request and the current implementation unit.
 - Do not permit delegation, commits, pushes, deployments, external mutations, or adjacent cleanup unless separately authorized.

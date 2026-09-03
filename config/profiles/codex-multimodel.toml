@@ -1,106 +1,105 @@
 schema_version = 1
-name = "claude-code"
-description = "Claude-native topology for running MStack inside Claude Code"
+name = "codex-multimodel"
+description = "Codex-led topology with native GPT workers and external Claude judgment"
 
 [roles.implement_worker]
-runner = "claude-native"
-model = "sonnet"
+runner = "codex-native"
+model = "gpt-5.6-luna"
 effort = "high"
-fast = false
+fast = true
 
 [roles.arena_candidate_a]
-runner = "claude-native"
+runner = "claude-code"
 model = "claude-fable-5-1"
 effort = "xhigh"
 fast = false
 
 [roles.arena_candidate_b]
-runner = "claude-native"
-model = "sonnet"
+runner = "codex-native"
+model = "gpt-5.6-sol"
 effort = "xhigh"
 fast = false
 
 [roles.arena_cross_judge]
-runner = "claude-native"
-model = "claude-fable-5-1"
+runner = "codex-native"
+model = "gpt-5.6-sol"
 effort = "xhigh"
 fast = false
 
 [roles.how_explorer]
-runner = "claude-native"
-model = "sonnet"
-effort = "high"
-fast = false
+runner = "codex-native"
+model = "gpt-5.6-luna"
+effort = "xhigh"
+fast = true
 
 [roles.how_simple_explainer]
-runner = "claude-native"
-model = "sonnet"
+runner = "codex-native"
+model = "gpt-5.6-sol"
 effort = "medium"
 fast = false
 
 [roles.how_complex_explainer]
-runner = "claude-native"
-model = "claude-fable-5-1"
+runner = "codex-native"
+model = "gpt-5.6-sol"
 effort = "high"
 fast = false
 
 [roles.how_critic_a]
-runner = "claude-native"
+runner = "claude-code"
 model = "claude-fable-5-1"
 effort = "xhigh"
 fast = false
 
 [roles.how_critic_b]
-runner = "claude-native"
-model = "sonnet"
+runner = "codex-native"
+model = "gpt-5.6-sol"
 effort = "xhigh"
 fast = false
 
 [roles.why_investigator]
-runner = "claude-native"
-model = "sonnet"
-effort = "high"
-fast = false
+runner = "codex-native"
+model = "gpt-5.6-luna"
+effort = "xhigh"
+fast = true
 
 [roles.why_synthesizer]
-runner = "claude-native"
+runner = "claude-code"
 model = "claude-fable-5-1"
 effort = "xhigh"
 fast = false
 
 [roles.interrogate_reviewer_a]
-runner = "claude-native"
+runner = "claude-code"
 model = "claude-fable-5-1"
 effort = "max"
 fast = false
 
 [roles.interrogate_reviewer_b]
-runner = "claude-native"
-model = "sonnet"
+runner = "codex-native"
+model = "gpt-5.6-sol"
 effort = "max"
 fast = false
 
 [roles.skill_eval_quality_judge]
-runner = "claude-native"
+runner = "claude-code"
 model = "claude-fable-5-1"
 effort = "xhigh"
 fast = false
 
 [roles.skill_eval_smoke_candidate]
-runner = "claude-native"
-model = "haiku"
+runner = "codex-native"
+model = "gpt-5.6-luna"
 effort = "low"
-fast = false
+fast = true
 
 [roles.skill_eval_smoke_judge]
-runner = "claude-native"
-model = "haiku"
+runner = "codex-native"
+model = "gpt-5.6-luna"
 effort = "low"
-fast = false
+fast = true
 
 [roles.consultant_default]
-runner = "claude-native"
+runner = "claude-code"
 model = "claude-fable-5-1"
 effort = "xhigh"
 fast = false
-

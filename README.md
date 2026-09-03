@@ -36,19 +36,21 @@ The same validation runs in GitHub Actions. Marketplace installation tests remai
 
 ## Configure models
 
-Run `$setup-mstack` in Codex or `/mstack:setup-mstack` in Claude Code. MStack ships three complete profiles:
+Run `$setup-mstack` in Codex or `/mstack:setup-mstack` in Claude Code. MStack ships one complete profile per host:
 
-- `multimodel`: the preferred Codex-led mix of native GPT workers and external Claude judgment.
-- `codex`: native Codex models only.
-- `claude-code`: native Claude Code models only.
+- `codex-multimodel`: Codex-led. Native GPT workers, with the external `claude-code` launcher supplying independent Claude judgment.
+- `claude-multimodel`: Claude Code-led. Native Claude workers, with the external `codex` launcher supplying independent GPT judgment.
 
-Packaged defaults live in [`config/`](config/). User choices live in `~/.config/mstack/models.toml`; managed plugin files are never rewritten. Orchestrating skills resolve their role assignments when invoked, so a configuration change applies to the next workflow run. Invalid or unavailable assignments fail visibly instead of falling back to another model.
+Without a user configuration, the resolver detects the host and uses that host's profile, so a fresh install works in either harness. Packaged defaults live in [`config/`](config/). User choices live in `~/.config/mstack/models.toml`; managed plugin files are never rewritten. Orchestrating skills resolve their role assignments when invoked, so a configuration change applies to the next workflow run. Invalid or unavailable assignments fail visibly instead of falling back to another model.
+
+Cross-vendor roles need the other CLI installed and logged in: `claude` for `codex-multimodel`, `codex` for `claude-multimodel`. Setup checks for it and reports the gap for the affected roles.
 
 To inspect or install one skill without the plugin, use its directory under `https://github.com/muneebshahid/mstack/tree/main/skills/`.
 
 Some workflows have optional external dependencies:
 
-- `claude-code` requires Claude Code and a requested Claude model that the account can serve.
+- `claude-code` requires the Claude Code CLI and a requested Claude model that the account can serve.
+- `codex` requires the Codex CLI and a requested GPT model that the account can serve.
 - GitHub evidence and PR workflows require the `gh` CLI.
 - `why` can use installed source connectors such as Linear. Those integrations are deliberately not bundled here.
 - Native multi-agent workflows require the selected host to expose subagent spawn, wait, message, and close operations.
@@ -73,9 +75,10 @@ Model slugs and effort levels in the selected profile describe the requested top
 ## Focused skills
 
 - `bro`: explicitly restate the immediately preceding answer in shorter, plain language.
-- `claude-code`: reusable process boundary for an independent Claude consultant or judge.
+- `claude-code`: reusable process boundary for an independent Claude consultant or judge, used from Codex.
+- `codex`: the reciprocal boundary for an independent Codex consultant or judge, used from Claude Code.
 - `grill-me`: explicitly pressure-test a loose idea in decision-tree rounds before planning or implementation.
-- `setup-mstack`: select a profile, validate available runners and models, and write user-owned role overrides.
+- `setup-mstack`: detect the host, select a profile, validate available runners and models, and write user-owned role overrides.
 - `gh-address-comments`: inspect and address all GitHub review comments unless the user narrows the scope.
 - `tdd`: focused red-green bug-fix workflow when a cheap, meaningful regression test exists.
 - `test-coverage-auditor`: judge whether changed behavior has appropriate tests, not merely coverage.

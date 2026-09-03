@@ -41,11 +41,11 @@ Launch the default candidates concurrently:
 | A | Resolved `arena_candidate_a` |
 | B | Resolved `arena_candidate_b` |
 
-Launch both assignments through their resolved runners with no inherited conversation history. Give each the same candidate prompt and a read-only, no-delegation role. For a `claude-code` assignment, read [Claude Code](../claude-code/SKILL.md) completely, write the prompt and output artifacts outside the repository, and pass the resolved model and effort explicitly. For a native assignment, retain its returned agent identifier for wait and close operations.
+Launch both assignments through their resolved runners with no inherited conversation history. Give each the same candidate prompt and a read-only, no-delegation role. For an external assignment (`claude-code` or `codex`), read the matching launcher skill, [Claude Code](../claude-code/SKILL.md) or [Codex](../codex/SKILL.md), in full, write the prompt and output artifacts outside the repository, and pass the resolved model, effort, and Fast setting explicitly. For a native assignment, retain its returned agent identifier for wait and close operations.
 
 Let both candidates run concurrently. Monitor each through its configured process or native agent status. Long elapsed time or a coarse `running` status is not a stall. Intervene only on concrete evidence of looping, repeated failure, irrelevant expansion, or another demonstrably unproductive pattern.
 
-For each `claude-code` assignment, always read `summary.json` after exit and read `claude.result.md` only when the summary reports success. Use verified served-model provenance in the Arena record rather than assuming a version from the requested value. Capture every native candidate's complete report through its wait result, then close it after preserving the report.
+For each external assignment, always read `summary.json` after exit and read the launcher's result file (`claude.result.md` or `codex.result.md`) only when the summary reports success. Use verified served-model provenance in the Arena record rather than assuming a version from the requested value. Capture every native candidate's complete report through its wait result, then close it after preserving the report.
 
 Recheck the current commit, working-tree status, and tracked diff. If repository state changed unexpectedly, do not accept, revert, or hide it automatically. Because candidates ran concurrently, do not invent attribution: report that the candidate phase was compromised and stop unless the mutation can be conclusively attributed and the unaffected result remains trustworthy.
 

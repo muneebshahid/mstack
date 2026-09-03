@@ -4,6 +4,6 @@
 - The parent agent owns Logbook judgment and writes. Workers may return decision evidence but must not edit `.agents/logbook/`.
 - Treat the installed `principle-*` skills as the canonical engineering standards. Use `apply-principles` when the relevant leaves are not already known.
 - Validate every changed skill and both plugin manifests before release. Validate Logbook records with `skills/logbook/scripts/validate_logbook.py`.
-- Resolve Skill Eval's dedicated smoke roles for execution checks. Keep production assignments unchanged, record every substitution, and do not treat smoke results as production-quality evidence. Verify the served model and do not use plan mode for a Haiku smoke run because plan mode may route the work to a larger model.
+- Resolve Skill Eval's dedicated smoke roles for execution checks. Keep production assignments unchanged, record every substitution, and do not treat smoke results as production-quality evidence. Verify the served model through the launcher's `summary.json` and do not use plan mode for a Haiku smoke run because plan mode may route the work to a larger model.
 - Do not commit credentials, private keys, access tokens, personal data, private repository material, machine-specific absolute paths, or generated caches.
 - Keep cross-skill links repository-relative so the stack remains portable.

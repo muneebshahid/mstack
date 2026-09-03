@@ -131,7 +131,9 @@ def validate_toml() -> None:
     for path in paths:
         with path.open("rb") as stream:
             tomllib.load(stream)
-    for profile in ("multimodel", "codex", "claude-code"):
+    with (ROOT / "config/models.defaults.toml").open("rb") as stream:
+        profiles = tomllib.load(stream)["profiles"]
+    for profile in profiles:
         run(
             [
                 sys.executable,
@@ -207,6 +209,18 @@ def validate_tests() -> None:
             "skills/claude-code/scripts",
             "-p",
             "test_run_claude.py",
+        ]
+    )
+    run(
+        [
+            sys.executable,
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "skills/codex/scripts",
+            "-p",
+            "test_run_codex.py",
         ]
     )
     run(

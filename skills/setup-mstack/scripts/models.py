@@ -10,7 +10,11 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 
-SUPPORTED_RUNNERS = ("codex-native", "claude-native", "claude-code")
+SUPPORTED_RUNNERS = ("codex-native", "claude-native", "claude-code", "codex")
+FAST_RUNNERS = ("codex-native", "codex")
+SUPPORTED_HOSTS = ("codex", "claude-code")
+EXTERNAL_RUNNERS = ("claude-code", "codex")
+NATIVE_ONLY_ROLES = ("implement_worker",)
 SUPPORTED_EFFORTS = ("low", "medium", "high", "xhigh", "max")
 ASSIGNMENT_FIELDS = ("runner", "model", "effort", "fast")
 
@@ -30,6 +34,7 @@ class Assignment:
 @dataclass(frozen=True)
 class ResolvedConfig:
     schema_version: int
+    host: str
     profile: str
     description: str
     user_config: str | None
@@ -38,6 +43,20 @@ class ResolvedConfig:
 
 def repository_root() -> Path:
     return Path(__file__).resolve().parents[3]
+
+
+def detect_host() -> str:
+    explicit = os.environ.get("MSTACK_HOST")
+    if explicit:
+        if explicit not in SUPPORTED_HOSTS:
+            raise ConfigError(f"MSTACK_HOST must be one of {', '.join(SUPPORTED_HOSTS)}")
+        return explicit
+    return "claude-code" if os.environ.get("CLAUDECODE") else "codex"
+
+
+def default_profile_for(defaults: dict[str, object], host: str) -> str:
+    table = require_table(defaults, "default_profile", "defaults")
+    return require_string(table, host, "defaults.default_profile")
 
 
 def default_user_config_path() -> Path:
@@ -85,6 +104,14 @@ def require_table(table: dict[str, object], key: str, owner: str) -> dict[str, o
 
 
 def parse_assignment(table: dict[str, object], owner: str) -> Assignment:
+    assignment = parse_assignment_fields(table, owner)
+    role = owner.removeprefix("roles.")
+    if role in NATIVE_ONLY_ROLES and assignment.runner in EXTERNAL_RUNNERS:
+        raise ConfigError(f"{owner}.runner must be a native runner; external launchers are read-only")
+    return assignment
+
+
+def parse_assignment_fields(table: dict[str, object], owner: str) -> Assignment:
     unknown = set(table) - set(ASSIGNMENT_FIELDS)
     if unknown:
         raise ConfigError(f"{owner} has unknown fields: {', '.join(sorted(unknown))}")
@@ -98,8 +125,8 @@ def parse_assignment(table: dict[str, object], owner: str) -> Assignment:
         raise ConfigError(f"{owner}.effort must be one of {', '.join(SUPPORTED_EFFORTS)}")
     if not isinstance(fast, bool):
         raise ConfigError(f"{owner}.fast must be a boolean")
-    if runner != "codex-native" and fast:
-        raise ConfigError(f"{owner}.fast is supported only by codex-native")
+    if runner not in FAST_RUNNERS and fast:
+        raise ConfigError(f"{owner}.fast is supported only by {' or '.join(FAST_RUNNERS)}")
     return Assignment(runner=runner, model=model, effort=effort, fast=fast)
 
 
@@ -126,7 +153,8 @@ def resolve_config(
     defaults_path = root / "config" / "models.defaults.toml"
     defaults = load_toml(defaults_path)
     schema_version = require_integer(defaults, "schema_version", "defaults")
-    default_profile = require_string(defaults, "default_profile", "defaults")
+    host = detect_host()
+    default_profile = default_profile_for(defaults, host)
     profiles = parse_string_list(defaults, "profiles", "defaults")
     role_names = parse_string_list(defaults, "roles", "defaults")
     resolved_user_path = config_path or default_user_config_path()
@@ -174,6 +202,7 @@ def resolve_config(
         resolved[role_name] = merge_assignment(base, override, f"roles.{role_name}")
     return ResolvedConfig(
         schema_version=schema_version,
+        host=host,
         profile=selected_profile,
         description=description,
         user_config=str(resolved_user_path) if user_loaded else None,
@@ -188,6 +217,7 @@ def resolved_payload(config: ResolvedConfig, role: str | None) -> dict[str, obje
             raise ConfigError(f"unknown role: {role}")
         return {
             "schema_version": config.schema_version,
+            "host": config.host,
             "profile": config.profile,
             "user_config": config.user_config,
             "role": role,
@@ -195,6 +225,7 @@ def resolved_payload(config: ResolvedConfig, role: str | None) -> dict[str, obje
         }
     return {
         "schema_version": config.schema_version,
+        "host": config.host,
         "profile": config.profile,
         "description": config.description,
         "user_config": config.user_config,
@@ -291,9 +322,13 @@ def main(arguments: list[str] | None = None) -> int:
             return 0
         if options.command == "profiles":
             defaults = load_toml(repository_root() / "config" / "models.defaults.toml")
+            host = detect_host()
+            default_profile = default_profile_for(defaults, host)
+            print(f"host: {host}")
             for profile in parse_string_list(defaults, "profiles", "defaults"):
                 resolved = resolve_config(profile_override=profile, use_user_config=False)
-                print(f"{resolved.profile}\t{resolved.description}")
+                marker = "  (default for this host)" if profile == default_profile else ""
+                print(f"{resolved.profile}\t{resolved.description}{marker}")
             return 0
         content = render_user_config(options.profile, options.set)
         if options.dry_run:

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codex Consultant"
+  short_description: "Run a selected Codex model as a consultant"
+  default_prompt: "Use $codex with the requested Codex model and effort for an independent critique."

@@ -134,7 +134,7 @@ Record `git status --short` before launching critics so unexpected mutations can
 | Critic B | Resolved `how_critic_b` |
 
 1. Resolve both critic roles and confirm both configured runners are callable.
-2. Launch both immediately with no inherited conversation context and the exact same prompt. For a `claude-code` assignment, read [Claude Code](../claude-code/SKILL.md) in full and pass the resolved model and effort explicitly.
+2. Launch both immediately with no inherited conversation context and the exact same prompt. For an external assignment (`claude-code` or `codex`), read the matching launcher skill, [Claude Code](../claude-code/SKILL.md) or [Codex](../codex/SKILL.md), in full and pass the resolved model, effort, and Fast setting explicitly.
 3. Let both critics run concurrently under the operating boundary. Monitor each through its configured process or native agent status.
 4. Capture each complete report and its available model provenance before closing native agents.
 5. Recheck `git status --short`. If a critic changed the repository, do not accept, revert, or hide the changes automatically. Report the mutation and exclude the violating result.
