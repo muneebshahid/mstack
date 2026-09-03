@@ -1,0 +1,7 @@
+interface:
+  display_name: "Principle: No Comments"
+  short_description: "Encode intent in code, never comments"
+  default_prompt: "Use $principle-no-comments to remove comments and encode their constraints directly in the code."
+
+policy:
+  allow_implicit_invocation: false

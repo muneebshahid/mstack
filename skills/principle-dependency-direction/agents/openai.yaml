@@ -1,0 +1,7 @@
+interface:
+  display_name: "Principle: Dependency Direction"
+  short_description: "Point dependencies toward stable core policy"
+  default_prompt: "Use $principle-dependency-direction to assess and correct architectural dependency direction."
+
+policy:
+  allow_implicit_invocation: false

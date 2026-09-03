@@ -1,0 +1,7 @@
+interface:
+  display_name: "Principle: Boundary Discipline"
+  short_description: "Make boundary contracts explicit and narrow"
+  default_prompt: "Use $principle-boundary-discipline to assess this boundary's contract, validation, representations, and errors."
+
+policy:
+  allow_implicit_invocation: false

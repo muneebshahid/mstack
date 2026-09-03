@@ -1,0 +1,7 @@
+interface:
+  display_name: "Principle: Make Operations Idempotent"
+  short_description: "Apply make operations idempotent"
+  default_prompt: "Use $principle-make-operations-idempotent to assess and guide this task."
+
+policy:
+  allow_implicit_invocation: false

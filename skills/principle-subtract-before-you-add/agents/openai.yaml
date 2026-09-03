@@ -1,0 +1,7 @@
+interface:
+  display_name: "Principle: Subtract Before You Add"
+  short_description: "Apply subtract before you add"
+  default_prompt: "Use $principle-subtract-before-you-add to assess and guide this task."
+
+policy:
+  allow_implicit_invocation: false

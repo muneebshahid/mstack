@@ -1,0 +1,4 @@
+interface:
+  display_name: "Test Coverage Auditor"
+  short_description: "Audit whether tests fit the code changes"
+  default_prompt: "Use $test-coverage-auditor to audit whether the tests are appropriate for the current changes."

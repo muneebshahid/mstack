@@ -1,0 +1,7 @@
+interface:
+  display_name: "Principle: Model the Domain"
+  short_description: "Choose domain structures before writing logic"
+  default_prompt: "Use $principle-model-the-domain to derive the data structure and types that make this domain logic obvious."
+
+policy:
+  allow_implicit_invocation: false

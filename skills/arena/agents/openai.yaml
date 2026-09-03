@@ -1,0 +1,6 @@
+interface:
+  display_name: "Arena"
+  short_description: "Compete and synthesize model candidates"
+  default_prompt: "Use $arena to generate competing candidates and synthesize the strongest result."
+policy:
+  allow_implicit_invocation: false

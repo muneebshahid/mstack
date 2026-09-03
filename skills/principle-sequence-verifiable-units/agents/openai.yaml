@@ -1,0 +1,7 @@
+interface:
+  display_name: "Principle: Sequence Verifiable Units"
+  short_description: "Apply sequence verifiable units"
+  default_prompt: "Use $principle-sequence-verifiable-units to assess and guide this task."
+
+policy:
+  allow_implicit_invocation: false

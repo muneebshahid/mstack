@@ -1,0 +1,7 @@
+interface:
+  display_name: "Principle: Minimize Reader Load"
+  short_description: "Reduce reader effort and code complexity"
+  default_prompt: "Use $principle-minimize-reader-load to find the smallest direct code shape with minimal traversal and hidden state."
+
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Apply Principles"
+  short_description: "Select and apply relevant engineering principles"
+  default_prompt: "Use $apply-principles to select and apply the relevant engineering principles to this task."
+
+policy:
+  allow_implicit_invocation: false

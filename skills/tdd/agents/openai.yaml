@@ -1,0 +1,7 @@
+interface:
+  display_name: "TDD"
+  short_description: "Fix bugs with focused regression tests"
+  default_prompt: "Use $tdd to reproduce this bug with a failing test, implement the smallest fix, and verify the regression."
+
+policy:
+  allow_implicit_invocation: false

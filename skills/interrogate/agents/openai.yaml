@@ -1,0 +1,4 @@
+interface:
+  display_name: "Interrogate"
+  short_description: "Adversarial multi-model code review"
+  default_prompt: "Use $interrogate to stress-test the current changes."

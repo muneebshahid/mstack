@@ -1,0 +1,7 @@
+interface:
+  display_name: "Technical Writing"
+  short_description: "Write precise developer documentation"
+  default_prompt: "Use $technical-writing to draft or review concise developer documentation."
+
+policy:
+  allow_implicit_invocation: false

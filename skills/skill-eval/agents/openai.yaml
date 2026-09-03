@@ -1,0 +1,6 @@
+interface:
+  display_name: "Skill Eval"
+  short_description: "Evaluate existing skills and proposed revisions"
+  default_prompt: "Use $skill-eval to evaluate this existing skill and report whether it works as claimed."
+policy:
+  allow_implicit_invocation: false

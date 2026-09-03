@@ -1,0 +1,4 @@
+interface:
+  display_name: "Claude Code Consultant"
+  short_description: "Run a selected Claude model as a consultant"
+  default_prompt: "Use $claude-code with the requested Claude model and effort for an independent critique."

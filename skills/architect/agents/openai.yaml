@@ -1,0 +1,6 @@
+interface:
+  display_name: "Architect"
+  short_description: "Design competing shapes without coding"
+  default_prompt: "Use $architect to ground, compare, and synthesize a read-only proposed architecture for this change."
+policy:
+  allow_implicit_invocation: false

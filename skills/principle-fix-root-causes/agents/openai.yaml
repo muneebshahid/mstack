@@ -1,0 +1,7 @@
+interface:
+  display_name: "Principle: Fix Root Causes"
+  short_description: "Apply fix root causes"
+  default_prompt: "Use $principle-fix-root-causes to assess and guide this task."
+
+policy:
+  allow_implicit_invocation: false

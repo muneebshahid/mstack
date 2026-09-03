@@ -1,0 +1,7 @@
+interface:
+  display_name: "Principle: Clear Ownership"
+  short_description: "Give every responsibility one clear owner"
+  default_prompt: "Use $principle-clear-ownership to identify and repair unclear or scattered responsibility ownership."
+
+policy:
+  allow_implicit_invocation: false

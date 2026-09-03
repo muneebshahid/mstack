@@ -1,0 +1,6 @@
+interface:
+  display_name: "Logbook"
+  short_description: "Capture durable engineering decisions and tradeoffs"
+  default_prompt: "Use $logbook to capture or refresh this repository's durable decision record."
+policy:
+  allow_implicit_invocation: false

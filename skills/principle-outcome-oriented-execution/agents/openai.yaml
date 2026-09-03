@@ -1,0 +1,7 @@
+interface:
+  display_name: "Principle: Outcome Oriented Execution"
+  short_description: "Apply outcome oriented execution"
+  default_prompt: "Use $principle-outcome-oriented-execution to assess and guide this task."
+
+policy:
+  allow_implicit_invocation: false
