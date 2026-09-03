@@ -29,7 +29,7 @@ The repository provides self-hosted marketplace metadata for both harnesses. MSt
 - `skills/`
 - `README.md`
 
-Codex and Claude clean-install execution tests remain outstanding. The manifests establish package shape, not full cross-harness runtime compatibility.
+Both Codex and Claude Code successfully added the public GitHub marketplace and installed `mstack@mstack` version `0.1.0`. The temporary installations and marketplace registrations were removed after verification. These checks establish package discovery and installation, not full cross-harness workflow compatibility.
 
 ## Consequences
 
