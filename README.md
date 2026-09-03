@@ -72,7 +72,9 @@ Model slugs and effort levels in the selected profile describe the requested top
 
 ## Focused skills
 
+- `bro`: explicitly restate the immediately preceding answer in shorter, plain language.
 - `claude-code`: reusable process boundary for an independent Claude consultant or judge.
+- `grill-me`: explicitly pressure-test a loose idea in decision-tree rounds before planning or implementation.
 - `setup-mstack`: select a profile, validate available runners and models, and write user-owned role overrides.
 - `gh-address-comments`: inspect and address all GitHub review comments unless the user narrows the scope.
 - `tdd`: focused red-green bug-fix workflow when a cheap, meaningful regression test exists.

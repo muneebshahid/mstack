@@ -17,3 +17,7 @@ PStack is distributed under the MIT License. Its license is preserved at [`LICEN
 ## Superpowers
 
 The stack's workflow design was reviewed against Jesse Vincent's [Superpowers](https://github.com/obra/superpowers). Superpowers informed the evaluation of planning, debugging, verification, and subagent patterns; this repository does not claim that Superpowers itself is bundled here.
+
+## Skills for Real Engineers
+
+`grill-me` adapts Matt Pocock's `grill-me` entry point and `grilling` interview primitive from [Skills for Real Engineers](https://github.com/mattpocock/skills). `bro` adapts the version published in [dmmulroy/skills](https://github.com/dmmulroy/skills), whose repository preserves Matt Pocock's MIT notice. The shared license is preserved at [`LICENSES/MATT-POCOCK-SKILLS-MIT.txt`](LICENSES/MATT-POCOCK-SKILLS-MIT.txt).

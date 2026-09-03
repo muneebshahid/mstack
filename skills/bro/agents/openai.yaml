@@ -1,0 +1,7 @@
+interface:
+  display_name: "Bro"
+  short_description: "Restate the last answer plainly"
+  default_prompt: "Use $bro to restate your last answer in plain, concise language."
+
+policy:
+  allow_implicit_invocation: false
