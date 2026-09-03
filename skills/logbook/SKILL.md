@@ -22,7 +22,7 @@ Logbook may write only inside the repository's declared logbook root. It does no
 - An explicit request to capture or refresh the logbook authorizes the corresponding logbook-only edits.
 - An active Implement workflow may invoke Capture for a decision-bearing authorized change. The Implement parent writes and validates the record; this logbook-only authorship is distinct from project source writing and does not grant commit authority.
 - Architect, Arena candidates, reviewers, investigators, and external consultants remain read-only. They may supply rationale or evidence but never write records.
-- The Luna implementation worker supplies factual implementation evidence and clarification but never creates, updates, moves, or deletes a record.
+- The configured implementation worker supplies factual implementation evidence and clarification but never creates, updates, moves, or deletes a record.
 - Preserve unrelated records and user changes. Do not delete a record unless the active request clearly authorizes cleanup and the record meets the retirement rules below.
 
 ## What deserves a record
@@ -66,7 +66,7 @@ Use Capture when the user explicitly requests a record or Implement identifies d
 6. Run `scripts/validate_logbook.py <repository>/.agents/logbook` and resolve every applicable violation.
 7. Report the record path, lifecycle, decision it owns, and any unresolved staleness or evidence gap.
 
-During Implement, the parent writes or moves the record after inspecting the relevant implementation unit and its fresh verification. It combines accepted rationale, Architect's note-ready material when available, and factual evidence from the Luna worker without delegating authorship or lifecycle judgment to that worker. The parent may ask Luna for missing implementation facts, consequences, constraints, or evidence, then updates and validates the record itself. When commits are authorized, the record change belongs in the same decision-bearing commit as the code it explains.
+During Implement, the parent writes or moves the record after inspecting the relevant implementation unit and its fresh verification. It combines accepted rationale, Architect's note-ready material when available, and factual evidence from the configured worker without delegating authorship or lifecycle judgment to that worker. The parent may ask the worker for missing implementation facts, consequences, constraints, or evidence, then updates and validates the record itself. When commits are authorized, the record change belongs in the same decision-bearing commit as the code it explains.
 
 ## Refresh mode
 

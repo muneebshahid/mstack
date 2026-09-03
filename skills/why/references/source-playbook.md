@@ -1,6 +1,6 @@
 # Source playbooks
 
-The why skill spawns one Luna xhigh investigator in Fast mode per available evidence category, each reading a single source-specific playbook below. The playbooks are concrete examples for common MCPs; adapt them to the callable Codex or parent-mediated tool in the same category. A named playbook is not proof that its integration is available.
+The why skill spawns one configured investigator per available evidence category, each reading a single source-specific playbook below. The playbooks are concrete examples for common MCPs; adapt them to the callable native or parent-mediated tool in the same category. A named playbook is not proof that its integration is available.
 
 | Category | Playbook | Example MCP it documents |
 |---|---|---|

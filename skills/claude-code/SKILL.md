@@ -1,13 +1,13 @@
 ---
 name: claude-code
-description: "Use when a workflow explicitly requires an external Claude Code model as an independent consultant, critic, judge, or bounded analyst. Runs a caller-selected Claude model and effort with configured Claude tools, then returns verified model provenance and report artifacts to the parent Codex agent. Do not use for ordinary Codex tasks or implementation work."
+description: "Use when a workflow explicitly requires an external Claude Code model as an independent consultant, critic, judge, or bounded analyst. Runs a caller-selected Claude model and effort with configured Claude tools, then returns verified model provenance and report artifacts to the parent agent. Do not use for ordinary tasks or implementation work."
 ---
 
 # Claude Code Consultant
 
 Run a caller-selected Claude Code model as an external, independent consultant. This skill owns the Claude Code process boundary. The calling workflow owns model selection, effort, task prompting, orchestration, interpretation, and final judgment.
 
-Use this boundary only when the user or an active workflow explicitly calls for Claude. It consumes Claude usage separately from Codex. Production workflows currently select Claude Fable 5.1 (`claude-fable-5-1`) at their declared effort; evaluation-only execution checks may deliberately select a cheaper model such as `haiku` at `low` effort.
+Use this boundary only when the user or an active workflow explicitly calls for an external Claude Code process. It consumes Claude usage separately from the parent harness. Calling workflows resolve their named MStack role. A direct invocation without a caller-owned assignment resolves `consultant_default` through [MStack runtime model resolution](../setup-mstack/references/runtime-resolution.md). Execution smoke tests resolve their dedicated smoke roles rather than borrowing production assignments.
 
 ## Prepare the Prompt
 
@@ -19,7 +19,7 @@ Give Claude a self-contained prompt. Include:
 - The required output structure.
 - Any additional role-specific limits or source priorities.
 
-The launcher gives Claude its normal tools and configuration, including available plugins and MCP servers, and exposes the Codex skills directory with `--add-dir`. When a Codex skill is relevant, give Claude its explicit path and tell it to read that skill before proceeding; Claude does not automatically treat Codex skills as native Claude skills.
+The launcher gives Claude its normal tools and configuration, including available plugins and MCP servers, and exposes both MStack's packaged `skills/` tree and the user's Codex skills directory when it exists. When a skill is relevant, give Claude its explicit path and tell it to read that skill before proceeding; an external Claude process does not automatically inherit skills loaded by the parent.
 
 The launcher prepends a strong consultant boundary to every prompt: Claude may investigate freely, but must not edit files, run mutating commands, change external systems, create or update tickets, commit, push, or delegate implementation. This is a role instruction, not a sandbox. Claude has write-capable tools, including unrestricted shell access, so the parent must review its report and retain final judgment.
 
@@ -40,7 +40,7 @@ python3 <skill-directory>/scripts/run_claude.py \
   --effort <low|medium|high|xhigh|max>
 ```
 
-Use the model and effort declared by the calling workflow. The launcher's compatibility default remains `claude-fable-5-1` at `xhigh`, but callers should pass both settings explicitly when correctness or cost depends on them. Do not configure a fallback model: the result must come from the requested model or fail clearly.
+Pass the resolved model and effort explicitly. The launcher has no model or effort default. Do not configure a fallback model: the result must come from the requested model or fail clearly.
 
 The launcher accepts exact model identifiers and the Claude Code aliases `fable`, `haiku`, `opus`, and `sonnet`. It verifies that an alias resolves to the matching served model family and records both requested and served model values in `summary.json`.
 

@@ -1,0 +1,106 @@
+schema_version = 1
+name = "claude-code"
+description = "Claude-native topology for running MStack inside Claude Code"
+
+[roles.implement_worker]
+runner = "claude-native"
+model = "sonnet"
+effort = "high"
+fast = false
+
+[roles.arena_candidate_a]
+runner = "claude-native"
+model = "claude-fable-5-1"
+effort = "xhigh"
+fast = false
+
+[roles.arena_candidate_b]
+runner = "claude-native"
+model = "sonnet"
+effort = "xhigh"
+fast = false
+
+[roles.arena_cross_judge]
+runner = "claude-native"
+model = "claude-fable-5-1"
+effort = "xhigh"
+fast = false
+
+[roles.how_explorer]
+runner = "claude-native"
+model = "sonnet"
+effort = "high"
+fast = false
+
+[roles.how_simple_explainer]
+runner = "claude-native"
+model = "sonnet"
+effort = "medium"
+fast = false
+
+[roles.how_complex_explainer]
+runner = "claude-native"
+model = "claude-fable-5-1"
+effort = "high"
+fast = false
+
+[roles.how_critic_a]
+runner = "claude-native"
+model = "claude-fable-5-1"
+effort = "xhigh"
+fast = false
+
+[roles.how_critic_b]
+runner = "claude-native"
+model = "sonnet"
+effort = "xhigh"
+fast = false
+
+[roles.why_investigator]
+runner = "claude-native"
+model = "sonnet"
+effort = "high"
+fast = false
+
+[roles.why_synthesizer]
+runner = "claude-native"
+model = "claude-fable-5-1"
+effort = "xhigh"
+fast = false
+
+[roles.interrogate_reviewer_a]
+runner = "claude-native"
+model = "claude-fable-5-1"
+effort = "max"
+fast = false
+
+[roles.interrogate_reviewer_b]
+runner = "claude-native"
+model = "sonnet"
+effort = "max"
+fast = false
+
+[roles.skill_eval_quality_judge]
+runner = "claude-native"
+model = "claude-fable-5-1"
+effort = "xhigh"
+fast = false
+
+[roles.skill_eval_smoke_candidate]
+runner = "claude-native"
+model = "haiku"
+effort = "low"
+fast = false
+
+[roles.skill_eval_smoke_judge]
+runner = "claude-native"
+model = "haiku"
+effort = "low"
+fast = false
+
+[roles.consultant_default]
+runner = "claude-native"
+model = "claude-fable-5-1"
+effort = "xhigh"
+fast = false
+

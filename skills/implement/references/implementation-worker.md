@@ -1,21 +1,19 @@
 # Implementation worker
 
-All project code writing in Implement goes through one persistent native Codex worker for the active task:
+All project code writing in Implement goes through one persistent configured worker for the active task. Read [MStack runtime model resolution](../../setup-mstack/references/runtime-resolution.md) completely and resolve `implement_worker` before launch.
 
-- Model: `gpt-5.6-luna`.
-- Reasoning effort: `high`.
-- Service tier: `priority` (request Codex Fast mode explicitly on the native spawn call).
+- Use the resolved runner, model, effort, and Fast setting exactly.
 - Start without inherited conversation history.
 - Permit edits only within the active request and the current implementation unit.
 - Do not permit delegation, commits, pushes, deployments, external mutations, or adjacent cleanup unless separately authorized.
 
 The worker never creates, updates, moves, or deletes Logbook records. When the parent is considering Logbook capture, the worker supplies factual implementation evidence, newly observed consequences or constraints, invalidation evidence, and clarification on request. The parent alone decides whether a record is warranted, authors it, selects its lifecycle, and validates it.
 
-Verify the served model, reasoning effort, and service tier when the launcher exposes them. If `priority` is rejected, omitted by the launcher, or reported as null, preserve that capability failure and label the worker as standard-speed rather than claiming Fast mode. Continue with the same Luna worker unless the user made Fast mode itself a completion condition.
+Verify the served model, reasoning effort, runner, and service tier when the launcher exposes them. If requested Fast service is rejected, omitted by the launcher, or reported as null, preserve that capability failure and label the worker as standard-speed rather than claiming Fast mode. Continue with the same worker unless the user made Fast mode itself a completion condition.
 
 ## Start the worker
 
-Confirm that the active toolset exposes a native subagent spawn operation. If it does not, record a failed launch and stop before project writes. Spawn the worker once after the parent has selected the mode, grounded the task, resolved any Architect checkpoint, and loaded the triggered principles. Give it a self-contained brief containing:
+Confirm that the active toolset exposes the configured runner. If it does not, record a failed launch and stop before project writes. Spawn the worker once after the parent has selected the mode, grounded the task, resolved any Architect checkpoint, and loaded the triggered principles. Give it a self-contained brief containing:
 
 1. The requested outcome, mode, allowed scope, and explicit exclusions.
 2. The repository root, repository instructions, and unrelated changes it must preserve.
@@ -47,14 +45,14 @@ The worker may state that a field is not applicable, but must not omit it. Its r
 
 The spawn call itself must appear in the execution trace and return a non-empty worker identifier. Surface that exact identifier in the next progress update, retain it, and use the same worker for every unit in this Implement run so feedback and implementation context remain continuous. Do not describe the worker as launched, running, idle, or resumable before this evidence exists.
 
-Worker creation is a hard precondition for project writes. If native spawn fails or does not return an identifier:
+Worker creation is a hard precondition for project writes. If the configured spawn fails or does not return an identifier:
 
 - Stop before editing project source.
 - Do not issue an empty wait, infer that an untracked process is the worker, or describe the worker as idle or resumable.
 - If files change despite the failed launch, treat the run as compromised, preserve the diff, and stop without accepting the changes or inventing authorship.
 - Report the exact launcher failure and leave implementation incomplete.
 
-Only call a wait, input, or close operation with the retained identifier explicitly present in its target set. An unavailable spawn tool or a worker that was never launched is a failed worker, not a degraded implementation path.
+Only call a wait, input, or close operation with the retained identifier explicitly present in its target set. An unavailable configured runner or a worker that was never launched is a failed worker, not a degraded implementation path.
 
 ## Parent review loop
 

@@ -245,7 +245,11 @@ def create_fake_claude(
         assert args[args.index("--effort") + 1] == {expected_effort!r}
         assert args[args.index("--permission-mode") + 1] == "auto"
         assert args[args.index("--tools") + 1] == "default"
-        assert args[args.index("--add-dir") + 1].endswith("/codex/skills")
+        add_dir = args.index("--add-dir")
+        no_session = args.index("--no-session-persistence")
+        skill_dirs = args[add_dir + 1:no_session]
+        assert {str(RUNNER.resolve().parents[2])!r} in skill_dirs
+        assert any(path.endswith("/codex/skills") for path in skill_dirs)
         assert args[args.index("--output-format") + 1] == "stream-json"
         assert "--verbose" in args
         assert "--safe-mode" not in args

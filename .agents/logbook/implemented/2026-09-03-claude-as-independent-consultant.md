@@ -9,7 +9,7 @@ Several workflows need a non-Codex model for independent design, critique, or ju
 
 ## Decision
 
-Use `claude-code` as the reusable launcher contract. The calling workflow selects the Claude model, effort, task, and role. The launcher runs Claude with its configured capabilities, verifies the served model when possible, and returns result and provenance artifacts.
+Use `claude-code` as the reusable launcher contract. The calling workflow resolves the Claude model and effort from its named MStack role and owns the task and role prompt. The launcher runs Claude with its configured capabilities, exposes MStack's packaged skills plus the user Codex skills directory when present, verifies the served model, and returns result and provenance artifacts.
 
 Prompts strongly require non-mutation for consultant roles, but the workflow does not pretend Bash is physically read-only. Callers audit repository state when mutation would compromise a result. Claude must report missing tools, authentication failures, unreadable paths, and other capability gaps instead of hiding them.
 

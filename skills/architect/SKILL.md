@@ -68,7 +68,7 @@ Use this Arena rubric:
 
 Design it independently. Arena's two default candidates satisfy the exploration requirement only when they represent materially independent attempts. If they converge because the constraints force one viable shape, record the consensus. If they converge on an unexamined safe middle or flavors of one shape, reframe and rerun one fresh candidate for a structurally different alternative before synthesis.
 
-Architect requires at least two usable candidate designs before claiming synthesis. If fewer than two candidates succeed, return the surviving design plus the blockers as an incomplete, degraded Architect result. Do not silently substitute a model. A failed Sol cross-judge does not block synthesis when at least two candidate designs are usable: the parent performs the criterion-level judgment, records the missing cross-judge, and labels the result degraded.
+Architect requires at least two usable candidate designs before claiming synthesis. If fewer than two candidates succeed, return the surviving design plus the blockers as an incomplete, degraded Architect result. Do not silently substitute a model. A failed configured cross-judge does not block synthesis when at least two candidate designs are usable: the parent performs the criterion-level judgment, records the missing cross-judge, and labels the result degraded.
 
 Screen every candidate against the design red flags before selecting a base. Reject or revise shallow modules, information leakage, temporal decomposition, pass-through methods, and designs that need callers to understand internal rules.
 

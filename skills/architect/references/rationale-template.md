@@ -22,7 +22,7 @@ Include the smallest diagrams that make ownership, dependency direction, module 
 
 ## Synthesis decision
 
-Record which Arena candidate became the base and why, what was grafted from each other candidate, and what was rejected. State whether the parent and Sol cross-judge agreed; when Sol was unavailable, record the concrete blocker and that the parent judged the candidates alone.
+Record which Arena candidate became the base and why, what was grafted from each other candidate, and what was rejected. State whether the parent and configured cross-judge agreed; when the judge was unavailable, record the concrete blocker and that the parent judged the candidates alone.
 
 ## Tradeoffs accepted
 

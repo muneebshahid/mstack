@@ -28,7 +28,7 @@ You are answering a "why" question about a piece of code by synthesizing finding
 
 {ACTIVE_SOURCE_PROFILE}
 
-Do not widen the investigation to unrelated connectors merely because they are available in Claude Code.
+Do not widen the investigation to unrelated connectors merely because they are available to your runner.
 
 ## Epistemics Framework
 

@@ -1,6 +1,6 @@
 {
   "name": "mstack",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Rigorous engineering workflows, reusable principles, and multi-model review for coding agents.",
   "author": {
     "name": "Muneeb",
@@ -34,6 +34,7 @@
     "privacyPolicyURL": "https://github.com/muneebshahid/mstack/blob/main/PRIVACY.md",
     "termsOfServiceURL": "https://github.com/muneebshahid/mstack/blob/main/TERMS.md",
     "defaultPrompt": [
+      "Use $setup-mstack to configure model assignments for my available harnesses.",
       "Use $implement to make this change in small, verified units.",
       "Use $architect to design this change without implementing it.",
       "Use $interrogate to run an adversarial review of these changes."

@@ -14,7 +14,6 @@ from pathlib import Path
 from typing import TextIO, TypedDict
 
 SUPPORTED_EFFORTS = ("low", "medium", "high", "xhigh", "max")
-DEFAULT_MODEL = "claude-fable-5-1"
 MODEL_ALIASES = ("fable", "haiku", "opus", "sonnet")
 OUTPUT_DRAIN_SECONDS = 2.0
 CONSULTANT_BOUNDARY = """\
@@ -26,7 +25,7 @@ Do not edit or create project files, run mutating commands,
 modify external systems, create or update tickets, commit, push, or delegate
 implementation. Treat write-capable tools as available only for read-only
 inspection. If the task would require a mutation, explain what would need to
-change and leave the action to the parent Codex agent.
+change and leave the action to the parent agent.
 
 If an expected tool, MCP server, plugin, skill, file, permission, authentication,
 or other capability is missing, inaccessible, or fails, do not hide the problem
@@ -109,7 +108,7 @@ def main() -> int:
     artifacts = build_artifacts(output_dir)
     prompt = build_prompt(prompt_path.read_text(encoding="utf-8"))
     command = build_command(
-        resolve_claude(), args.model, args.effort, resolve_skills_dir()
+        resolve_claude(), args.model, args.effort, resolve_skill_dirs()
     )
     process = run_process(command, cwd, prompt, artifacts, args.timeout_seconds)
     extraction = extract_result(artifacts, args.model) if process.exit_code == 0 else None
@@ -139,10 +138,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", required=True, help="Artifact directory")
     parser.add_argument(
         "--model",
-        default=DEFAULT_MODEL,
+        required=True,
         help="Claude model alias or exact model identifier",
     )
-    parser.add_argument("--effort", choices=SUPPORTED_EFFORTS, default="xhigh")
+    parser.add_argument("--effort", choices=SUPPORTED_EFFORTS, required=True)
     parser.add_argument(
         "--timeout-seconds",
         type=int,
@@ -189,16 +188,18 @@ def build_prompt(task_prompt: str) -> str:
     return CONSULTANT_BOUNDARY + task_prompt
 
 
-def resolve_skills_dir() -> Path:
+def resolve_skill_dirs() -> tuple[Path, ...]:
+    packaged_skills = Path(__file__).resolve().parents[2]
     codex_root = Path(os.environ.get("CODEX_HOME", Path.home() / ".codex"))
-    skills_dir = codex_root / "skills"
-    if not skills_dir.is_dir():
-        raise SystemExit(f"Codex skills directory does not exist: {skills_dir}")
-    return skills_dir.resolve()
+    user_skills = codex_root / "skills"
+    resolved = [packaged_skills]
+    if user_skills.is_dir() and user_skills.resolve() != packaged_skills:
+        resolved.append(user_skills.resolve())
+    return tuple(resolved)
 
 
 def build_command(
-    binary: str, model: str, effort: str, skills_dir: Path
+    binary: str, model: str, effort: str, skill_dirs: tuple[Path, ...]
 ) -> tuple[str, ...]:
     return (
         binary,
@@ -212,7 +213,7 @@ def build_command(
         "--tools",
         "default",
         "--add-dir",
-        str(skills_dir),
+        *(str(path) for path in skill_dirs),
         "--no-session-persistence",
         "--output-format",
         "stream-json",

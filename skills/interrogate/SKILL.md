@@ -5,7 +5,7 @@ description: "Use for \"interrogate\", \"adversarial review\", \"multi-model rev
 
 # Interrogate
 
-Spawn Claude Fable 5.1 max and GPT-5.6 Sol max to adversarially review code changes. Each model gets the same prompt and rubric. The adversarial signal comes from model diversity, not assigned personas. Models differ in blind spots, priors, and reasoning patterns. Agreement across models is high-confidence signal; lone-model findings are worth reading but lower confidence.
+Spawn the two configured Interrogate reviewers to adversarially review code changes. Each model gets the same prompt and rubric. The adversarial signal comes from model diversity, not assigned personas. Models differ in blind spots, priors, and reasoning patterns. Agreement across models is high-confidence signal; lone-model findings are worth reading but lower confidence.
 
 The deliverable is a synthesized verdict. Do NOT auto-apply changes.
 
@@ -37,10 +37,12 @@ Write one clear intent paragraph and a compact requirements context. Reviewers c
 
 Launch both reviewers concurrently.
 
-| Reviewer | Execution |
+| Reviewer | Assignment |
 |----------|-----------|
-| Reviewer A | Claude Fable 5.1, max, through the `claude-code` skill |
-| Reviewer B | GPT-5.6 Sol, max, through Codex's native subagent tool |
+| Reviewer A | Resolved `interrogate_reviewer_a` |
+| Reviewer B | Resolved `interrogate_reviewer_b` |
+
+Read [MStack runtime model resolution](../setup-mstack/references/runtime-resolution.md) in full and resolve both reviewer assignments before building the launch plan.
 
 Read [references/principle-routing.md](references/principle-routing.md) in full. Resolve the core and concretely triggered conditional principles to absolute filesystem paths, then read every selected `SKILL.md` completely. Interrogate selects these leaves directly; do not invoke `apply-principles` inside the panel.
 
@@ -56,16 +58,16 @@ Prepend this execution guard:
 
 > You are one reviewer in an already-running two-model panel. Read every explicitly provided principle skill and apply it under this read-only review assignment. Do not invoke orchestration skills, delegate, spawn subagents, or modify files. Inspect the supplied code and return only your independent review.
 
-The same filled template goes to both reviewers, so every model applies the same selected principles. Provide filesystem paths rather than copying the skills into the prompt. Include applicable repository instructions because Fable runs without project customizations. Keep secrets and unrelated content out of the prompt.
+The same filled template goes to both reviewers, so every model applies the same selected principles. Provide filesystem paths rather than copying the skills into the prompt. Include applicable repository instructions because an external runner may not inherit project customizations. Keep secrets and unrelated content out of the prompt.
 
 Before launching, record the repository's current `git status --short` so unexpected mutations can be detected.
 
-Confirm that both launch mechanisms are callable before describing the panel as started: a managed process launcher for Fable and a native subagent spawn tool for Sol. An absent mechanism means that reviewer failed to launch.
+Confirm that both configured runners are callable before describing the panel as started. An absent mechanism means that reviewer failed to launch.
 
-1. Read [the Claude Code skill](../claude-code/SKILL.md) in full. Write the filled prompt to a temporary file outside the repository, create a temporary output directory, and invoke its launcher with `--model claude-fable-5-1 --effort max` in a managed terminal session. Retain the returned process or session identity before claiming Fable is running, then yield so orchestration can continue.
-2. Immediately invoke Codex's native subagent spawn tool with `model: gpt-5.6-sol`, `reasoning_effort: max`, and no inherited conversation context. Give it the exact same filled prompt. This is a subagent of the current task, not a new user-owned task. The spawn call itself must appear in the execution trace and return a non-empty native reviewer identifier. Surface that exact identifier in the next progress update and retain it before claiming Sol is running.
-3. Let both reviewers run concurrently. Wait on the retained Sol identifier through the native agent wait tool and monitor Fable through its terminal session. Never issue an empty wait, infer an orphaned reviewer, or treat an attempted launch as a running reviewer. Avoid repeated unchanged polls.
-4. When Fable exits, read `claude.result.md` and `summary.json` from its output directory. Use the native Sol agent's completed final message as Sol's review.
+1. Launch each reviewer immediately through its resolved runner with no inherited conversation context and the exact same filled prompt. For a `claude-code` assignment, read [the Claude Code skill](../claude-code/SKILL.md) in full, write artifacts outside the repository, and pass the resolved model and effort explicitly.
+2. Retain every returned process, session, or native reviewer identifier before claiming that reviewer is running. A native spawn call must appear in the trace and return a non-empty identifier; surface it in the next progress update.
+3. Let both reviewers run concurrently. Monitor and wait through each configured boundary. Never issue an empty wait, infer an orphaned reviewer, or treat an attempted launch as a running reviewer. Avoid repeated unchanged polls.
+4. Capture each complete result and available model provenance before closing native reviewers.
 5. Recheck `git status --short`. If the review changed the repository, do not accept, revert, or hide the changes automatically. Report the unexpected mutation and exclude any result that violated the read-only assignment.
 
 If either launch is not invoked, fails, or returns no usable process or reviewer identifier, record that reviewer as failed immediately and do not wait on it. A never-launched reviewer counts as failed when deciding whether one or both reviewers failed. If one reviewer fails, inspect its failure once. Do not repeatedly retry authentication, quota, model-availability, configuration, or missing-identifier failures. Use the surviving review, label the panel degraded, and report the missing reviewer. If both fail, stop and report the concrete blockers. Close a completed native reviewer after capturing its report.

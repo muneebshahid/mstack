@@ -23,6 +23,8 @@ Work like a careful, cautious, precise investigator reconstructing a historical 
 
 Read [references/epistemics.md](references/epistemics.md) in full before running the investigation. The final synthesizer must follow it.
 
+Before launching any role, read [MStack runtime model resolution](../setup-mstack/references/runtime-resolution.md) completely and resolve `why_investigator` and `why_synthesizer`.
+
 ## 1. Establish the Question and Code Anchor
 
 Identify the target and the exact question. If the referent is vague, infer it from the conversation and state the interpretation briefly.
@@ -39,7 +41,7 @@ Before delegating, build a compact anchor:
 
 This seed context prevents every investigator from rediscovering the same basics. Do not treat the code itself as evidence of intent.
 
-Repository Logbook records are always in scope when present because they travel with the code. They do not require a separate investigator category: include relevant records in the anchor sent to investigators and Fable. Treat a missing Logbook tree as ordinary absence, not a capability failure.
+Repository Logbook records are always in scope when present because they travel with the code. They do not require a separate investigator category: include relevant records in the anchor sent to investigators and the synthesizer. Treat a missing Logbook tree as ordinary absence, not a capability failure.
 
 ## 2. Build the Runtime Coverage Map
 
@@ -66,15 +68,13 @@ Use these distinct outcomes:
 
 Read [references/source-playbook.md](references/source-playbook.md) to select the source-specific playbook. Keep future playbooks available even when their integrations are not currently configured.
 
-## 3. Run Parallel Luna Investigators
+## 3. Run Parallel Investigators
 
-Spawn one native Codex subagent per available evidence category. Launch independent investigators together so they run concurrently.
+Spawn one configured investigator per available evidence category. Launch independent investigators together so they run concurrently.
 
 For every investigator:
 
-- Model: `gpt-5.6-luna`.
-- Reasoning effort: `xhigh`.
-- Service tier: `priority` (Codex Fast mode).
+- Use the resolved `why_investigator` runner, model, effort, and Fast setting exactly.
 - Start without forked conversation history; provide a self-contained assignment.
 - Give it [references/investigator-prompt.md](references/investigator-prompt.md), exactly one matching source playbook, the code anchor, and the user's original question.
 - Give it [references/sources/incident-postmortem.md](references/sources/incident-postmortem.md) as an additional cross-cutting angle when the target is defensive code such as retries, null guards, timeouts, rate limits, feature flags, egress guards, or OOM handling.
@@ -82,30 +82,30 @@ For every investigator:
 - Instruct it to investigate read-only, collect evidence rather than answer the question, and report capability or tool failures in its result.
 - Let it continue until its assigned source is reasonably exhausted and it can return a complete report. Do not impose an elapsed-time deadline.
 
-Each investigator owns one category. Do not collapse multiple source categories into a single agent. If a connector is unavailable inside a native subagent but is callable by the parent, the parent may perform the read-only query and send the returned evidence to that same investigator for analysis. Record this as parent-mediated access in the coverage map. Never silently claim that the investigator queried a tool it could not access.
+Each investigator owns one category. Do not collapse multiple source categories into a single agent. If a connector is unavailable inside a configured subagent but is callable by the parent, the parent may perform the read-only query and send the returned evidence to that same investigator for analysis. Record this as parent-mediated access in the coverage map. Never silently claim that the investigator queried a tool it could not access.
 
 Wait for all investigators needed by the synthesis, retaining null results and tool failures. A `running` status or long elapsed time alone is not evidence of a stall. Do not interrupt an investigator that is making visible progress. The native orchestration API may expose only coarse status; in that case, do not invent progress judgments or send routine pings. Intervene only when surfaced activity shows a concrete loop, repeated failed operation, irrelevant expansion, or another clearly unproductive pattern. Start with one non-interrupting corrective message; interrupt only if the behavior continues. If an investigator becomes genuinely unusable, record the capability issue and use parent-mediated read-only evidence when practical rather than blocking synthesis. Close completed native agents after their reports have been captured.
 
-## 4. Synthesize With Claude Fable Xhigh
+## 4. Synthesize Evidence
 
-Read and use [Claude Code](../claude-code/SKILL.md); follow its process boundary.
+Launch `why_synthesizer` through its resolved runner under the same read-only boundary. If the assignment uses `claude-code`, read and use [Claude Code](../claude-code/SKILL.md) and follow its process boundary.
 
-Create a self-contained Fable prompt from [references/synthesizer-prompt.md](references/synthesizer-prompt.md). Include:
+Create a self-contained synthesizer prompt from [references/synthesizer-prompt.md](references/synthesizer-prompt.md). Include:
 
 1. The original question and code anchor.
 2. Every investigator report, including null results and capability failures.
 3. Every skipped category and its reason.
-4. The active project source profile, so Fable does not widen the investigation to unrelated connectors.
-5. The exact path to [references/epistemics.md](references/epistemics.md), which Fable must read in full.
-6. Permission to spot-verify citations with its own read-only Claude Code tools, Linear MCP, `git`, and `gh` when available.
+4. The active project source profile, so the synthesizer does not widen the investigation to unrelated connectors.
+5. The exact path to [references/epistemics.md](references/epistemics.md), which the synthesizer must read in full.
+6. Permission to spot-verify citations with its own read-only tools, Linear connector, `git`, and `gh` when available.
 
-Invoke Fable with `--model claude-fable-5-1 --effort xhigh`. Fable has full Claude Code capabilities but operates under the reusable non-mutation boundary. Its `Capability and Tool Issues` section is part of the result and must be preserved.
+Invoke the assignment with its resolved model, effort, and Fast setting. A synthesizer with broad tools still operates under the reusable non-mutation boundary. Its `Capability and Tool Issues` section is part of the result and must be preserved.
 
-Do not configure or silently use another synthesis model. If Fable fails, return the collected investigator evidence plus the concrete launcher failure and label the synthesis incomplete.
+Do not configure or silently use another synthesis model. If the configured synthesizer fails, return the collected investigator evidence plus the concrete launcher failure and label the synthesis incomplete.
 
 ## 5. Apply Parent Lead Judgment and Present
 
-The parent Codex agent retains lead judgment. Check that Fable:
+The parent agent retains lead judgment. Check that the synthesizer:
 
 - Separates Direct, Supported, Inferred, Speculative, and Unknown claims correctly.
 - Cites every Direct and Supported claim.
@@ -126,6 +126,6 @@ If the question is a precursor to changing the code, add a concise Preserve / Ch
 - Treating a failed or unavailable tool as a successful null search.
 - Collapsing all investigators into one agent.
 - Letting investigators synthesize the final answer instead of collecting evidence.
-- Passing only positive findings to Fable and dropping null results or contradictions.
-- Silently replacing Fable when its invocation fails.
+- Passing only positive findings to the synthesizer and dropping null results or contradictions.
+- Silently replacing the configured synthesizer when its invocation fails.
 - Hiding capability issues that would let the user repair the workflow.

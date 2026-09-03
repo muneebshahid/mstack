@@ -1,0 +1,7 @@
+interface:
+  display_name: "Setup MStack"
+  short_description: "Configure models for every MStack role"
+  default_prompt: "Use $setup-mstack to inspect and configure my MStack model assignments."
+policy:
+  allow_implicit_invocation: false
+

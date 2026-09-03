@@ -1,0 +1,23 @@
+schema_version = 1
+default_profile = "multimodel"
+profiles = ["multimodel", "codex", "claude-code"]
+roles = [
+  "implement_worker",
+  "arena_candidate_a",
+  "arena_candidate_b",
+  "arena_cross_judge",
+  "how_explorer",
+  "how_simple_explainer",
+  "how_complex_explainer",
+  "how_critic_a",
+  "how_critic_b",
+  "why_investigator",
+  "why_synthesizer",
+  "interrogate_reviewer_a",
+  "interrogate_reviewer_b",
+  "skill_eval_quality_judge",
+  "skill_eval_smoke_candidate",
+  "skill_eval_smoke_judge",
+  "consultant_default",
+]
+

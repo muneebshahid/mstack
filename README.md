@@ -24,7 +24,17 @@ Add the repository marketplace, then install MStack:
 /plugin install mstack@mstack
 ```
 
-Start a new Claude Code session after installation. Claude-specific runtime validation is still in progress; the current orchestration defaults describe the Codex runtime.
+Start a new Claude Code session after installation.
+
+## Configure models
+
+Run `$setup-mstack` in Codex or `/mstack:setup-mstack` in Claude Code. MStack ships three complete profiles:
+
+- `multimodel`: the preferred Codex-led mix of native GPT workers and external Claude judgment.
+- `codex`: native Codex models only.
+- `claude-code`: native Claude Code models only.
+
+Packaged defaults live in [`config/`](config/). User choices live in `~/.config/mstack/models.toml`; managed plugin files are never rewritten. Orchestrating skills resolve their role assignments when invoked, so a configuration change applies to the next workflow run. Invalid or unavailable assignments fail visibly instead of falling back to another model.
 
 To inspect or install one skill without the plugin, use its directory under `https://github.com/muneebshahid/mstack/tree/main/skills/`.
 
@@ -33,21 +43,21 @@ Some workflows have optional external dependencies:
 - `claude-code` requires Claude Code and a requested Claude model that the account can serve.
 - GitHub evidence and PR workflows require the `gh` CLI.
 - `why` can use installed source connectors such as Linear. Those integrations are deliberately not bundled here.
-- Native multi-agent workflows require a Codex host that exposes subagent spawn, wait, message, and close operations.
+- Native multi-agent workflows require the selected host to expose subagent spawn, wait, message, and close operations.
 
-Model slugs and effort levels describe the current preferred topology. If a host does not offer one, the workflow must report the capability gap rather than claim that the requested model ran.
+Model slugs and effort levels in the selected profile describe the requested topology. If a host does not offer one, the workflow must report the capability gap rather than claim that the requested model ran.
 
 ## Workflow map
 
 | Skill | Purpose | Agent flow |
 | --- | --- | --- |
-| `implement` | Single entry point for feature, bug-fix, refactoring, and prototype code changes | Parent scopes and verifies; one persistent GPT-5.6 Luna `high` Fast worker writes small, verifiable units |
+| `implement` | Single entry point for feature, bug-fix, refactoring, and prototype code changes | Parent scopes and verifies; one persistent configured worker writes small, verifiable units |
 | `architect` | Read-only architecture for consequential changes | Grounds the system, selects principles, invokes `arena`, and returns a design and invalidation criteria to `implement` |
-| `arena` | Competing designs for consequential artifacts | Fable 5.1 `xhigh` and Sol `xhigh` produce independent candidates; Sol `xhigh` cross-judges; parent selects and synthesizes |
-| `how` | Explain current mechanics and architecture | Simple: Sol `medium`; complex: Luna `xhigh` Fast explorers followed by Sol `high`; critique adds Fable 5.1 `xhigh` and Sol `xhigh` |
-| `why` | Reconstruct design rationale from evidence | One Luna `xhigh` Fast investigator per available source; Fable 5.1 `xhigh` synthesizes; parent verifies and presents |
-| `interrogate` | Adversarial multi-model code review | Fable 5.1 `max` and Sol `max` review independently; parent verifies, deduplicates, and categorizes findings |
-| `skill-eval` | Test an existing skill or compare it with a proposed revision | Disposable scenarios and a blinded Claude judge; cheap Luna/Haiku substitutions are allowed only for execution smoke tests |
+| `arena` | Competing designs for consequential artifacts | Two configured candidates work independently; a configured cross-judge advises; parent selects and synthesizes |
+| `how` | Explain current mechanics and architecture | Uses configured explorer, explainer, and optional critic roles according to complexity and mode |
+| `why` | Reconstruct design rationale from evidence | One configured investigator per available source; a configured synthesizer reconciles evidence; parent verifies and presents |
+| `interrogate` | Adversarial multi-model code review | Two configured reviewers work independently; parent verifies, deduplicates, and categorizes findings |
+| `skill-eval` | Test an existing skill or compare it with a proposed revision | Disposable scenarios and a configured blinded judge; dedicated cheap assignments are used only for execution smoke tests |
 | `teach` | Explain what something is, how it works, and why | Composes `how` and `why` into one account |
 | `apply-principles` | Select engineering standards for a broad task | Routes to the smallest relevant set of canonical `principle-*` leaves |
 | `logbook` | Preserve durable engineering decisions | Records rationale, alternatives, evidence, consequences, and revisit conditions in `.agents/logbook/` |
@@ -55,6 +65,7 @@ Model slugs and effort levels describe the current preferred topology. If a host
 ## Focused skills
 
 - `claude-code`: reusable process boundary for an independent Claude consultant or judge.
+- `setup-mstack`: select a profile, validate available runners and models, and write user-owned role overrides.
 - `gh-address-comments`: inspect and address all GitHub review comments unless the user narrows the scope.
 - `tdd`: focused red-green bug-fix workflow when a cheap, meaningful regression test exists.
 - `test-coverage-auditor`: judge whether changed behavior has appropriate tests, not merely coverage.

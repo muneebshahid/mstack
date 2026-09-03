@@ -14,6 +14,8 @@ Two modes:
 
 How explains current purpose, structure, runtime flow, ownership, and placement. Do not infer historical motivation from code. Use `why` when the question requires design lineage, rejected alternatives, incidents, or business constraints.
 
+Before launching any role, read [MStack runtime model resolution](../setup-mstack/references/runtime-resolution.md) completely and resolve only the roles required by the selected mode.
+
 ## Operating Boundary
 
 - Inspect read-only. Do not edit project files, mutate external systems, commit, or push.
@@ -52,11 +54,9 @@ Decompose the question into two to four distinct exploration angles so agents do
 - Request path and enforcement.
 - Configuration and metrics infrastructure.
 
-Launch every explorer concurrently as a native Codex subagent:
+Resolve `how_explorer` once and launch every explorer concurrently with that assignment:
 
-- Model: `gpt-5.6-luna`.
-- Reasoning effort: `xhigh`.
-- Service tier: `priority` (request Codex Fast mode).
+- Use the resolved runner, model, effort, and Fast setting exactly.
 - Start without inherited conversation history and provide a self-contained assignment.
 - Read-only role; no delegation or file modification.
 
@@ -66,10 +66,9 @@ Overlap is acceptable where slices meet; the explainer reconciles it. Wait for a
 
 ### 2b. Explain Directly
 
-For a simple question, launch one native Codex subagent:
+For a simple question, resolve and launch `how_simple_explainer`:
 
-- Model: `gpt-5.6-sol`.
-- Reasoning effort: `medium`.
+- Use the resolved runner, model, effort, and Fast setting exactly.
 - Start without inherited conversation history and provide the question, repository root, known target, and applicable repository instructions.
 - Read-only role; no delegation or file modification.
 
@@ -77,10 +76,9 @@ Read [references/explainer-prompt.md](references/explainer-prompt.md) in full. T
 
 ### 3. Synthesize Complex Questions
 
-After the explorers return, launch one native Codex subagent:
+After the explorers return, resolve and launch `how_complex_explainer`:
 
-- Model: `gpt-5.6-sol`.
-- Reasoning effort: `high`.
+- Use the resolved runner, model, effort, and Fast setting exactly.
 - Start without inherited conversation history.
 - Read-only role; no delegation or file modification.
 
@@ -88,7 +86,7 @@ Build its prompt from [references/explainer-prompt.md](references/explainer-prom
 
 ### 4. Validate and Present
 
-The parent Codex agent retains final judgment. Check material file and symbol references, resolve demonstrable contradictions, and ensure the explanation distinguishes observed mechanics from inferred historical intent. Lightly edit for clarity without replacing the explainer's mental model.
+The parent agent retains final judgment. Check material file and symbol references, resolve demonstrable contradictions, and ensure the explanation distinguishes observed mechanics from inferred historical intent. Lightly edit for clarity without replacing the explainer's mental model.
 
 Use this structure as relevant:
 
@@ -130,15 +128,15 @@ Record `git status --short` before launching critics so unexpected mutations can
 
 ### 3. Run Critics Concurrently
 
-| Critic | Execution |
+| Critic | Assignment |
 |---|---|
-| Critic A | Claude Fable 5.1, `xhigh`, through the `claude-code` skill |
-| Critic B | GPT-5.6 Sol, `xhigh`, through Codex's native subagent tool |
+| Critic A | Resolved `how_critic_a` |
+| Critic B | Resolved `how_critic_b` |
 
-1. Read [Claude Code](../claude-code/SKILL.md) in full. Write the shared prompt to a temporary file outside the repository, create a temporary output directory, and start its launcher with `--model claude-fable-5-1 --effort xhigh` in a managed terminal session.
-2. Immediately spawn the native critic with `model: gpt-5.6-sol`, `reasoning_effort: xhigh`, no inherited conversation context, and the exact same prompt.
-3. Let both critics run concurrently under the operating boundary. Monitor Fable through its process and artifact stream; wait sparingly on the native agent.
-4. Read Fable's verified `claude.result.md` and `summary.json`, and capture the native Sol final report.
+1. Resolve both critic roles and confirm both configured runners are callable.
+2. Launch both immediately with no inherited conversation context and the exact same prompt. For a `claude-code` assignment, read [Claude Code](../claude-code/SKILL.md) in full and pass the resolved model and effort explicitly.
+3. Let both critics run concurrently under the operating boundary. Monitor each through its configured process or native agent status.
+4. Capture each complete report and its available model provenance before closing native agents.
 5. Recheck `git status --short`. If a critic changed the repository, do not accept, revert, or hide the changes automatically. Report the mutation and exclude the violating result.
 
 If one critic fails, inspect its failure once, preserve the concrete blocker, and continue with a clearly degraded panel. If both fail, stop the critique and return the explanation plus the blockers.
