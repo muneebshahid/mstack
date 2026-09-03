@@ -93,14 +93,13 @@ effort = "low"
 fast = true
 
 [roles.skill_eval_smoke_judge]
-runner = "claude-code"
-model = "haiku"
+runner = "codex-native"
+model = "gpt-5.6-luna"
 effort = "low"
-fast = false
+fast = true
 
 [roles.consultant_default]
 runner = "claude-code"
 model = "claude-fable-5-1"
 effort = "xhigh"
 fast = false
-

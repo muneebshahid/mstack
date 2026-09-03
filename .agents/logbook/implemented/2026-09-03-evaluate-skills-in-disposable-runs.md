@@ -15,7 +15,7 @@ Evaluation without a revision runs the current skill against realistic acceptanc
 
 Use host-native fresh subagents for leaf skills. When the skill under test must itself spawn native agents, use one top-level ephemeral `codex exec --json` candidate process inside the disposable repository. That candidate may use native subagents but must not launch another Codex process.
 
-Execution smoke tests may temporarily substitute Luna `low` Fast and Claude Haiku `low` to verify mechanics cheaply. Quality evaluation uses the production models and settings. A blinded Claude judge reads one common temporary evidence root; launcher metadata stays outside that root so it cannot reveal candidate identity.
+Execution smoke tests use dedicated cheap roles rather than production assignments. The packaged `multimodel` and `codex` profiles map both candidate and judge to Luna `low` with Fast; the `claude-code` profile maps both to Haiku `low`. Quality evaluation uses the production models and settings. A blinded judge reads one common temporary evidence root; launcher metadata stays outside that root so it cannot reveal candidate identity.
 
 ## Alternatives considered
 

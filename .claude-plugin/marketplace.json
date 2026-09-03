@@ -9,7 +9,7 @@
     {
       "name": "mstack",
       "description": "Rigorous engineering workflows, reusable principles, and multi-model review for coding agents.",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "source": "./",
       "author": {
         "name": "Muneeb",
