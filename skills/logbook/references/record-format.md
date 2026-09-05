@@ -1,88 +1,45 @@
 # Logbook record format
 
-Store records at:
+Store records at `.agents/logbook/{proposed,implemented,rejected}/YYYY-MM-DD-topic-title.md`. Use the date the topic was first recorded and keep it across lifecycle moves. Filename topics are lowercase and hyphenated.
 
-```text
-.agents/logbook/{proposed,implemented,rejected}/YYYY-MM-DD-topic-title.md
-```
-
-The date is when the durable topic was first recorded. Keep that date when moving a record between lifecycles. Use a short lowercase hyphenated topic title.
-
-The first five lines are:
+The header has this exact layout, including the blank line after `Kind`:
 
 ```markdown
 # Logbook: <title>
 
-Status: proposed
+Status: implemented
 Kind: architecture
 
 ```
 
-`Status` must match the lifecycle folder. `Kind` is one of:
+`Status` matches the folder. `Kind` is `architecture`, `behavior`, `bug-fix`, `simplification`, `process`, or `testing`.
 
-- `architecture`
-- `behavior`
-- `bug-fix`
-- `simplification`
-- `process`
-- `testing`
-
-Use this body for `proposed` and `rejected` records:
+Keep these sections in order. For proposed and rejected records, replace `Decision` with `Proposal`.
 
 ```markdown
 ## Problem
 
-The durable problem or pressure, stated without assuming the proposal.
-
-## Proposal
-
-The concrete direction that is being considered or was rejected.
-
-## Alternatives considered
-
-Only genuine alternatives and why each lost or remained unresolved.
-
-## Evidence
-
-Observed code, tests, incidents, measurements, tickets, prototypes, or verification relevant to the choice. Name gaps.
-
-## Consequences
-
-What the proposal buys, costs, constrains, or deliberately gives up.
-
-## Revisit when
-
-Concrete observations, invalidation signals, or changed constraints that justify reopening the decision.
-```
-
-Use this body for `implemented` records:
-
-```markdown
-## Problem
-
-The durable problem or pressure, stated without assuming the decision.
+The problem or question, without assuming the solution.
 
 ## Decision
 
-Present-tense shipped reality. Name the owner, boundary, contract, or mechanism precisely enough to guide later work without duplicating an implementation inventory.
+The accepted result and its rationale. Distinguish realized changes and verified conclusions from pending recommendations.
 
 ## Alternatives considered
 
-Only genuine alternatives and why each lost.
+What was actually considered, accepted or rejected, and why. State when no alternatives were considered or the historical record is unavailable.
 
 ## Evidence
 
-The implementation and fresh verification that support the record. Link repository paths relatively when useful and name remaining gaps.
+Consequential work performed, verification, and gaps. Distinguish observations from interpretation and uncertainty. Include agent attribution or session references when useful and available. Link repository files relatively.
 
 ## Consequences
 
-What the decision buys, costs, constrains, or deliberately gives up.
+Benefits, costs, constraints, and capabilities given up.
 
 ## Revisit when
 
-Concrete observations, invalidation signals, or changed constraints that justify reopening the decision.
+Concrete evidence or changed constraints that would reopen the topic.
 ```
 
-Additional technical sections are allowed between the primary `Proposal` or `Decision` section and `Alternatives considered` when they materially clarify a contract, schema, flow, or migration. Do not append chronological updates. Keep current factual realization in place and let version control carry chronology.
-
-For a rejected record, state the rejection and its evidence in the existing sections. Retain it only while the rationale prevents a plausible mistake. For a superseded implemented decision, create the replacement record and cross-link both; never rewrite the old rationale into its opposite.
+A Proposal states the direction under consideration or declined; a rejected record explains the verdict and evidence. Optional technical sections may follow Decision or Proposal before Alternatives considered. Update facts in place; do not append dated Update sections or command logs. Preserve historical rationale when superseding a record, and cross-link its replacement.

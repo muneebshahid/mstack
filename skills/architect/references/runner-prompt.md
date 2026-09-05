@@ -1,6 +1,6 @@
 # Architect candidate prompt
 
-You are producing one candidate design inside Architect's Arena. Read the Architect skill, every explicitly supplied principle skill, this prompt, the design red flags, and the rationale template completely before designing.
+You are producing one candidate design inside Architect's Arena. Read the Architect skill, every explicitly supplied canonical principle reference, this prompt, the design red flags, and the rationale template completely before designing.
 
 Return one candidate design package: caller usage, core types and data structures, signatures, module map, tricky-flow pseudocode, at least one useful dependency or runtime-flow diagram, and a prose rationale shaped by the supplied template.
 
@@ -18,6 +18,6 @@ Return one candidate design package: caller usage, core types and data structure
 - **Low reader load.** Flatten pass-through layers and call chains that force ordinary tracing across more than three files or layers.
 - **Implementation feedback.** Distinguish load-bearing decisions from adaptable details. Identify the highest-risk load-bearing assumption and put the smallest practical end-to-end unit that tests it first in the handoff. Name concrete runtime, type, ownership, dependency, and repeated-friction evidence that would prove this candidate wrong during implementation.
 
-An explicitly designated temporary design sketch may use `TODO` comments or `TODO` pseudocode only inside intentionally unimplemented bodies. Do not put the sketch in project source. Do not use doc comments, rationale comments, suppressions, warnings, or historical prose in the sketch. Put intent and invariants in names, types, signatures, and the separate rationale. Every TODO marks non-executable design material for the later Implement workflow.
+Apply [Source Style](../../apply-principles/references/source-style.md) to sketches. Express contracts through types and signatures; describe unimplemented behavior and rationale in separate prose. Keep sketches outside project source.
 
 Produce the best coherent design your model can make. Do not hedge toward the other candidate or offer a menu instead of one shape. Differences between whole designs are the signal Arena needs.

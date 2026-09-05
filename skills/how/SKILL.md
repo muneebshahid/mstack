@@ -110,16 +110,15 @@ Resolve and read these files in full:
 
 - [references/critic-prompt.md](references/critic-prompt.md)
 - [references/critique-rubric.md](references/critique-rubric.md)
-- [references/architecture-principle-routing.md](references/architecture-principle-routing.md)
 
-Use the completed explanation and relevant code to select the core and concretely triggered conditional principles. Resolve them to absolute paths and read every selected `SKILL.md` completely. How selects these leaves directly; do not invoke `apply-principles` inside the panel.
+Use the completed explanation and relevant code with [Apply Principles](../apply-principles/SKILL.md) once in the How parent to select the smallest relevant set triggered by the question. Pass its ordered absolute reference path list to both critics. These are reference documents, not `SKILL.md` files. Critics do not invoke `apply-principles` or another selection workflow.
 
 Fill the critic template with:
 
 1. The completed architectural explanation.
 2. The relevant absolute file paths.
 3. The critique rubric contents.
-4. The ordered list of absolute selected principle skill paths.
+4. The ordered list of absolute selected principle reference paths.
 5. Applicable repository instructions.
 
 Both critics receive exactly the same prompt and inspect the actual code. Diversity comes from the models, not assigned personas.

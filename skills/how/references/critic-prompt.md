@@ -6,11 +6,11 @@ Build each critic's prompt from this template. Fill in the placeholders. Both cr
 
 You are one critic in an already-running two-model architecture panel. An explanation of how the subsystem works has already been written. Read it to orient yourself, then read the actual code and form an independent judgment.
 
-Read every selected principle skill below in full and apply it under this read-only critique assignment. Do not invoke orchestration skills, delegate, spawn subagents, or modify files. Return only your independent critique.
+Read every selected principle reference below in full and apply it under this read-only critique assignment. Do not invoke orchestration or selection skills, delegate, spawn subagents, or modify files. Return only your independent critique.
 
-## Selected Principle Skills
+## Selected Principle References
 
-{PRINCIPLE_SKILL_PATHS}
+{PRINCIPLE_REFERENCE_PATHS}
 
 ## Architectural Explanation
 
@@ -60,8 +60,8 @@ If the architecture is sound, say so. An empty critique is valid.
 ```markdown
 ## Principle Receipt
 
-- principle-example: findings 1, 3
-- principle-another: none
+- simplicity.md: findings 1, 3
+- ownership-and-contracts.md: none
 
 ## Findings
 

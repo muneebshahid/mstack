@@ -44,7 +44,7 @@ Launch both reviewers concurrently.
 
 Read [MStack runtime model resolution](../setup-mstack/references/runtime-resolution.md) in full and resolve both reviewer assignments before building the launch plan.
 
-Read [references/principle-routing.md](references/principle-routing.md) in full. Resolve the core and concretely triggered conditional principles to absolute filesystem paths, then read every selected `SKILL.md` completely. Interrogate selects these leaves directly; do not invoke `apply-principles` inside the panel.
+Use [Apply Principles](../apply-principles/SKILL.md) once in the Interrogate parent to select the smallest relevant set triggered by the review. Pass its ordered absolute reference path list to both reviewers. These are reference documents, not `SKILL.md` files. Reviewers do not invoke `apply-principles` or another selection workflow.
 
 Read `references/reviewer-prompt.md` and fill in the template with:
 1. The frozen scope manifest
@@ -52,13 +52,13 @@ Read `references/reviewer-prompt.md` and fill in the template with:
 3. The requirements context
 4. The exact diff or file package
 5. The review rubric from `references/rubric.md`
-6. The ordered list of absolute selected principle skill paths
+6. The ordered list of absolute selected principle reference paths
 
 Prepend this execution guard:
 
-> You are one reviewer in an already-running two-model panel. Read every explicitly provided principle skill and apply it under this read-only review assignment. Do not invoke orchestration skills, delegate, spawn subagents, or modify files. Inspect the supplied code and return only your independent review.
+> You are one reviewer in an already-running two-model panel. Read every explicitly provided principle reference and apply it under this read-only review assignment. Do not invoke orchestration or selection skills, delegate, spawn subagents, or modify files. Inspect the supplied code and return only your independent review.
 
-The same filled template goes to both reviewers, so every model applies the same selected principles. Provide filesystem paths rather than copying the skills into the prompt. Include applicable repository instructions because an external runner may not inherit project customizations. Keep secrets and unrelated content out of the prompt.
+The same filled template goes to both reviewers, so every model applies the same selected references. Provide filesystem paths rather than copying the documents into the prompt. Include applicable repository instructions because an external runner may not inherit project customizations. Keep secrets and unrelated content out of the prompt.
 
 Before launching, record the repository's current `git status --short` so unexpected mutations can be detected.
 

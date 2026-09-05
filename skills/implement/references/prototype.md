@@ -6,24 +6,24 @@ Use this mode when a disposable experiment can settle an observable uncertainty 
 
 - State the exact layout, interaction, behavior, timing, performance, or technical fork the prototype must decide.
 - Define the observation that would favor each option. If no decision depends on the result, do not prototype; use [Feature](feature.md).
-- For user or caller experience, read [Experience First](../../principle-experience-first/SKILL.md) and evaluate from that user's seat.
+- For user or caller experience, read [Design Decisions](../../apply-principles/references/design-decisions.md) and evaluate from that user's seat.
 
 ## 2. Explore cheaply
 
-- Read [Exhaust the Design Space](../../principle-exhaust-the-design-space/SKILL.md). Build two or three genuinely different variants at the cheapest fidelity that exposes the tradeoff. One design with cosmetic flavors does not count.
+- Use [Design Decisions](../../apply-principles/references/design-decisions.md) to build the genuinely different variants required by the calling workflow at the cheapest fidelity that exposes the tradeoff. One design with cosmetic flavors does not count.
 - Default to a fresh operating-system temporary directory outside the repository. Use the lightest suitable artifact: a small visual mock, script, benchmark, replay, or switchable set of variants. If the user explicitly requires repository-local placement, use a path that is ignored and excluded from builds, imports, packaging, and test discovery.
-- Read [Subtract Before You Add](../../principle-subtract-before-you-add/SKILL.md) and the Laziness Protocol in [Minimize Reader Load](../../principle-minimize-reader-load/SKILL.md). Minimize the instrument and setup, not the number of meaningful alternatives.
-- Apply [No Comments](../../principle-no-comments/SKILL.md). Throwaway status does not require commented code or rationale; keep rationale in the prototype report.
+- Read [Simplicity](../../apply-principles/references/simplicity.md). Minimize the instrument and setup, not the number of meaningful alternatives.
+- Apply [Source Style](../../apply-principles/references/source-style.md). Throwaway status does not require commented code or rationale; keep rationale in the prototype report.
 - Do not add production abstractions, compatibility, migrations, generalized types, defensive layers, or a test suite unless one of those is the property being tested. A prototype is not a low-quality first draft of the final implementation.
 
 ## 3. Observe the real question
 
-- Read [Prove It Works](../../principle-prove-it-works/SKILL.md), interpreting proof as direct observation of the decision variable.
+- Read [Verification](../../apply-principles/references/verification.md), interpreting proof as direct observation of the decision variable.
 - For visual or interaction work, render and drive each variant and capture comparable screenshots or recordings.
 - For behavioral, runtime, or performance work, log or print the relevant output, timing, state transition, or trace. Assertions are optional; the observation is the evidence.
 - Keep inputs and conditions comparable across variants. Record uncertainty and observer effects rather than smoothing them away.
 
-If repetition or measurement error makes a tiny rerunnable harness worthwhile, apply [Build the Lever](../../principle-build-the-lever/SKILL.md); the harness should remain smaller than the uncertainty it resolves.
+If repetition or measurement error makes a tiny rerunnable harness worthwhile, apply [Automation and Learning](../../apply-principles/references/automation-and-learning.md); the harness should remain smaller than the uncertainty it resolves.
 
 ## 4. Decide and hand off
 

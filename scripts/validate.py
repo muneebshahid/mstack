@@ -49,7 +49,8 @@ def repository_files() -> list[Path]:
         capture_output=True,
         check=True,
     )
-    return [ROOT / value.decode() for value in completed.stdout.split(b"\0") if value]
+    paths = [ROOT / value.decode() for value in completed.stdout.split(b"\0") if value]
+    return [path for path in paths if path.exists()]
 
 
 def frontmatter(text: str, path: Path) -> dict[str, str]:
@@ -221,6 +222,18 @@ def validate_tests() -> None:
             "skills/codex/scripts",
             "-p",
             "test_run_codex.py",
+        ]
+    )
+    run(
+        [
+            sys.executable,
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "scripts",
+            "-p",
+            "test_validate.py",
         ]
     )
     run(

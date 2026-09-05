@@ -1,6 +1,6 @@
 interface:
   display_name: "Logbook"
-  short_description: "Capture durable engineering decisions and tradeoffs"
-  default_prompt: "Use $logbook to capture or refresh this repository's durable decision record."
+  short_description: "Record work, decisions, reviews, and evidence"
+  default_prompt: "Use $logbook to capture or refresh records of this work, its decisions, review outcomes, and evidence."
 policy:
   allow_implicit_invocation: false

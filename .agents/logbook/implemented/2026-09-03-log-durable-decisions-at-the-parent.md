@@ -11,6 +11,8 @@ Code and ordinary documentation show the current state but often lose why a dire
 
 Keep repository-local records under `.agents/logbook/` with explicit `proposed`, `implemented`, and `rejected` lifecycle states. Record durable architecture, behavior, bug-fix, simplification, process, and testing decisions when future maintainers could otherwise relitigate them.
 
+[Record Agent Work](2026-09-05-tighten-principles-and-record-agent-work.md) broadens this original capture threshold to non-trivial changes and meaningful investigation or review outcomes. Parent authorship and the flat lifecycle layout remain in effect.
+
 During `implement`, only the parent decides whether a decision deserves a record and writes or updates it. Luna may include rationale, alternatives, and evidence in its unit report, but it does not edit the Logbook. Failed exploratory units are evidence only; they do not become implemented decisions unless the parent adopts a resulting direction.
 
 ## Alternatives considered
@@ -25,7 +27,7 @@ During `implement`, only the parent decides whether a decision deserves a record
 - `skills/logbook/references/record-format.md`
 - `skills/implement/SKILL.md`
 - `skills/implement/references/implementation-worker.md`
-- `skills/principle-no-comments/SKILL.md`
+- `skills/apply-principles/references/source-style.md`
 
 This record reconstructs the decision from the installed stack because version control begins with this public repository.
 

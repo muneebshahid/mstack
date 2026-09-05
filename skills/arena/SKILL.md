@@ -16,7 +16,7 @@ Arena is a read-only orchestration workflow, not mutation authority. Keep candid
 - Skip it for mechanical work, clear precedent, tightly constrained fixes, or choices whose constraints leave one viable shape.
 - Candidates work independently and do not see one another's output.
 - Candidates do not edit the project, commit, push, mutate external systems, or delegate.
-- An artifact explicitly designated as a temporary pre-implementation design sketch may contain `TODO` comments or `TODO` pseudocode marking intentionally unimplemented bodies. It is not completed source, and every such comment must be removed when implementation fills the body.
+- Apply [Source Style](../apply-principles/references/source-style.md) to source sketches. Use types and signatures for contracts and separate prose for unimplemented behavior.
 - Preserve candidate dropouts, capability failures, disagreements, and rejected alternatives in the synthesis record.
 
 ## 1. Frame

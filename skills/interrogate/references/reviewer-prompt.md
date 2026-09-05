@@ -32,17 +32,17 @@ Do not expand the review into excluded surfaces. You may read surrounding code t
 
 {RUBRIC_CONTENTS}
 
-## Selected Principle Skills
+## Selected Principle References
 
-Read every skill file below in full and apply it under this read-only review assignment:
+Read every reference document below in full and apply it under this read-only review assignment:
 
-{PRINCIPLE_SKILL_PATHS}
+{PRINCIPLE_REFERENCE_PATHS}
 
-Do not invoke `apply-principles` or another orchestration skill. The parent already selected the leaves. Do not modify files.
+Do not invoke `apply-principles` or another orchestration or selection skill. The parent already selected the references. Do not modify files.
 
 ## Instructions
 
-Review the code through every relevant lens in the rubric and selected principles. Do not force lenses that do not apply. A simple bug fix does not need paragraphs about architectural integrity.
+Review the code through every relevant lens in the rubric and selected references. Do not force lenses that do not apply. A simple bug fix does not need paragraphs about architectural integrity.
 
 For each finding, provide:
 
@@ -73,13 +73,13 @@ For each finding, provide:
 
 ## Output
 
-Return a principle receipt followed by your findings. For each selected principle, name the finding IDs it produced or say `none`. If you have zero findings, say so. An empty review is a valid outcome.
+Return a principle receipt followed by your findings. For each selected reference, name the finding IDs it produced or say `none`. If you have zero findings, say so. An empty review is a valid outcome.
 
 ```
 ## Principle Receipt
 
-- principle-example: findings 1, 3
-- principle-another: none
+- simplicity.md: findings 1, 3
+- ownership-and-contracts.md: none
 
 ## Findings
 

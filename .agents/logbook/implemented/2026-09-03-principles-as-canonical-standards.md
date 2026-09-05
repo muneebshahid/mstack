@@ -3,6 +3,8 @@
 Status: implemented
 Kind: architecture
 
+The separate-leaf packaging below is superseded by [Consolidate Principles as Selective References](2026-09-05-consolidate-principles-as-references.md). The original paths in this record identify the arrangement at repository revision `3d6a64d`; they are historical evidence, not current skill locations.
+
 ## Problem
 
 Large code-quality and architecture-review skills repeated overlapping guidance. Their rules could conflict, drift, or be applied wholesale when only a few standards were relevant.
@@ -11,7 +13,7 @@ Large code-quality and architecture-review skills repeated overlapping guidance.
 
 Represent engineering standards as small `principle-*` skills. Each leaf owns one rule and states when it applies. `apply-principles` is a router for broad judgment; workflows that already know their required standards load the relevant leaves directly.
 
-Architecture and review workflows may select principles, but they do not restate or weaken them. The current stack keeps twenty leaves covering structure, simplicity, correctness, execution, product design, and source style.
+Architecture and review workflows may select principles, but they do not restate or weaken them. At the time of this decision, the stack kept twenty leaves covering structure, simplicity, correctness, execution, product design, and source style.
 
 ## Alternatives considered
 

@@ -14,7 +14,7 @@ Signs:
 - Public options expose internal stages or implementation choices.
 - Learning the interface does not save the caller from learning the implementation.
 
-Apply `principle-minimize-reader-load`.
+Apply [Simplicity](../../apply-principles/references/simplicity.md).
 
 ## Information leakage
 
@@ -22,7 +22,7 @@ Information leakage makes several modules depend on the same internal decision. 
 
 Public re-exports of transport or wire types are leakage. Parse external data into domain types behind the interface. Keep storage schemas, framework objects, and protocol details private.
 
-Apply `principle-boundary-discipline`, `principle-clear-ownership`, and, when source dependencies are involved, `principle-dependency-direction`.
+Apply [Ownership and Contracts](../../apply-principles/references/ownership-and-contracts.md).
 
 ## Temporal decomposition
 
@@ -30,7 +30,7 @@ Temporal decomposition organizes modules by execution order instead of the knowl
 
 Group code around domain knowledge and ownership. Methods that run at different times can still belong to one module when they protect the same decisions.
 
-Apply `principle-model-the-domain` and `principle-clear-ownership`.
+Apply [Modeling and Types](../../apply-principles/references/modeling-and-types.md) and [Ownership and Contracts](../../apply-principles/references/ownership-and-contracts.md).
 
 ## Pass-through method
 
@@ -38,4 +38,4 @@ A pass-through method forwards the same arguments to another method with the sam
 
 Remove it or move responsibility to the module that can complete the operation. Keep a forwarding boundary only when it adds policy, adaptation, or a distinct abstraction.
 
-Apply `principle-minimize-reader-load` and `principle-dependency-direction`.
+Apply [Simplicity](../../apply-principles/references/simplicity.md) and [Ownership and Contracts](../../apply-principles/references/ownership-and-contracts.md).

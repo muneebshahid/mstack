@@ -18,7 +18,7 @@ You are one independent candidate in a multi-model Arena. Produce the strongest 
 - Optimize the whole artifact rather than accumulating locally attractive ideas.
 - Surface assumptions, unresolved questions, and capability or tool failures.
 - Work read-only against the project and return the artifact in your final response. Do not create project or temporary files yourself.
-- Temporary design sketches may use `TODO` comments or `TODO` pseudocode solely to mark intentionally unimplemented bodies. Do not use comments for rationale, history, suppressions, or explanations that belong in the accompanying artifact.
+- Apply [Source Style](../../apply-principles/references/source-style.md) to source sketches. Put rationale and unimplemented behavior in accompanying prose.
 
 Return:
 

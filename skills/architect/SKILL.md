@@ -12,7 +12,7 @@ Design without implementing. Ground the systems the change touches, sketch calle
 Architect is explicit-only and always read-only, even when the outer request also authorizes implementation. It must not edit project files, create a worktree, implement a prototype, commit, push, deploy, or mutate external systems.
 
 - Temporary prompts and candidate artifacts stay outside the repository.
-- Diagrams, usage sketches, type signatures, module maps, and TODO pseudocode are design artifacts, not source changes.
+- Diagrams, usage sketches, type signatures, module maps, and pseudocode are design artifacts, not source changes.
 - Persist a rationale or diagram only when the user separately asks for a file; persistence does not authorize source implementation.
 - If executable evidence is needed to choose an architecture, recommend a bounded [Implement Prototype](../implement/references/prototype.md) task and stop. A later Architect run may consume that prototype evidence.
 
@@ -24,7 +24,7 @@ Build a real mental model of every system the new code touches. Naming files is 
 
 1. Read the [How skill](../how/SKILL.md) completely and run its Explain mode over the relevant subsystems. Use How Critique only when the caller asks for critique or the current structure itself is a contested constraint.
 2. Produce the traced model How prescribes: current purpose, runtime flow, ownership, data and invariants, boundaries, side effects, failure behavior, and relevant files.
-3. When `.agents/logbook/` exists, search its implemented records for decisions governing the affected subsystem and read relevant proposed or rejected records only when they illuminate active alternatives. Treat current code and tests as authority for mechanics; records preserve stated rationale and tradeoffs. Architect never writes or moves a record.
+3. When `.agents/logbook/` exists, search relevant records for prior work, decisions, and investigation or review outcomes, including useful rejected alternatives. Treat current code and tests as authority for mechanics; records preserve stated rationale and tradeoffs. Architect never writes or moves a record.
 4. Read and run [Why](../why/SKILL.md) when the design would redefine established ownership, layering, contracts, or a non-obvious constraint whose historical rationale may still matter. Do not run Why merely because old code exists.
 5. Skip grounding only for genuinely greenfield work with no surrounding system, contract, or repository convention to integrate.
 
@@ -32,9 +32,9 @@ Turn the grounding into explicit design constraints. Separate observed constrain
 
 ## Select design principles
 
-Read [references/principle-routing.md](references/principle-routing.md). Resolve every selected principle to its absolute `SKILL.md` path and read it completely. Select the core leaves plus only conditionals concretely triggered by the task. Pass the exact same ordered path list to every Arena candidate.
+After grounding, use [Apply Principles](../apply-principles/SKILL.md) once in the Architect parent to select the smallest relevant set triggered by the design. Pass its ordered absolute reference path list to every Arena candidate. These are reference documents, not `SKILL.md` files.
 
-Architect selects leaves directly; do not ask candidates to invoke `apply-principles` or other orchestration skills.
+Candidates receive the parent-selected references directly. Do not ask them to invoke `apply-principles` or any other orchestration or selection workflow.
 
 ## Phase B: Sketch through Arena
 
@@ -53,7 +53,7 @@ Build Arena's common candidate prompt from its own candidate template plus the A
 - The exact requested outcome and read-only design authority.
 - The grounding model and unresolved evidence gaps.
 - Relevant project paths and repository instructions.
-- The ordered selected principle paths.
+- The ordered selected reference paths.
 - The design red flags and rationale template.
 
 Each candidate produces one design package. “Caller usage first” means usage is designed before core data structures, types, and Shape; the final rationale may still open with its short Problem paragraph for readability. Follow usage with function or method signatures, module map, tricky-flow pseudocode, at least one useful dependency or runtime-flow diagram, and rationale.
@@ -93,7 +93,7 @@ Shape the design so [Implement](../implement/SKILL.md) can execute it without si
 4. Define specific invalidation signals. Include any single observation that contradicts caller usage, an invariant owner, a boundary, dependency direction, shared-state assumptions, or failure policy. Also include repeated friction such as the same workaround, escape hatch, special case, or unplanned coordination appearing in two independent places or units.
 5. State the evidence Implement must return when a deviation occurs: affected unit and symbols, expected versus required shape, failed check or runtime observation, and whether the worker believes the issue is local or architectural.
 6. Keep the sequence roughly 400–500 changed lines per unit when practical; treat roughly 1,000 changed lines as a decomposition signal, not a hard cap.
-7. Return note-ready Logbook material when the selected architecture is decision-bearing: the problem, accepted decision, genuine alternatives considered and why they lost, expected evidence, consequences, and revisit or invalidation signals. This is input to Implement, not a repository write or an instruction to record every design.
+7. Return [Logbook](../logbook/SKILL.md) material for substantial design work: what was investigated, the selected design, accepted and rejected reasoning, evidence and gaps, consequences, and revisit signals. Distinguish expected implementation evidence from observations already verified. The implementation parent authors the record; Architect remains read-only.
 
 The handoff is a decision boundary, not an immutable plan. Implement may adapt explicitly flexible details. It must pause and return to Architect when observed evidence contradicts a load-bearing decision or matches an invalidation signal. A fresh Architect run consumes that evidence and may retain, amend, or replace the design.
 
@@ -108,4 +108,4 @@ Return:
 - The synthesized design package shaped by [references/rationale-template.md](references/rationale-template.md).
 - Arena's synthesis record.
 - A read-only implementation contract: ordered verifiable units, adaptable details, load-bearing decisions, invalidation signals, deviation-evidence requirements, and remaining risks.
-- Note-ready Logbook material when the selected architecture meets the decision-bearing threshold, or a brief statement that no durable record is warranted.
+- Logbook material for substantial design work and meaningful investigation outcomes, including accepted and rejected reasoning and evidence gaps.

@@ -69,8 +69,8 @@ Model slugs and effort levels in the selected profile describe the requested top
 | `interrogate` | Adversarial multi-model code review | Two configured reviewers work independently; parent verifies, deduplicates, and categorizes findings |
 | `skill-eval` | Test an existing skill or compare it with a proposed revision | Disposable scenarios and a configured blinded judge; dedicated cheap assignments are used only for execution smoke tests |
 | `teach` | Explain what something is, how it works, and why | Composes `how` and `why` into one account |
-| `apply-principles` | Select engineering standards for a broad task | Routes to the smallest relevant set of canonical `principle-*` leaves |
-| `logbook` | Preserve durable engineering decisions | Records rationale, alternatives, evidence, consequences, and revisit conditions in `.agents/logbook/` |
+| `apply-principles` | Select engineering standards for a broad task | Routes to the smallest relevant set of canonical reference documents |
+| `logbook` | Preserve non-trivial work and meaningful investigation outcomes | Records work, accepted and rejected reasoning, verification, and gaps in `.agents/logbook/` |
 
 ## Focused skills
 
@@ -89,18 +89,22 @@ Model slugs and effort levels in the selected profile describe the requested top
 
 ## Engineering principles
 
-The `principle-*` skills are canonical leaves. Workflows load only the leaves triggered by the task.
+The canonical engineering standards live in ten references under [`skills/apply-principles/references/`](skills/apply-principles/references/). [`apply-principles`](skills/apply-principles/SKILL.md) selects only the references triggered by the task:
 
-- Structure: boundary discipline, clear ownership, dependency direction, domain modeling, and separation before serializing shared state.
-- Simplicity: minimize reader load, subtract before adding, redesign from first principles, and migrate callers before deleting legacy APIs.
-- Correctness: fix root causes, prove the real artifact works, use type-system discipline, and make retryable operations idempotent.
-- Execution: sequence verifiable units, optimize for the intended outcome, build small automation levers, and encode recurring lessons in structure.
-- Product and design: put experience first and exhaust the design space when consequential choices have multiple viable shapes.
-- Source style: completed owned source contains no human-authored comments; temporary architecture scaffolds may use `TODO` comments or pseudocode until implementation fills them.
+- [Simplicity](skills/apply-principles/references/simplicity.md)
+- [Modeling and Types](skills/apply-principles/references/modeling-and-types.md)
+- [Ownership and Contracts](skills/apply-principles/references/ownership-and-contracts.md)
+- [Concurrency and Retries](skills/apply-principles/references/concurrency-and-retries.md)
+- [Delivery and Migration](skills/apply-principles/references/delivery-and-migration.md)
+- [Diagnosis](skills/apply-principles/references/diagnosis.md)
+- [Verification](skills/apply-principles/references/verification.md)
+- [Design Decisions](skills/apply-principles/references/design-decisions.md)
+- [Automation and Learning](skills/apply-principles/references/automation-and-learning.md)
+- [Source Style](skills/apply-principles/references/source-style.md)
 
 ## Repository decisions
 
-Durable decisions live in [`.agents/logbook/`](.agents/logbook/). The first records reconstruct the major decisions that produced this stack. Future changes should update the relevant record or add a new one when they change architecture, behavior, process, testing policy, or a costly-to-reverse convention.
+Records live in [`.agents/logbook/`](.agents/logbook/). The first records reconstruct the major decisions that produced this stack. Every non-trivial change adds or updates a relevant record; meaningful investigation and review outcomes belong there too, including rejected suggestions and their evidence. [Logbook](skills/logbook/SKILL.md) defines the mechanical/local exemptions and parent authorship.
 
 ## Origins and licensing
 

@@ -14,7 +14,7 @@ Design this before Shape and before choosing the final types, although the compl
 
 Present data structures first, then signatures, module map, and data flow. Name load-bearing decisions, invariant owners, validation boundaries, dependency direction, side effects, and failure policy. State what the system deliberately does not do.
 
-Judge interface depth explicitly: what complexity the public surface hides, what remains exposed, and why the interface is no larger than needed. Cite selected principle IDs behind decisions without restating the principles.
+Judge interface depth explicitly: what complexity the public surface hides, what remains exposed, and why the interface is no larger than needed. Cite selected reference names behind decisions without restating the standards.
 
 ## Diagrams
 
