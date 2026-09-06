@@ -33,7 +33,7 @@ This record reconstructs the decision from the installed stack because version c
 
 ## Consequences
 
-Why investigations can use decision records as evidence while checking current mechanics against code and history. Repository changes that establish a durable decision should update the record in the same implementation unit when practical. The Logbook remains curated rather than exhaustive.
+Explain rationale investigations can use decision records as evidence while checking current mechanics against code and history. Repository changes that establish a durable decision should update the record in the same implementation unit when practical. The Logbook remains curated rather than exhaustive.
 
 ## Revisit when
 

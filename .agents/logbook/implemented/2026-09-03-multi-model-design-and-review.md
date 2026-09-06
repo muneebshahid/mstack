@@ -13,9 +13,9 @@ Use multi-model panels only where a wrong result is consequential enough to repa
 
 `arena` uses two independently configured candidate roles and a separately configured cross-judge. The parent reads every candidate, selects the base, grafts only compatible strengths, and produces the final synthesis.
 
-`interrogate` replaces a separate general code-review workflow. Two configured reviewers receive the same diff, intent, rubric, and selected principles. The parent verifies high-severity claims against reachable code, deduplicates by causal defect, and classifies findings rather than aggregating every suggestion.
+`interrogate` replaces a separate general code-review workflow. Two configured reviewers receive the same diff or file package, intent, rubric, and selected principles. The parent verifies high-severity claims against reachable code, deduplicates by causal defect, and classifies findings rather than aggregating every suggestion.
 
-How's critique mode uses two configured critics after first establishing how the subsystem currently works. The packaged `multimodel` profile preserves the original Fable and Sol topology; the native-only profiles preserve independent model families where their host supports them.
+The original How critique panel is superseded by [Consolidate Explanations](2026-09-05-consolidate-explanations.md). Explain answers ordinary architecture questions; requested adversarial critique uses Interrogate's existing panel with a subsystem or design target. The packaged Codex and Claude profiles retain host-specific model assignments.
 
 ## Alternatives considered
 
@@ -29,8 +29,8 @@ How's critique mode uses two configured critics after first establishing how the
 - `skills/arena/SKILL.md`
 - `skills/interrogate/SKILL.md`
 - `skills/interrogate/references/lead-judgment.md`
-- `skills/how/SKILL.md`
-- `config/profiles/multimodel.toml`
+- `skills/explain/SKILL.md`
+- `config/profiles/codex-multimodel.toml` and `config/profiles/claude-multimodel.toml`
 
 This record reconstructs the decision from the installed stack because version control begins with this public repository.
 

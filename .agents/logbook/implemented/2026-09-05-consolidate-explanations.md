@@ -1,0 +1,49 @@
+# Logbook: Consolidate Explanations
+
+Status: implemented
+Kind: simplification
+
+## Problem
+
+How, Why, and Teach repeat investigation, synthesis, and presentation instructions. Their mandatory agent chains make narrow questions expensive, while fixed source sweeps and diagram sequences obscure the reader's actual question.
+
+## Decision
+
+Explain replaces the three entry points. Its source guidance covers mechanics, rationale, and recaps. After user review, the parent replaced detailed investigation procedures with a source menu: code, Git history, Logbook, issue trackers, project documents and discussions, service telemetry, deployment history, and incidents. The agent chooses relevant sources as it investigates. This makes evidence beyond code discoverable without requiring a fixed search sequence.
+
+The parent investigates and answers directly. Optional consulting uses existing model configuration for a bounded question. The seven How/Why roles, duplicate prompts, speculative connector playbooks, hardcoded personal source profile, and oversized output forms are removed.
+
+Preserve documented reasons versus inference, conflicting accounts, record status, and unavailable versus empty searches. Link useful files and records. Use diagrams when helpful, without fixed counts. The user subsequently required a stable response structure: Summary, Walkthrough, Implications, and Evidence and limits. Keep these headings consistent and scale their contents to the question.
+
+Keep ordinary placement judgment in Explain. Requested adversarial critique routes to Interrogate; its scope and judgment guidance now cover subsystems and unimplemented designs without requiring an introducing diff. Caller workflows select canonical principles rather than adding another architecture rubric to Explain.
+
+## Alternatives considered
+
+- Keep separate How, Why, and Teach workflows. Rejected because distinct evidence methods do not require separate public entry points or synthesis agents.
+- Add an Explain-specific consultant role. Rejected for now: consulting is optional and existing configuration already supplies it.
+- Move the old architecture rubric unchanged. Rejected because much of it duplicates canonical principles and encourages hypothetical future-change reviews.
+- Require per-claim confidence labels, one diagram, or mandatory Preserve / Change / Avoid / Risk closing labels. Rejected as presentation machinery; preserve uncertainty and relevant implementation constraints in natural language.
+- Keep detailed investigation steps and five confidence tiers. Removed after user review: the useful guidance is where to look beyond code, with concise rules for uncertainty and source access.
+- Leave response structure entirely open. Replaced after user review: the four-section template makes explanations predictable without restoring the old nine-section reports.
+
+## Evidence
+
+The parent inspected the entry points, historical-confidence guidance, callers, model registry, and Interrogate's file-target support. Fable High independently reviewed the three skill trees and migration dependencies; the launcher verified `claude-fable-5-1` with no capability failures. The parent accepted the single evidence-reference structure and the need to preserve subsystem critique, while rejecting additional roles and rigid output rules.
+
+This supersedes the orchestration in [Separate Mechanics From Historical Rationale](2026-09-03-separate-mechanics-from-rationale.md) and the separate How panel in [Model Diversity](2026-09-03-multi-model-design-and-review.md), preserving their evidence and independent-review principles. The approved implementation adds one skill and one evidence reference, repairs callers, removes the seven retired roles, and reuses existing model fixtures for retained roles. Repository validation passes with 19 skills. All changed skills pass the bundled validator. The parent made the edits directly under the user's explicit instruction, inspected the diff, and ran the repository checks.
+
+Fable High (`claude-fable-5-1`) reviewed the implementation and answered three fixture questions covering mechanics, missing rationale, and a recap. All used the four headings; the rationale stayed unknown, and the recap used a small diagram. The first pass also overstated caller consequences and prescribed an unrequested fix. The parent added a distinction between code facts, conditional risks, and design-quality judgments. A focused recap recheck separated concurrency risk and avoided fix prescriptions but still described an unused parameter as misleading; the final wording explicitly limits design-quality judgments to requested assessments. That last wording adjustment was inspected, not behaviorally retested. Both runs reported no capability failures. These are narrow probes, not a production-quality benchmark.
+
+Before the source-menu revision, the replacement Markdown totaled 912 words versus 14,993 in the three retired skills and their references. File-location guidance was retained despite a suggestion that it duplicated ownership: physical reading anchors help the user navigate the code. A suggested new finding category was unnecessary because Interrogate already supports pre-existing defects and residual risks.
+
+The parent subsequently applied Unslop and the user's source-selection feedback, shortening both Explain files while retaining the response template, useful diagrams, optional consultation, and requested Interrogate routing. The source examples describe when to investigate; no external sources were queried for this edit. Structural validation passed; the revised instructions were not behaviorally retested.
+
+At the user's request, the parent read the installed Show Me skill and merged its presentation guidance into Explain's Walkthrough: choose among pseudocode, call/component/file trees, diffs, Mermaid, and focused HTML; keep prose brief and visuals local to the point. The four response headings and source menu remain. The format table replaces repeated examples to keep the skill concise. HTML preview uses the available tool rather than a platform-specific shell command. The installed Show Me skill was not modified. Skill and Logbook validation passed; no model evaluation was run for this presentation edit.
+
+## Consequences
+
+Three entry points become one, and routine explanations require no delegated model. Caller links, model fixtures, setup examples, and historical record links migrate together. Existing user overrides for retired roles must be removed; README documents the migration. The four-section template is intentionally consistent, even for short explanations. The user's current preference for Claude Code consulting guides this editing session without becoming a permanent portable default.
+
+## Revisit when
+
+Direct investigation misses important evidence, recap explanations fail to restore the reader's mental model, or a specific source needs a maintained search procedure.

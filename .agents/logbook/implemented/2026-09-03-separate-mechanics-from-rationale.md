@@ -9,6 +9,8 @@ Code can establish what a system does, but it rarely proves why a design was cho
 
 ## Decision
 
+The separate entry points and agent topology below are historical at revision `f7efaf2`. [Consolidate Explanations](2026-09-05-consolidate-explanations.md) supersedes them while preserving the distinction between mechanics and historical rationale. Current guidance lives in [Explain](../../../skills/explain/SKILL.md).
+
 Use `how` for current mechanics, ownership, boundaries, data flow, failure behavior, and placement. Use `why` for design lineage, incidents, rejected alternatives, business constraints, and data-backed thresholds. Use `teach` when both views should become one explanation.
 
 For complex How requests, Luna `xhigh` Fast explorers cover independent system angles and Sol `high` synthesizes them. Narrow requests use Sol `medium` directly.
@@ -23,6 +25,8 @@ Why creates one Luna `xhigh` Fast investigator per available evidence category. 
 - Automatically search every available personal connector. Rejected to avoid unrelated data access; the declared project source profile controls scope.
 
 ## Evidence
+
+The following paths describe the historical layout at `f7efaf2`:
 
 - `skills/how/SKILL.md`
 - `skills/why/SKILL.md`

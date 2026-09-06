@@ -52,10 +52,12 @@ Some workflows have optional external dependencies:
 - `claude-code` requires the Claude Code CLI and a requested Claude model that the account can serve.
 - `codex` requires the Codex CLI and a requested GPT model that the account can serve.
 - GitHub evidence and PR workflows require the `gh` CLI.
-- `why` can use installed source connectors such as Linear. Those integrations are deliberately not bundled here.
+- `explain` can use project-declared source connectors such as Linear. Those integrations are deliberately not bundled here.
 - Native multi-agent workflows require the selected host to expose subagent spawn, wait, message, and close operations.
 
 Model slugs and effort levels in the selected profile describe the requested topology. If a host does not offer one, the workflow must report the capability gap rather than claim that the requested model ran.
+
+When upgrading from separate How/Why workflows, remove retired `how_*` and `why_*` overrides from your model configuration. Explain uses `consultant_default` only when consulting is needed.
 
 ## Workflow map
 
@@ -64,11 +66,9 @@ Model slugs and effort levels in the selected profile describe the requested top
 | `implement` | Single entry point for feature, bug-fix, refactoring, and prototype code changes | Parent scopes and verifies; one persistent configured worker writes small, verifiable units |
 | `architect` | Read-only architecture for consequential changes | Grounds the system, selects principles, invokes `arena`, and returns a design and invalidation criteria to `implement` |
 | `arena` | Competing designs for consequential artifacts | Two configured candidates work independently; a configured cross-judge advises; parent selects and synthesizes |
-| `how` | Explain current mechanics and architecture | Uses configured explorer, explainer, and optional critic roles according to complexity and mode |
-| `why` | Reconstruct design rationale from evidence | One configured investigator per available source; a configured synthesizer reconciles evidence; parent verifies and presents |
+| `explain` | Explain mechanics, rationale, and changes | Parent investigates and answers in a consistent template; optional consulting for bounded questions |
 | `interrogate` | Adversarial multi-model code review | Two configured reviewers work independently; parent verifies, deduplicates, and categorizes findings |
 | `skill-eval` | Test an existing skill or compare it with a proposed revision | Disposable scenarios and a configured blinded judge; dedicated cheap assignments are used only for execution smoke tests |
-| `teach` | Explain what something is, how it works, and why | Composes `how` and `why` into one account |
 | `apply-principles` | Select engineering standards for a broad task | Routes to the smallest relevant set of canonical reference documents |
 | `logbook` | Preserve non-trivial work and meaningful investigation outcomes | Records work, accepted and rejected reasoning, verification, and gaps in `.agents/logbook/` |
 
@@ -84,7 +84,6 @@ Model slugs and effort levels in the selected profile describe the requested top
 - `test-coverage-auditor`: judge whether changed behavior has appropriate tests, not merely coverage.
 - `typescript-best-practices`: TypeScript-specific type, API, module, and runtime-boundary guidance.
 - `technical-writing`: Diátaxis, developer style, simplified technical English, and ambiguity control.
-- `teach`: combine mechanics and rationale at the reader's pace.
 - `unslop`: remove generic AI prose patterns without changing facts or requested voice.
 
 ## Engineering principles

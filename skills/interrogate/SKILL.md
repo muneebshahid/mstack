@@ -1,11 +1,11 @@
 ---
 name: interrogate
-description: "Use for \"interrogate\", \"adversarial review\", \"multi-model review\", \"challenge this\", \"stress test this code\", \"find blind spots\", or \"tear this apart\". Multiple LLM reviewers challenge changes from independent angles."
+description: "Use for \"interrogate\", \"adversarial review\", \"multi-model review\", \"challenge this\", \"stress test this code\", \"find blind spots\", or \"tear this apart\". Multiple LLM reviewers challenge code changes, subsystems, or designs from independent angles."
 ---
 
 # Interrogate
 
-Spawn the two configured Interrogate reviewers to adversarially review code changes. Each model gets the same prompt and rubric. The adversarial signal comes from model diversity, not assigned personas. Models differ in blind spots, priors, and reasoning patterns. Agreement across models is high-confidence signal; lone-model findings are worth reading but lower confidence.
+Spawn the two configured Interrogate reviewers to adversarially review the requested code changes, subsystem, or design. Each model gets the same prompt and rubric. The adversarial signal comes from model diversity, not assigned personas. Models differ in blind spots, priors, and reasoning patterns. Agreement across models is high-confidence signal; lone-model findings are worth reading but lower confidence.
 
 The deliverable is a synthesized verdict. Do NOT auto-apply changes.
 
@@ -14,12 +14,13 @@ The deliverable is a synthesized verdict. Do NOT auto-apply changes.
 Resolve one canonical review target from the user's request and repository state:
 
 - Explicit files or supplied diff: review exactly that target plus necessary surrounding context.
+- Subsystem or design: identify its boundaries, requirements, and relevant files or design artifact. Review that existing shape; no introducing diff is required.
 - Working tree: distinguish unstaged, staged, and relevant untracked files. Include an untracked file only when it belongs to the intended change.
 - Commit or range: resolve the exact revisions before packaging the diff.
 - Feature branch: determine the actual base from the user, pull-request metadata, upstream configuration, or repository default branch, then use the merge base. Never silently assume `main`.
 - Pull request: resolve its number, base, head, revision, description, and diff through `gh` when available. Preserve and report an access failure rather than substituting a guessed local range.
 
-Create a compact scope manifest naming the target, base and head or working-tree surfaces, included paths, excluded surfaces, and any unresolved gap. Capture one exact diff or file package and give that same package to both reviewers. If it is empty, wrong-base, or changes before synthesis, stop or report the drift rather than silently mixing scopes.
+Create a compact scope manifest naming the target, revisions when applicable, included paths, excluded surfaces, and any unresolved gap. Capture one exact diff or file package and give that same package to both reviewers. If it is empty, wrong-base, or changes before synthesis, stop or report the drift rather than silently mixing scopes.
 
 ## Step 2, State the Intent
 
@@ -92,7 +93,7 @@ You are the lead reviewer, a pragmatic senior engineer, not a neutral aggregator
 
 Read `references/lead-judgment.md` for the full framework. Reviewers only see a slice of the codebase. You have the full context (the goal, the constraints, the timeline, which tradeoffs were already considered). Use that context aggressively.
 
-Before categorization, independently validate every proposed **Act on** finding against the actual code and reachable execution path. Do the same for every `critical` finding raised by only one reviewer. Verify its source location, preconditions, consequence, and whether existing callers, validation, types, or tests already prevent it. An unverified high-severity claim cannot be **Act on**; preserve it as a lower-confidence risk or dismiss it with the evidence gap.
+Before categorization, independently validate every proposed **Act on** finding against the reviewed code or design and its requirements. Do the same for every `critical` finding raised by only one reviewer. Verify its location, preconditions, consequence, and whether callers, validation, types, or tests prevent it. For an unimplemented design, distinguish a demonstrated contradiction from an unverified runtime assumption. An unverified high-severity claim cannot be **Act on**; preserve it as a lower-confidence risk or dismiss it with the evidence gap.
 
 Categorize every finding using these buckets:
 

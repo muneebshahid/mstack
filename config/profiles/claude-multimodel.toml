@@ -26,48 +26,6 @@ model = "claude-fable-5-1"
 effort = "xhigh"
 fast = false
 
-[roles.how_explorer]
-runner = "claude-native"
-model = "sonnet"
-effort = "high"
-fast = false
-
-[roles.how_simple_explainer]
-runner = "claude-native"
-model = "sonnet"
-effort = "medium"
-fast = false
-
-[roles.how_complex_explainer]
-runner = "claude-native"
-model = "claude-fable-5-1"
-effort = "high"
-fast = false
-
-[roles.how_critic_a]
-runner = "claude-native"
-model = "claude-fable-5-1"
-effort = "xhigh"
-fast = false
-
-[roles.how_critic_b]
-runner = "codex"
-model = "gpt-5.6-sol"
-effort = "xhigh"
-fast = false
-
-[roles.why_investigator]
-runner = "claude-native"
-model = "sonnet"
-effort = "high"
-fast = false
-
-[roles.why_synthesizer]
-runner = "claude-native"
-model = "claude-fable-5-1"
-effort = "xhigh"
-fast = false
-
 [roles.interrogate_reviewer_a]
 runner = "claude-native"
 model = "claude-fable-5-1"

@@ -26,7 +26,7 @@ Expose the installed Codex skills directory to Claude so it can read whichever r
 - `skills/claude-code/SKILL.md`
 - `skills/claude-code/scripts/run_claude.py`
 - `skills/arena/SKILL.md`
-- `skills/why/SKILL.md`
+- `skills/explain/SKILL.md`
 - `skills/interrogate/SKILL.md`
 
 This record reconstructs the decision from the installed stack because version control begins with this public repository.

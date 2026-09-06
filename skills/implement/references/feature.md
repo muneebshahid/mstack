@@ -11,8 +11,8 @@ Use this mode when intended behavior is being added or deliberately changed. Own
 
 ## 2. Ground the current system
 
-- Inspect the affected source, tests, public contracts, data flow, and repository instructions. Read [How](../../how/SKILL.md) for a non-trivial subsystem.
-- Read [Why](../../why/SKILL.md) when history or an earlier decision could reveal a real constraint. Do not infer historical intent from current code alone.
+- Inspect the affected source, tests, public contracts, data flow, and repository instructions. Read [Explain](../../explain/SKILL.md) mechanics for a non-trivial subsystem.
+- Read Explain rationale when history or an earlier decision could reveal a real constraint. Do not infer historical intent from current code alone.
 - Identify what can be removed before construction and read [Simplicity](../../apply-principles/references/simplicity.md).
 
 ## 3. Choose the target shape

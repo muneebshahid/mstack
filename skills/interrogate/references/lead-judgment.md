@@ -34,7 +34,7 @@ This is the most common false positive in code review. A finding that amounts to
 ### Missing Context Signals
 
 Watch for findings that reveal the reviewer didn't understand the context:
-- Suggesting changes to code the author didn't write or modify
+- Suggesting changes outside the requested review target. An existing subsystem can be the target even without recent edits
 - Flagging patterns that are consistent with the rest of the codebase (the reviewer just doesn't know that)
 - Recommending approaches that conflict with constraints you know about
 
@@ -56,9 +56,9 @@ Be especially careful about dismissing security findings and correctness bugs. T
 Reviewer severity and agreement are signals, not verdicts. Before assigning **Act on**:
 
 1. Open the claimed source location and verify it exists in the frozen scope or its necessary context.
-2. Trace the reachable execution path and preconditions.
+2. Trace the reachable execution path and preconditions, or the proposed flow for an unimplemented design. Distinguish a requirement contradiction from an assumption needing runtime evidence.
 3. Check callers, types, validation, tests, and repository constraints that may prevent the claimed consequence.
-4. Confirm whether the reviewed change introduced the issue or merely exposed a relevant pre-existing defect.
+4. For a change review, distinguish introduced from relevant pre-existing defects. For a subsystem or design review, verify the defect against the selected target and requirements.
 5. Perform the same validation for every single-reviewer `critical` finding even if it will not become **Act on**.
 
 If validation is inconclusive, classify the item as a residual risk under **Consider** or **Noted**, or dismiss it when the claim lacks a plausible path. Never present an unverified high-severity assertion as actionable fact.

@@ -50,7 +50,7 @@ Create the whole user configuration idempotently with the bundled script. Use on
 ```bash
 python3 <setup-mstack-directory>/scripts/models.py configure \
   --profile claude-multimodel \
-  --set how_simple_explainer.effort=low
+  --set consultant_default.effort=high
 ```
 
 Supported assignment fields are `runner`, `model`, `effort`, and `fast`. Effort is one of `low`, `medium`, `high`, `xhigh`, or `max`. Fast is a boolean and is valid only for the `codex-native` and `codex` runners. `implement_worker` must use a native runner.

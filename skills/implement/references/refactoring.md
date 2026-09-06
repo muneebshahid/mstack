@@ -4,7 +4,7 @@ Use this mode when structure changes and externally observable behavior must rem
 
 ## 1. Pin the behavior contract
 
-- Read [How](../../how/SKILL.md) to understand the affected flow, callers, side effects, boundaries, and failure behavior. Read [Why](../../why/SKILL.md) only when historical constraints may explain an apparently odd contract.
+- Read [Explain](../../explain/SKILL.md) mechanics to understand the affected flow, callers, side effects, boundaries, and failure behavior. Read Explain rationale only when historical constraints may explain an apparently odd contract.
 - Before moving structure, establish a characterization test, snapshot, replay, or old-versus-new equivalence harness. Type checking and compilation alone are not a behavior pin.
 - Read [Verification](../../apply-principles/references/verification.md) so the chosen pin observes the real artifact rather than a proxy.
 
