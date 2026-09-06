@@ -22,7 +22,7 @@ Create a visible working plan for Ground, Sketch, Decide, and Handoff.
 
 Build a real mental model of every system the new code touches. Naming files is not grounding.
 
-1. Use [Explain](../explain/SKILL.md) mechanics to ground the relevant subsystems. Answer placement questions against the selected principles; use Interrogate only for requested adversarial or multi-model critique.
+1. Use [Explain](../explain/SKILL.md) mechanics to ground the relevant subsystems. Answer placement questions against the selected principles; use Review only for requested adversarial or multi-model critique.
 2. Establish the current model: current purpose, runtime flow, ownership, data and invariants, boundaries, side effects, failure behavior, and relevant files.
 3. When `.agents/logbook/` exists, search relevant records for prior work, decisions, and investigation or review outcomes, including useful rejected alternatives. Treat current code and tests as authority for mechanics; records preserve stated rationale and tradeoffs. Architect never writes or moves a record.
 4. Use Explain rationale when historical choices or constraints could affect the design. Do not investigate history merely because old code exists.
@@ -81,7 +81,7 @@ The parent retains final architectural judgment after Arena.
 - Return the synthesized design and stop. Architect never proceeds into source implementation.
 - If the caller rejects or materially changes the shape, treat that response as new grounding evidence and return to Phase A.
 - If Implement returns evidence that a load-bearing decision is wrong, treat the observed code friction, failed verification, and deviation record as new grounding evidence. Use Explain mechanics on the affected built shape, revise the constraints, and return to Phase B. Do not defend the old sketch or patch it incrementally merely because implementation has started.
-- Run [Interrogate](../interrogate/SKILL.md) on the synthesized sketch only when the caller explicitly asks for adversarial pressure. Arena's cross-judge already supplies ordinary independent comparison.
+- Run [Review](../review/SKILL.md) on the synthesized sketch only when the caller explicitly asks for adversarial pressure. Arena's cross-judge already supplies ordinary independent comparison.
 
 ## Phase D: Hand off
 

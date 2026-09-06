@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review"
+  short_description: "Review correctness, complexity, and test usefulness"
+  default_prompt: "Use $review to review the current changes for concrete defects, unnecessary complexity, and useful tests."

@@ -45,7 +45,7 @@ class ModelsTest(unittest.TestCase):
 
     def test_claude_code_host_defaults_to_claude_multimodel(self) -> None:
         result = self.run_models(
-            "resolve", "--role", "interrogate_reviewer_b", "--no-user-config", CLAUDECODE="1"
+            "resolve", "--role", "review_reviewer_b", "--no-user-config", CLAUDECODE="1"
         )
         self.assertIn('"host": "claude-code"', result.stdout)
         self.assertIn('"profile": "claude-multimodel"', result.stdout)

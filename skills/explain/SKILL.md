@@ -19,7 +19,7 @@ Read [Evidence](references/evidence.md) for sources to consider. Choose what cou
 
 Investigate directly by default. Consult another model when independent research or judgment would help, using `consultant_default` through [model configuration](../setup-mstack/references/runtime-resolution.md) and its runner. Give it a focused question and relevant context; check its evidence before using the answer.
 
-Use [Interrogate](../interrogate/SKILL.md) for requested adversarial or multi-model critique. Include the subsystem or design, its requirements, and existing findings.
+Use [Review](../review/SKILL.md) for requested adversarial or multi-model critique. Include the subsystem or design, its requirements, and existing findings.
 
 ## Response template
 

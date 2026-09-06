@@ -17,6 +17,8 @@ Use multi-model panels only where a wrong result is consequential enough to repa
 
 The original How critique panel is superseded by [Consolidate Explanations](2026-09-05-consolidate-explanations.md). Explain answers ordinary architecture questions; requested adversarial critique uses Interrogate's existing panel with a subsystem or design target. The packaged Codex and Claude profiles retain host-specific model assignments.
 
+Interrogate's review instructions are subsequently simplified in [Simplify Review](2026-09-06-simplify-review.md), preserving the panel and parent judgment while replacing consensus weighting with evidence checks.
+
 ## Alternatives considered
 
 - Use only one frontier model. Retained for ordinary work but rejected for explicitly adversarial or consequential design tasks.
@@ -27,8 +29,8 @@ The original How critique panel is superseded by [Consolidate Explanations](2026
 ## Evidence
 
 - `skills/arena/SKILL.md`
-- `skills/interrogate/SKILL.md`
-- `skills/interrogate/references/lead-judgment.md`
+- `skills/review/SKILL.md`
+- `skills/review/SKILL.md` now contains the parent judgment rules formerly in `references/lead-judgment.md`
 - `skills/explain/SKILL.md`
 - `config/profiles/codex-multimodel.toml` and `config/profiles/claude-multimodel.toml`
 

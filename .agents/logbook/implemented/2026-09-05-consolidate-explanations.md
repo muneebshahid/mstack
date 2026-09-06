@@ -15,7 +15,7 @@ The parent investigates and answers directly. Optional consulting uses existing 
 
 Preserve documented reasons versus inference, conflicting accounts, record status, and unavailable versus empty searches. Link useful files and records. Use diagrams when helpful, without fixed counts. The user subsequently required a stable response structure: Summary, Walkthrough, Implications, and Evidence and limits. Keep these headings consistent and scale their contents to the question.
 
-Keep ordinary placement judgment in Explain. Requested adversarial critique routes to Interrogate; its scope and judgment guidance now cover subsystems and unimplemented designs without requiring an introducing diff. Caller workflows select canonical principles rather than adding another architecture rubric to Explain.
+Keep ordinary placement judgment in Explain. Requested adversarial critique routes to Review (then named Interrogate); its scope and judgment guidance now cover subsystems and unimplemented designs without requiring an introducing diff. Caller workflows select canonical principles rather than adding another architecture rubric to Explain.
 
 ## Alternatives considered
 

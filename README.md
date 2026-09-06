@@ -59,6 +59,8 @@ Model slugs and effort levels in the selected profile describe the requested top
 
 When upgrading from separate How/Why workflows, remove retired `how_*` and `why_*` overrides from your model configuration. Explain uses `consultant_default` only when consulting is needed.
 
+Interrogate is now `review`. Rename any `interrogate_reviewer_a` and `interrogate_reviewer_b` model overrides to `review_reviewer_a` and `review_reviewer_b`; their assignments are unchanged. Test Coverage Auditor is removed; Review checks coverage and test usefulness within the requested scope.
+
 ## Workflow map
 
 | Skill | Purpose | Agent flow |
@@ -67,7 +69,7 @@ When upgrading from separate How/Why workflows, remove retired `how_*` and `why_
 | `architect` | Read-only architecture for consequential changes | Grounds the system, selects principles, invokes `arena`, and returns a design and invalidation criteria to `implement` |
 | `arena` | Competing designs for consequential artifacts | Two configured candidates work independently; a configured cross-judge advises; parent selects and synthesizes |
 | `explain` | Explain mechanics, rationale, and changes | Parent investigates and answers in a consistent template; optional consulting for bounded questions |
-| `interrogate` | Adversarial multi-model code review | Two configured reviewers work independently; parent verifies, deduplicates, and categorizes findings |
+| `review` | Review code, designs, simplicity, and test usefulness | Two configured reviewers for adversarial review; focused reviews can run directly; parent verifies findings and proposed remedies |
 | `skill-eval` | Test an existing skill or compare it with a proposed revision | Disposable scenarios and a configured blinded judge; dedicated cheap assignments are used only for execution smoke tests |
 | `apply-principles` | Select engineering standards for a broad task | Routes to the smallest relevant set of canonical reference documents |
 | `logbook` | Preserve non-trivial work and meaningful investigation outcomes | Records work, accepted and rejected reasoning, verification, and gaps in `.agents/logbook/` |
@@ -81,7 +83,6 @@ When upgrading from separate How/Why workflows, remove retired `how_*` and `why_
 - `setup-mstack`: detect the host, select a profile, validate available runners and models, and write user-owned role overrides.
 - `gh-address-comments`: inspect and address all GitHub review comments unless the user narrows the scope.
 - `tdd`: focused red-green bug-fix workflow when a cheap, meaningful regression test exists.
-- `test-coverage-auditor`: judge whether changed behavior has appropriate tests, not merely coverage.
 - `typescript-best-practices`: TypeScript-specific type, API, module, and runtime-boundary guidance.
 - `technical-writing`: Diátaxis, developer style, simplified technical English, and ambiguity control.
 - `unslop`: remove generic AI prose patterns without changing facts or requested voice.
