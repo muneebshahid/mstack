@@ -8,21 +8,15 @@ model = "sonnet"
 effort = "high"
 fast = false
 
-[roles.arena_candidate_a]
+[roles.architect_candidate_a]
 runner = "claude-native"
 model = "claude-fable-5-1"
 effort = "xhigh"
 fast = false
 
-[roles.arena_candidate_b]
+[roles.architect_candidate_b]
 runner = "codex"
 model = "gpt-5.6-sol"
-effort = "xhigh"
-fast = false
-
-[roles.arena_cross_judge]
-runner = "claude-native"
-model = "claude-fable-5-1"
 effort = "xhigh"
 fast = false
 

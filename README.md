@@ -61,13 +61,14 @@ When upgrading from separate How/Why workflows, remove retired `how_*` and `why_
 
 Interrogate is now `review`. Rename any `interrogate_reviewer_a` and `interrogate_reviewer_b` model overrides to `review_reviewer_a` and `review_reviewer_b`; their assignments are unchanged. Test Coverage Auditor is removed; Review checks coverage and test usefulness within the requested scope.
 
+Arena is now an optional comparison method within Architect. Rename `arena_candidate_a` and `arena_candidate_b` overrides to `architect_candidate_a` and `architect_candidate_b`; assignments are unchanged. Remove `arena_cross_judge` overrides; optional judgment uses `consultant_default`. Grill Me is removed.
+
 ## Workflow map
 
 | Skill | Purpose | Agent flow |
 | --- | --- | --- |
 | `implement` | Single entry point for feature, bug-fix, refactoring, and prototype code changes | Parent scopes and verifies; one persistent configured worker writes small, verifiable units |
-| `architect` | Read-only architecture for consequential changes | Grounds the system, selects principles, invokes `arena`, and returns a design and invalidation criteria to `implement` |
-| `arena` | Competing designs for consequential artifacts | Two configured candidates work independently; a configured cross-judge advises; parent selects and synthesizes |
+| `architect` | Read-only design for consequential changes | Parent designs directly or compares independent proposals, then returns the design and implementation handoff |
 | `explain` | Explain mechanics, rationale, and changes | Parent investigates and answers in a consistent template; optional consulting for bounded questions |
 | `review` | Review code, designs, simplicity, and test usefulness | Two configured reviewers for adversarial review; focused reviews can run directly; parent verifies findings and proposed remedies |
 | `skill-eval` | Test an existing skill or compare it with a proposed revision | Disposable scenarios and a configured blinded judge; dedicated cheap assignments are used only for execution smoke tests |
@@ -79,7 +80,6 @@ Interrogate is now `review`. Rename any `interrogate_reviewer_a` and `interrogat
 - `bro`: explicitly restate the immediately preceding answer in shorter, plain language.
 - `claude-code`: reusable process boundary for an independent Claude consultant or judge, used from Codex.
 - `codex`: the reciprocal boundary for an independent Codex consultant or judge, used from Claude Code.
-- `grill-me`: explicitly pressure-test a loose idea in decision-tree rounds before planning or implementation.
 - `setup-mstack`: detect the host, select a profile, validate available runners and models, and write user-owned role overrides.
 - `gh-address-comments`: inspect and address all GitHub review comments unless the user narrows the scope.
 - `tdd`: focused red-green bug-fix workflow when a cheap, meaningful regression test exists.

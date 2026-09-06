@@ -76,10 +76,10 @@ class ModelsTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             config = Path(directory) / "models.toml"
             config.write_text(
-                'schema_version = 1\nprofile = "codex-multimodel"\n\n[roles.arena_candidate_b]\neffort = "low"\n',
+                'schema_version = 1\nprofile = "codex-multimodel"\n\n[roles.architect_candidate_b]\neffort = "low"\n',
                 encoding="utf-8",
             )
-            result = self.run_models("resolve", "--role", "arena_candidate_b", "--config", str(config))
+            result = self.run_models("resolve", "--role", "architect_candidate_b", "--config", str(config))
             self.assertIn('"model": "gpt-5.6-sol"', result.stdout)
             self.assertIn('"effort": "low"', result.stdout)
 
@@ -101,11 +101,11 @@ class ModelsTest(unittest.TestCase):
                 "--profile",
                 "claude-multimodel",
                 "--set",
-                "arena_cross_judge.effort=medium",
+                "consultant_default.effort=medium",
                 "--output",
                 str(config),
             )
-            result = self.run_models("resolve", "--role", "arena_cross_judge", "--config", str(config))
+            result = self.run_models("resolve", "--role", "consultant_default", "--config", str(config))
             self.assertIn('"profile": "claude-multimodel"', result.stdout)
             self.assertIn('"effort": "medium"', result.stdout)
 

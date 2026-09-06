@@ -19,6 +19,8 @@ The original How critique panel is superseded by [Consolidate Explanations](2026
 
 Interrogate's review instructions are subsequently simplified in [Simplify Review](2026-09-06-simplify-review.md), preserving the panel and parent judgment while replacing consensus weighting with evidence checks.
 
+The mandatory Arena and cross-judge arrangement above is superseded by [Simplify Architect](2026-09-06-simplify-architect.md). Architect now designs directly or uses its optional comparison method; the parent still owns the decision and implementation feedback.
+
 ## Alternatives considered
 
 - Use only one frontier model. Retained for ordinary work but rejected for explicitly adversarial or consequential design tasks.
@@ -28,7 +30,7 @@ Interrogate's review instructions are subsequently simplified in [Simplify Revie
 
 ## Evidence
 
-- `skills/arena/SKILL.md`
+- `skills/architect/references/compare-designs.md` (formerly Arena)
 - `skills/review/SKILL.md`
 - `skills/review/SKILL.md` now contains the parent judgment rules formerly in `references/lead-judgment.md`
 - `skills/explain/SKILL.md`

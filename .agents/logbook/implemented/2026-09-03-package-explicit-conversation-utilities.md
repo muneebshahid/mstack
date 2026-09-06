@@ -11,6 +11,8 @@ Kind: behavior
 
 MStack packages `bro` and `grill-me` as explicit-only conversation utilities. `bro` restates only the assistant's immediately preceding message without adding claims. `grill-me` keeps its design-tree, frontier-round, recommendation, factual-investigation, and user-decision boundaries, but folds the upstream `grilling` primitive into one self-contained skill. It writes no files and does not plan or implement until the user separately requests that work after confirming shared understanding.
 
+The user subsequently chose to remove Grill Me entirely; see [Simplify Architect](2026-09-06-simplify-architect.md). Its paths and execution evidence below describe the historical package at `61e70fd`. Bro remains packaged, and the shared license notice is retained.
+
 ## Alternatives considered
 
 - Package the two-line `grill-me` alias and add a third public `grilling` skill. Rejected because the extra discovery surface exists only to satisfy an internal indirection.

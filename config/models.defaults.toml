@@ -2,9 +2,8 @@ schema_version = 1
 profiles = ["codex-multimodel", "claude-multimodel"]
 roles = [
   "implement_worker",
-  "arena_candidate_a",
-  "arena_candidate_b",
-  "arena_cross_judge",
+  "architect_candidate_a",
+  "architect_candidate_b",
   "review_reviewer_a",
   "review_reviewer_b",
   "skill_eval_quality_judge",

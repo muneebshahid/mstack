@@ -25,7 +25,7 @@ Expose the installed Codex skills directory to Claude so it can read whichever r
 
 - `skills/claude-code/SKILL.md`
 - `skills/claude-code/scripts/run_claude.py`
-- `skills/arena/SKILL.md`
+- `skills/architect/references/compare-designs.md` (formerly Arena)
 - `skills/explain/SKILL.md`
 - `skills/review/SKILL.md`
 

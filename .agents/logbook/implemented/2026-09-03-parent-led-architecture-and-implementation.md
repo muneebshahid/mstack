@@ -15,6 +15,8 @@ Use `implement` as the single code-changing workflow. The parent agent chooses t
 
 One persistent GPT-5.6 Luna worker at `high` effort and Fast service writes project code in small verifiable units. The parent iterates with that same worker. Re-architecture is triggered by concrete invalidation evidence, not by ordinary implementation friction or stylistic preference.
 
+The mandatory Arena and cross-judge arrangement above is superseded by [Simplify Architect](2026-09-06-simplify-architect.md). Architect now designs directly or uses its optional comparison method; the parent still owns the decision and implementation feedback.
+
 ## Alternatives considered
 
 - Let the parent write code directly. Rejected to reserve expensive parent reasoning for judgment and verification.
@@ -27,8 +29,8 @@ One persistent GPT-5.6 Luna worker at `high` effort and Fast service writes proj
 - `skills/implement/SKILL.md`
 - `skills/implement/references/implementation-worker.md`
 - `skills/architect/SKILL.md`
-- `skills/architect/references/rationale-template.md`
-- `skills/arena/SKILL.md`
+- `skills/architect/references/design-template.md` (formerly the rationale template)
+- `skills/architect/references/compare-designs.md` (formerly Arena)
 
 This record reconstructs the decision from the installed stack because version control begins with this public repository.
 
