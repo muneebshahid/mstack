@@ -17,6 +17,8 @@ One persistent GPT-5.6 Luna worker at `high` effort and Fast service writes proj
 
 The mandatory Arena and cross-judge arrangement above is superseded by [Simplify Architect](2026-09-06-simplify-architect.md). Architect now designs directly or uses its optional comparison method; the parent still owns the decision and implementation feedback.
 
+[Simplify Implement](2026-09-12-simplify-implement.md) supersedes mandatory worker ownership, mode workflows, and line-count guidance. The parent now implements directly or delegates when useful, retaining inspection and verification responsibility.
+
 ## Alternatives considered
 
 - Let the parent write code directly. Rejected to reserve expensive parent reasoning for judgment and verification.

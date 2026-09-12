@@ -11,7 +11,7 @@ Use judgment to adapt the steps, depth, delegation, and reruns. These are workfl
 
 ## Boundary
 
-Architect is read-only, including when called from an implementation workflow. Keep prompts and candidate artifacts outside the repository. Save a design file only when requested; this does not authorize source changes. If a decision needs executable evidence, propose a bounded [Prototype](../implement/references/prototype.md). Continue independent design work where useful and leave evidence-dependent choices open.
+Architect is read-only, including when called from an implementation workflow. Keep prompts and candidate artifacts outside the repository. Save a design file only when requested; this does not authorize source changes. If a decision needs executable evidence, propose a bounded experiment through [Implement](../implement/SKILL.md). Continue independent design work where useful and leave evidence-dependent choices open.
 
 ## Understand
 

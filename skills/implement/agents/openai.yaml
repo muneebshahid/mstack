@@ -1,7 +1,7 @@
 interface:
   display_name: "Implement"
-  short_description: "Route feature, fix, refactor, or prototype work"
-  default_prompt: "Use $implement to choose the right implementation mode, have the configured worker make the code changes in small units, and verify each unit directly."
+  short_description: "Make and verify changes, delegating when useful"
+  default_prompt: "Use $implement to make this change directly or with a persistent worker, inspect the result, and verify the affected behavior."
 
 policy:
   allow_implicit_invocation: false

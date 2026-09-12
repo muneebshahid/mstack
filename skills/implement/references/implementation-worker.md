@@ -1,73 +1,9 @@
 # Implementation worker
 
-All project code writing in Implement goes through one persistent configured worker for the active task. Read [MStack runtime model resolution](../../setup-mstack/references/runtime-resolution.md) completely and resolve `implement_worker` before launch.
+Resolve `implement_worker` through [model configuration](../../setup-mstack/references/runtime-resolution.md) and use its native runner.
 
-- Use the resolved runner, model, effort, and Fast setting exactly. The worker must be a native runner; the external `claude-code` and `codex` launchers are read-only consultants and the resolver rejects them for this role.
-- Start without inherited conversation history.
-- Permit edits only within the active request and the current implementation unit.
-- Do not permit delegation, commits, pushes, deployments, external mutations, or adjacent cleanup unless separately authorized.
+Give it the requested outcome, relevant context and principles, owned scope, design constraints, and verification target. Ask for the changes, check results, and any design conflicts or blockers. The parent writes Logbook records.
 
-The worker never creates, updates, moves, or deletes Logbook records. It supplies facts about work performed, findings, alternatives considered, verification, and gaps. The parent applies [Logbook](../../logbook/SKILL.md), judges accepted and rejected reasoning, authors the record, selects its lifecycle, and validates it.
+Inspect the actual diff and check results. Send concrete feedback to the same worker and retain it across related units and design revisions. Close it when finished.
 
-Verify the served model, reasoning effort, runner, and service tier when the launcher exposes them. If requested Fast service is rejected, omitted by the launcher, or reported as null, preserve that capability failure and label the worker as standard-speed rather than claiming Fast mode. Continue with the same worker unless the user made Fast mode itself a completion condition.
-
-## Start the worker
-
-Confirm that the active toolset exposes the configured runner. If it does not, record a failed launch and stop before project writes. Spawn the worker once after the parent has selected the mode, grounded the task, resolved any Architect checkpoint, and loaded the triggered principles. Give it a self-contained brief containing:
-
-1. The requested outcome, mode, allowed scope, and explicit exclusions.
-2. The repository root, repository instructions, and unrelated changes it must preserve.
-3. The accepted design or diagnostic conclusion, its load-bearing constraints, adaptable details, unresolved uncertainties, and concrete invalidation signals.
-4. The ordered canonical reference paths it must read in full.
-5. The first implementation unit's outcome, owned and expected files or surface, relevant interfaces and contracts, dependencies, settled requirements, expected tests, acceptance criteria, and required verification.
-6. Any Logbook evidence request: the topic and the work, findings, alternatives, consequences, verification, or gaps this unit should report. Do not provide the record format or ask the worker to draft or edit the record.
-7. The instruction to edit only that unit, run focused checks, inspect its own diff, and return the verification receipt below with the architecture relationship, requested Logbook facts when any, and blockers. The architecture relationship must use exactly one classification:
-   - `No deviation`: the implementation follows the contract as written.
-   - `Adaptation`: it uses a detail the contract explicitly left flexible; name that latitude and the chosen detail.
-   - `Deviation`: identify the affected symbols, expected shape, required shape, observed evidence, and whether the mismatch appears local or architectural.
-
-For an executable architecture scaffold, name the types, signatures, and module seams to expose through the smallest functional slice. Apply [Source Style](../../apply-principles/references/source-style.md) and describe unfinished work in separate prose. Keep required checks green; if the scaffold cannot be verified separately, combine it with the first end-to-end unit.
-
-## Verification receipt
-
-Require this factual receipt after every unit:
-
-- Files changed.
-- Tests inspected.
-- Tests added or changed.
-- Failing-before or characterization evidence when applicable.
-- Commands and runtime checks executed.
-- Exact observed results, distinguishing passes, failures, and inconclusive checks.
-- A justified no-test exception when no test was added or changed.
-- Remaining risks, blockers, or evidence gaps.
-
-The worker may state that a field is not applicable, but must not omit it. Its receipt is evidence to inspect, not proof by assertion.
-
-The spawn call itself must appear in the execution trace and return a non-empty worker identifier. Surface that exact identifier in the next progress update, retain it, and use the same worker for every unit in this Implement run so feedback and implementation context remain continuous. Do not describe the worker as launched, running, idle, or resumable before this evidence exists.
-
-Worker creation is a hard precondition for project writes. If the configured spawn fails or does not return an identifier:
-
-- Stop before editing project source.
-- Do not issue an empty wait, infer that an untracked process is the worker, or describe the worker as idle or resumable.
-- If files change despite the failed launch, treat the run as compromised, preserve the diff, and stop without accepting the changes or inventing authorship.
-- Report the exact launcher failure and leave implementation incomplete.
-
-Only call a wait, input, or close operation with the retained identifier explicitly present in its target set. An unavailable configured runner or a worker that was never launched is a failed worker, not a degraded implementation path.
-
-## Parent review loop
-
-After each unit:
-
-1. Wait for the worker's report, then inspect the actual tree, complete unit diff, and relevant test files independently.
-2. Check the receipt against the files and run or inspect the focused checks and matching runtime surface when practical.
-3. Compare the unit against the accepted design, adaptation latitude, invalidation signals, principles, scope, unrelated working-tree state, and the work or outcome documented in Logbook.
-4. Classify every reported or observed difference as no deviation, an adaptable detail, a local correction, or architecture-invalidating evidence. Verify the classification from the diff and runtime evidence; the worker's label is advisory.
-5. For an adaptable detail or local correction, send one concrete feedback message to the same worker. Name the observed defect, evidence, required outcome, and verification to rerun. Do not prescribe a patch when the worker can derive the smallest correct change.
-6. For architecture-invalidating evidence, do not ask the worker to redesign. If it already exists, keep it idle while the parent re-invokes Architect read-only with the original contract, partial diff, failed check or runtime observation, and deviation record. Resume that same worker with the revised contract after parent judgment. If the contradiction predates worker launch, complete the Architect pass first and spawn only afterward.
-7. When Logbook capture is active, decide what the verified unit warrants, ask the worker only for missing factual clarification, then create, update, move, and validate the record directly. The record must accurately describe the work and its outcome. Never delegate Logbook authorship or lifecycle judgment to the worker.
-8. Repeat with the same worker until the unit is verified or a precise blocker remains.
-9. Only then send the next small unit to that same worker.
-
-The parent may perform read-only inspection and verification commands and may write Logbook records under the Logbook skill's authority. If verification itself requires writing project code or tests, assign that work to the worker as part of the unit. The parent must not patch project source as a shortcut.
-
-Close the worker after its final report is captured and final verification is complete. If an identified worker later becomes unusable, preserve the failure and ask for direction or report the blocker; do not silently switch models or take over code writing.
+If the worker fails, report the failure and use judgment to retry, replace it, or continue directly. Stop any active writer and inspect partial edits before transferring ownership. Honor explicit model or delegation requirements and report substitutions.
