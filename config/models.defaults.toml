@@ -2,6 +2,7 @@ schema_version = 1
 profiles = ["codex-multimodel", "claude-multimodel"]
 roles = [
   "implement_worker",
+  "explain_explorer",
   "architect_candidate_a",
   "architect_candidate_b",
   "review_reviewer_a",

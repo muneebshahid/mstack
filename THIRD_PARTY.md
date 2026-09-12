@@ -10,6 +10,14 @@ PStack is distributed under the MIT License. Its license is preserved at [`LICEN
 
 `gh-address-comments` is adapted from an OpenAI bundled skill and retains its Apache License 2.0 text in [`skills/gh-address-comments/LICENSE.txt`](skills/gh-address-comments/LICENSE.txt).
 
+## HumanLayer Show Me
+
+`explain` incorporates the visual guidance and examples from HumanLayer's [Show Me](https://github.com/humanlayer/skills/blob/3c2629142c5d437428269b1b722b08c0b87f574d/plugins/show-me/skills/show-me/SKILL.md), adapted to its response template and HTML preview tools. HumanLayer's MIT license is preserved at [`LICENSES/HUMANLAYER-SKILLS-MIT.txt`](LICENSES/HUMANLAYER-SKILLS-MIT.txt).
+
+## Anthropic review guidance
+
+`review` draws on Anthropic's [Code Review](https://github.com/anthropics/claude-code/blob/main/plugins/code-review/README.md) and [Code Simplifier](https://github.com/anthropics/claude-plugins-official/blob/main/plugins/code-simplifier/agents/code-simplifier.md): cite applicable project rules, consult relevant history, and favor clarity over compact rewrites. The upstream plugins and agents are not bundled here.
+
 ## Unslop
 
 `unslop` incorporates upstream work whose MIT notice is preserved in [`skills/unslop/LICENSE`](skills/unslop/LICENSE).

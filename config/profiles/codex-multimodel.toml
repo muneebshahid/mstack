@@ -8,6 +8,12 @@ model = "gpt-5.6-luna"
 effort = "high"
 fast = true
 
+[roles.explain_explorer]
+runner = "codex-native"
+model = "gpt-5.6-luna"
+effort = "max"
+fast = false
+
 [roles.architect_candidate_a]
 runner = "claude-code"
 model = "claude-fable-5-1"

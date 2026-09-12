@@ -8,6 +8,12 @@ model = "sonnet"
 effort = "high"
 fast = false
 
+[roles.explain_explorer]
+runner = "claude-native"
+model = "sonnet"
+effort = "high"
+fast = false
+
 [roles.architect_candidate_a]
 runner = "claude-native"
 model = "claude-fable-5-1"

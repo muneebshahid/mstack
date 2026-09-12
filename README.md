@@ -57,7 +57,7 @@ Some workflows have optional external dependencies:
 
 Model slugs and effort levels in the selected profile describe the requested topology. If a host does not offer one, the workflow must report the capability gap rather than claim that the requested model ran.
 
-When upgrading from separate How/Why workflows, remove retired `how_*` and `why_*` overrides from your model configuration. Explain uses `consultant_default` only when consulting is needed.
+When upgrading from separate How/Why workflows, remove retired `how_*` and `why_*` overrides from your model configuration. Explain handles simple questions directly and uses one or two native `explain_explorer` agents when exploration benefits from delegation: Luna at `max` effort on Codex, Sonnet at `high` on Claude Code. Optional independent judgment uses `consultant_default`.
 
 Interrogate is now `review`. Rename any `interrogate_reviewer_a` and `interrogate_reviewer_b` model overrides to `review_reviewer_a` and `review_reviewer_b`; their assignments are unchanged. Test Coverage Auditor is removed; Review checks coverage and test usefulness within the requested scope.
 

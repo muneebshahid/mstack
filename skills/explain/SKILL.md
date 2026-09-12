@@ -17,9 +17,11 @@ Use the [Evidence](references/evidence.md) menu when choosing sources. Choose wh
 - **Rationale:** Git history, Logbook records, tickets, discussions, and design records. Do not infer the author's reasons from code alone.
 - **Recap:** the diff against a stated baseline, including relevant uncommitted work, plus records explaining the changes.
 
-## Optional review
+## Exploration and optional review
 
-Investigate directly by default. Consult another model when independent research or judgment would help, using `consultant_default` through [model configuration](../setup-mstack/references/runtime-resolution.md) and its runner. Give it a focused question and relevant context; check its evidence before using the answer.
+Handle simple questions directly. When exploration benefits from delegation, use one or two subagents through `explain_explorer` in [model configuration](../setup-mstack/references/runtime-resolution.md): Luna at `max` on Codex, Sonnet at `high` on Claude Code. Give each a focused read-only question and relevant context; split distinct investigations when using two. The main agent checks their evidence and writes the explanation. If delegation is unavailable, continue directly and report the limitation.
+
+Consult another model when independent judgment would help, using `consultant_default` and its runner. Give it a focused question and relevant context; check its evidence before using the answer.
 
 Use [Review](../review/SKILL.md) for requested adversarial or multi-model critique. Include the subsystem or design, its requirements, and existing findings.
 
