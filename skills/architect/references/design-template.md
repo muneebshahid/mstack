@@ -1,6 +1,6 @@
 # Design template
 
-Use these headings for both direct designs and candidate proposals. Keep sections proportional to the task; omit unnecessary sketches and empty subsections.
+Use these headings as a starting point for direct designs and candidate proposals. Adapt the detail and sketches to the decision and the implementer's needs.
 
 ## Problem and constraints
 

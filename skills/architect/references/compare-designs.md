@@ -1,6 +1,6 @@
 # Compare designs
 
-Use independent proposals to resolve a consequential design choice. The parent chooses the result; a separate judge is optional.
+Use independent proposals to resolve a consequential design choice. Adapt this method to the task; the parent chooses the result and any need for separate judgment.
 
 ## Prepare
 
@@ -8,26 +8,26 @@ Define the requested design, constraints, evidence, and criteria that distinguis
 
 Resolve `architect_candidate_a` and `architect_candidate_b` through [model configuration](../../setup-mstack/references/runtime-resolution.md). Follow the configured runners' instructions. Record the current commit, status, and diff before launching.
 
-Give both candidates the same self-contained prompt with:
+A useful default is two independent candidates with the same self-contained prompt covering:
 
 - The requested outcome, constraints, assumptions, and relevant project evidence.
 - Repository instructions and the parent-selected principle reference paths.
 - The [design template](design-template.md), comparison criteria, and [Source Style](../../apply-principles/references/source-style.md).
-- A read-only, no-delegation assignment to produce one concrete design and report evidence gaps or tool failures. Candidates must not edit project files, read each other's output, or invoke orchestration or principle-selection workflows.
+- A read-only assignment to propose a concrete design and report evidence gaps or tool failures. Candidates investigate directly by default and leave comparison coordination to the parent. They do not edit project files or read each other's output before proposing their own design.
 
-Provide paths to references and require candidates to read them. Exclude secrets and unrelated material; do not tell candidates which solution the parent prefers.
+Provide reference paths for candidates to consult as needed. Exclude secrets and unrelated material; do not tell candidates which solution the parent prefers.
 
 ## Run
 
 Launch the two candidates concurrently in fresh contexts. Retain their process or agent identifiers, monitor completion, and capture reports and available model provenance before closing them. Keep external artifacts outside the repository.
 
-Do not substitute models or repeatedly retry a failed runner. With one usable candidate, return it with the blockers as an incomplete comparison. With none, report the blockers. Do not claim independent comparison with fewer than two usable proposals.
+Use judgment about retrying, reframing, or continuing with available evidence after a failure. Honor explicit model choices and report what ran, any substitutions, and resulting limits. One usable proposal can inform a design but does not establish an independent comparison.
 
-Compare repository state after the candidate phase. Report unexpected edits and exclude compromised output. If attribution is unclear, stop the comparison rather than assuming one candidate is unaffected; do not silently keep or revert the edits.
+Compare repository state after the candidate phase. Report unexpected edits and exclude compromised output. If attribution is unclear, assess what evidence remains trustworthy before continuing; do not silently keep or revert the edits.
 
 ## Choose
 
-Read every complete proposal and compare it against the requirements and criteria. Select one coherent design. Adopt ideas from another only when they improve it without conflicting with its contracts or ownership. Record the source and reason for significant adoptions and rejections.
+Assess the complete proposals against the requirements and criteria. Select one coherent design. Adopt ideas from another only when they improve it without conflicting with its contracts or ownership. Record the source and reason for significant adoptions and rejections.
 
 Reframe and rerun if needed.
 

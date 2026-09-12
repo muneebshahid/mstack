@@ -7,15 +7,17 @@ description: "Design a consequential change without implementing it. Use when ex
 
 Design a change that fits its callers and requirements. Return a proposed design and implementation handoff.
 
+Use judgment to adapt the steps, depth, delegation, and reruns. These are workflow defaults; explicit user requests and the read-only boundary still apply.
+
 ## Boundary
 
-Architect is read-only, including when called from an implementation workflow. Keep prompts and candidate artifacts outside the repository. Save a design file only when requested; this does not authorize source changes. If a decision needs executable evidence, hand back a bounded [Prototype](../implement/references/prototype.md) question and stop until the evidence is available.
+Architect is read-only, including when called from an implementation workflow. Keep prompts and candidate artifacts outside the repository. Save a design file only when requested; this does not authorize source changes. If a decision needs executable evidence, propose a bounded [Prototype](../implement/references/prototype.md). Continue independent design work where useful and leave evidence-dependent choices open.
 
 ## Understand
 
 Use [Explain](../explain/SKILL.md) to understand relevant behavior, callers, ownership, and integration constraints. Reuse established findings. Distinguish observed constraints from assumptions and unanswered questions.
 
-Use [Apply Principles](../apply-principles/SKILL.md) to select and read the relevant standards. Apply [Source Style](../apply-principles/references/source-style.md) to sketches. Keep design rules in those references rather than building another checklist here.
+Use [Apply Principles](../apply-principles/SKILL.md) for relevant standards, reusing guidance already in context. Apply [Source Style](../apply-principles/references/source-style.md) to sketches. Keep design rules in those references rather than building another checklist here.
 
 ## Design
 
@@ -25,7 +27,7 @@ Design directly when requirements or established practice settle the approach. U
 
 The parent chooses the design and checks that usage, types, data flow, failure behavior, and implementation sequence agree. Check complexity before handoff: remove unjustified machinery while preserving required behavior and useful boundaries. Record significant rejected alternatives and why they lost.
 
-Use [Review](../review/SKILL.md) only for requested adversarial or multi-model critique. Independent design comparison does not require another review panel.
+Use [Review](../review/SKILL.md) when critique would help or is requested. Choose its depth for the question; design comparison need not trigger another panel.
 
 ## Hand off and revise
 

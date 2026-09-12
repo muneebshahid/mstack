@@ -5,9 +5,9 @@ description: "Select engineering standards when a design, implementation, or rev
 
 # Apply Principles
 
-The ten references below hold the canonical standards. This index selects which to read.
+The ten references below hold the engineering standards. Apply them with judgment to the task and its constraints; use concrete requirements and evidence over broad heuristics. Explicit user preferences still govern.
 
-For every owned-source edit, read [Source Style](references/source-style.md) before applying the change.
+Apply [Source Style](references/source-style.md) to owned-source edits; reuse it when already available in context.
 
 ## Select
 
@@ -28,10 +28,10 @@ Choose the smallest relevant set using the task and evidence, rather than loadin
 
 ## Apply
 
-Read selected references completely. Reuse guidance still available in context; reread it when changed or unavailable. New evidence may warrant another reference. Prefer a concrete requirement, contract, failure, or material risk over a broad heuristic.
+Read the guidance needed for the decision. Reuse available context and expand the selection when new evidence warrants it.
 
 Resolve links relative to the containing MStack skill or reference in the same plugin installation, never the consumer project's working directory. Selected filenames resolve under this skill's `references/` directory.
 
-For panels and delegated reviewers, the parent selects and reads the references, then passes the same ordered absolute paths to every participant. Each participant reads those documents in full without running another selector. They are reference documents, not skill entrypoints.
+For panels and delegated work, the parent can share relevant reference paths to avoid repeated selection. Participants can consult further guidance when useful and report any resulting difference in assumptions or criteria. These are reference documents, not skill entrypoints.
 
 Report important outcomes, evidence, and tradeoffs.

@@ -7,6 +7,8 @@ description: "Review code changes, subsystems, or designs against their requirem
 
 Find problems worth fixing within the requested scope. Review read-only and return a verdict. No findings is a valid result.
 
+Use judgment to adapt the steps, depth, delegation, and reruns. These are workflow defaults; preserve explicit user requests and report what was actually verified.
+
 ## Scope
 
 Establish the intended behavior from the request, plan, issue, PR, or project evidence. Read applicable project instructions; consult Git history, discussions, or Logbook records when they could resolve a claim.
@@ -18,22 +20,22 @@ Resolve the target:
 - Commit or range: resolve exact revisions.
 - Branch or PR: establish base and head from the request, PR metadata, or repository configuration. Use the merge base for a branch diff. Do not guess `main` or substitute a local range for an inaccessible PR.
 
-Record the target, revisions, inclusions, exclusions, and access gaps. Capture one diff or file snapshot. Report an empty diff as no changes to review. If the target changes, refresh affected evidence or state the resulting limit.
+Make the target and relevant access gaps clear. Use a snapshot when it helps keep reviewers aligned. Report an empty diff as no changes to review. If the target changes, refresh affected evidence or state the resulting limit.
 
 ## Review
 
-Explicit skill invocations and requested adversarial or multi-model reviews use two independent reviewers. Handle other reviews directly, including focused tests-only or simplicity-only requests. Keep the requested focus.
+Choose direct review or independent reviewers according to the task. Honor explicit requests for adversarial or multi-model review; invoking this skill alone does not require a panel. Keep the requested focus.
 
-The parent uses [Apply Principles](../apply-principles/SKILL.md) to select and read relevant references, then reads [Review criteria](references/rubric.md).
+Use [Apply Principles](../apply-principles/SKILL.md) and [Review criteria](references/rubric.md) as needed, reusing guidance already in context.
 
-For a panel:
+A typical panel uses the two configured reviewer roles:
 
 1. Resolve `review_reviewer_a` and `review_reviewer_b` through [model configuration](../setup-mstack/references/runtime-resolution.md). Follow each runner's instructions.
 2. Fill [Reviewer prompt](references/reviewer-prompt.md) with the scope, requirements, snapshot, project instructions, criteria, and selected reference paths. Exclude secrets and unrelated content. Launch both reviewers concurrently in fresh contexts with the same prompt.
 3. Retain process or agent identifiers and monitor completion. Capture reports and available model provenance before closing reviewers. Keep external artifacts outside the repository.
 4. Compare repository status and diffs before and after review. Report unexpected edits and exclude reports from reviewers that violated the read-only assignment. Do not silently keep or revert their edits.
 
-Report launch and access failures. Do not substitute models or repeatedly retry unavailable runners. With one usable report, label the verdict degraded. With none, report the blockers without claiming a completed review.
+Use judgment about retrying, narrowing the review, or continuing directly after a failure. Report what ran, any substitutions, and limits; do not present an incomplete requested panel as complete. Honor explicit model choices.
 
 ## Judge findings
 
@@ -41,7 +43,7 @@ Check findings against requirements, evidence, known constraints, and recorded d
 
 Before accepting a finding, verify its location, reachable path, preconditions, and consequence. Check callers, types, validation, and tests for evidence that rules it out. Investigate critical claims even from one reviewer. For unimplemented designs, distinguish requirement conflicts from assumptions needing runtime evidence.
 
-Merge findings only when they share a cause and affected path. Retain reviewer attribution and local IDs; assign stable `REV-NNN` IDs. Distinguish introduced defects from relevant pre-existing issues.
+Group findings by cause and affected path without losing distinct defects. Keep reviewer attribution; use stable `REV-NNN` IDs when useful for tracking. Distinguish introduced defects from relevant pre-existing issues.
 
 - **Act on:** verified problems worth fixing under the requirements.
 - **Consider:** plausible concerns with an unresolved assumption or tradeoff. State what would settle them.
@@ -51,7 +53,7 @@ Check proposed fixes against the simplicity and test criteria too. Prefer the sm
 
 ## Response
 
-Use these headings and keep empty sections brief:
+Use these headings as the default report structure, adapting detail to the task:
 
 ### Verdict
 
@@ -59,7 +61,7 @@ State whether justified findings remain. Summarize the intent, scope, and review
 
 ### Findings
 
-Order by impact. Include ID, Act on / Consider, location, evidence, consequence, and a suggested correction if known. Label pre-existing issues and attribute panel findings. Say "No justified findings" when appropriate.
+Order by impact. Include Act on / Consider, location, evidence, consequence, a suggested correction if known, and tracking IDs when used. Label pre-existing issues and attribute panel findings. Say "No justified findings" when appropriate.
 
 ### Rejected suggestions
 

@@ -1,6 +1,6 @@
 # Review criteria
 
-Apply relevant criteria without requiring a finding from each category.
+Use these criteria to guide judgment, focusing on the risks and tradeoffs that matter to the task. No category needs to produce a finding.
 
 ## Behavior and contracts
 

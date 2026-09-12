@@ -5,11 +5,13 @@ description: "Explain how code works, why a design was chosen, where behavior be
 
 # Explain
 
-Help the user understand the system. Investigate read-only; keep design critique and fixes to requested assessments.
+Help the user understand the system. Investigate read-only; keep design critique to requested assessments.
+
+Use judgment to adapt the investigation, depth, and delegation. These are workflow defaults; preserve the requested outcome and response format.
 
 ## Sources
 
-Read [Evidence](references/evidence.md) for sources to consider. Choose what could answer the question and follow useful leads. Check relevant connected sources when code leaves questions about requirements, decisions, or production behavior. Do not search every source by default.
+Use the [Evidence](references/evidence.md) menu when choosing sources. Choose what could answer the question and follow useful leads. Check relevant connected sources when code leaves questions about requirements, decisions, or production behavior. Do not search every source by default.
 
 - **Mechanics:** code, tests, configuration, and runtime evidence.
 - **Rationale:** Git history, Logbook records, tickets, discussions, and design records. Do not infer the author's reasons from code alone.

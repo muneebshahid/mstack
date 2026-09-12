@@ -44,6 +44,8 @@ The parent inspected Anthropic's [Code Review README](https://github.com/anthrop
 
 An Unslop pass tightened the entry point, criteria, and reviewer prompt from 1,426 to 1,263 words while retaining scope, panel handling, evidence requirements, and test-addition and removal rules. Skill, Logbook, and diff validation passed. This source comparison and prose revision did not include another consultant or behavioral test.
 
+The user subsequently made process requirements adaptable in [Use Judgment in Refined Workflows](2026-09-06-use-judgment-in-workflows.md). That pass supersedes fixed panel triggers, exhaustive reading, and unconditional failure stops while preserving read-only boundaries and explicit user requests.
+
 ## Consequences
 
 One fewer public skill and one fewer review reference. Reviewers still assess test coverage, but every proposed addition needs a concrete failure and every proposed removal must account for the protection it provided. Existing installations may retain the removed skill until refreshed.

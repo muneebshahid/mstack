@@ -40,6 +40,8 @@ Claude Code reviewed the draft through `consultant_default`, with requested and 
 
 The changes received instruction review and structural checks, not an end-to-end behavioral evaluation of direct design or comparison. The user approved the draft after removing history guidance already covered by Explain and replacing the rerun rules with agent judgment, then authorized committing and pushing it.
 
+The user subsequently made process requirements adaptable in [Use Judgment in Refined Workflows](2026-09-06-use-judgment-in-workflows.md). That pass supersedes fixed panel triggers, exhaustive reading, and unconditional failure stops while preserving read-only boundaries and explicit user requests.
+
 ## Consequences
 
 Two fewer public skills. Ordinary architecture work needs no extra model; independent comparisons use two candidates and optional consulting. User overrides must rename the candidate keys and remove the retired judge key; README documents this. Existing installations need a refresh to remove old entry points. Implement's broader simplification remains separate work.

@@ -1,12 +1,12 @@
 # Reviewer prompt
 
-Fill this template and send the same prompt to both reviewers.
+Adapt this template to the assignment, giving independent reviewers the same requirements and evidence.
 
 ---
 
 Review the supplied code or design against its requirements, complexity, and test usefulness. Report problems supported by evidence. No findings is a valid result.
 
-This is a read-only assignment in an existing panel. Do not edit project files, change external systems, invoke orchestration or selection workflows, or delegate. Read surrounding code to check claims.
+This is a read-only assignment in an existing panel. Do not edit project files or change external systems. Investigate directly by default, using surrounding code and relevant references as needed. Leave panel coordination to the parent.
 
 ## Scope and requirements
 
@@ -22,13 +22,13 @@ This is a read-only assignment in an existing panel. Do not edit project files, 
 
 ## Review references
 
-Read these documents in full; the parent has selected them:
+Use these references as a starting point, consulting relevant sections and further guidance as needed:
 
 {REVIEW_CRITERIA_AND_PRINCIPLE_PATHS}
 
 ## Findings
 
-For each finding, return:
+Use this format when useful for reporting findings:
 
 - A local ID such as `R-1` and a verified file/line or symbol.
 - The problem, consequence, and severity based on that consequence.
