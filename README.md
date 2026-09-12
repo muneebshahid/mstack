@@ -42,7 +42,6 @@ External consultants require the other CLI installed and logged in: Claude Code 
 | [skill-eval](skills/skill-eval/SKILL.md) | Evaluate skills with disposable scenarios and independent judgment. |
 | [gh-address-comments](skills/gh-address-comments/SKILL.md) | Address comments on the current GitHub pull request. |
 | [typescript-best-practices](skills/typescript-best-practices/SKILL.md) | Guide TypeScript types, APIs, modules, and runtime boundaries. |
-| [technical-writing](skills/technical-writing/SKILL.md) | Structure and clarify technical documentation. |
 | [unslop](skills/unslop/SKILL.md) | Remove generic AI wording while preserving meaning. |
 | [bro](skills/bro/SKILL.md) | Restate the preceding answer in shorter, plain language. |
 

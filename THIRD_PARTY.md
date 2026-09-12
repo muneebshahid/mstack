@@ -20,7 +20,7 @@ PStack is distributed under the MIT License. Its license is preserved at [`LICEN
 
 ## Unslop
 
-`unslop` incorporates upstream work whose MIT notice is preserved in [`skills/unslop/LICENSE`](skills/unslop/LICENSE).
+`unslop` incorporates Stephen D. Turner's work, whose MIT notice is preserved in [`skills/unslop/LICENSE`](skills/unslop/LICENSE). Its pattern catalogs also draw on [tropes.fyi](https://tropes.fyi) by [ossama.is](https://ossama.is), originally included as a separate reference and now consolidated into the phrase and structure guides.
 
 ## Superpowers
 
