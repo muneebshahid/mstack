@@ -21,7 +21,7 @@ Use the [Evidence](references/evidence.md) menu when choosing sources. Choose wh
 
 Handle simple questions directly. When exploration benefits from delegation, use one or two subagents through `explain_explorer` in [model configuration](../setup-mstack/references/runtime-resolution.md): Luna at `max` on Codex, Sonnet at `high` on Claude Code. Give each a focused read-only question and relevant context; split distinct investigations when using two. The main agent checks their evidence and writes the explanation. If delegation is unavailable, continue directly and report the limitation.
 
-Consult another model when independent judgment would help, using `consultant_default` and its runner. Give it a focused question and relevant context; check its evidence before using the answer.
+Use [Consult](../consult/SKILL.md) when independent judgment would help, with `consultant_default`. Give it a focused question and relevant context; check its evidence before using the answer.
 
 Use [Review](../review/SKILL.md) for requested adversarial or multi-model critique. Include the subsystem or design, its requirements, and existing findings.
 

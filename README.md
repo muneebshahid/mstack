@@ -36,8 +36,7 @@ External consultants require the other CLI installed and logged in: Claude Code 
 | [review](skills/review/SKILL.md) | Review correctness, simplicity, and test usefulness, directly or with independent reviewers. Read-only. |
 | [apply-principles](skills/apply-principles/SKILL.md) | Select relevant engineering standards, including simplicity, strong types, ownership, diagnosis, and verification. |
 | [logbook](skills/logbook/SKILL.md) | Record work, accepted and rejected approaches, reasoning, and evidence. |
-| [claude-code](skills/claude-code/SKILL.md) | Consult an external Claude model. |
-| [codex](skills/codex/SKILL.md) | Consult an external GPT model. |
+| [consult](skills/consult/SKILL.md) | Get independent judgment from Claude or Codex, with resumable follow-ups and native fallback. |
 | [setup-mstack](skills/setup-mstack/SKILL.md) | Configure model assignments and check runner availability. |
 | [skill-eval](skills/skill-eval/SKILL.md) | Evaluate skills with disposable scenarios and independent judgment. |
 | [gh-address-comments](skills/gh-address-comments/SKILL.md) | Address comments on the current GitHub pull request. |

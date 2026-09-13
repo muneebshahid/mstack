@@ -9,6 +9,8 @@ Claude Code-led workflows need a non-Claude model for independent design, critiq
 
 ## Decision
 
+The original launcher decision below is superseded by [Consolidate Resumable Consultation](2026-09-12-consolidate-resumable-consultation.md). Historical paths describe the original implementation.
+
 Use `codex` as the reciprocal launcher contract to `claude-code` ([Claude Runs as an Independent Consultant](2026-09-03-claude-as-independent-consultant.md)). The calling workflow resolves the model, effort, and Fast setting from its named MStack role and owns the task prompt. The launcher runs `codex exec --json` in Codex's `read-only` sandbox, prepends the same consultant boundary the Claude launcher uses, streams sanitized activity, and verifies the served model and effort from the session rollout Codex writes under its home directory before accepting a result.
 
 The launcher deliberately does not pass `--ephemeral`, because the JSON event stream does not name the served model and the rollout is the only provenance source. Codex does not report the served service tier, so a Fast request is recorded as requested but unverified.

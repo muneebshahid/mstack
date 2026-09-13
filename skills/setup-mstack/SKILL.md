@@ -34,10 +34,10 @@ Using the other host's profile fails at launch because its native runner does no
 Enumerate model identifiers from the current harness's callable native-agent schema or a provider command that reports the user's available models. Check required runners as well as model names:
 
 - `codex-native` needs the Codex host. `claude-native` needs the Claude Code host.
-- `claude-code` means MStack's sibling `claude-code` skill and `scripts/run_claude.py`; its executable is `CLAUDE_CODE_BIN` when set, otherwise `claude`. Do not look for a binary named `claude-code`.
-- `codex` means MStack's sibling `codex` skill and `scripts/run_codex.py`; its executable is `CODEX_BIN` when set, otherwise `codex`. It also needs a writable Codex home (`CODEX_HOME` or `~/.codex`) because served-model provenance is read from the session rollout.
+- `claude-code` means the [Consult](../consult/SKILL.md) launcher with `--provider claude`; its executable is `CLAUDE_CODE_BIN` when set, otherwise `claude`. Do not look for a binary named `claude-code`.
+- `codex` means the [Consult](../consult/SKILL.md) launcher with `--provider codex`; its executable is `CODEX_BIN` when set, otherwise `codex`. It also needs a writable Codex home (`CODEX_HOME` or `~/.codex`) because served-model provenance is read from the session rollout.
 
-Check that the external CLI for the selected profile is on `PATH` and logged in (`codex login status` or `claude auth status`). Report a missing or unauthenticated CLI as a capability gap for every role that uses it, and tell the user how to install or log in. Do not silently move those roles to the native runner.
+Check that the external CLI for the selected profile is on `PATH` and logged in (`codex login status` or `claude auth status`). Report a missing or unauthenticated CLI as a capability gap for every role that uses it, and tell the user how to install or log in. Consult can use a native fallback at execution time and must report the substitution; keep the saved assignment unchanged.
 
 Do not treat a packaged default, documentation example, or successful authentication as proof that a model is available. When entitlement cannot be inspected without running an expensive model, ask the user to confirm the exact identifier. If a launch probe is useful and authorized, use the cheapest suitable model: Luna `low` with Fast for Codex mechanics and Haiku `low` for Claude mechanics. Do not run a Haiku probe in Claude plan mode because the harness may route planning to a larger model. Verify served-model provenance. A cheap probe validates the runner, not a different production model.
 

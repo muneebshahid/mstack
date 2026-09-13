@@ -207,21 +207,9 @@ def validate_tests() -> None:
             "unittest",
             "discover",
             "-s",
-            "skills/claude-code/scripts",
+            "skills/consult/scripts",
             "-p",
-            "test_run_claude.py",
-        ]
-    )
-    run(
-        [
-            sys.executable,
-            "-m",
-            "unittest",
-            "discover",
-            "-s",
-            "skills/codex/scripts",
-            "-p",
-            "test_run_codex.py",
+            "test_*.py",
         ]
     )
     run(

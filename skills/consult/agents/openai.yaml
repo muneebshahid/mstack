@@ -1,0 +1,4 @@
+interface:
+  display_name: "Consult"
+  short_description: "Get independent judgment with resumable follow-ups"
+  default_prompt: "Use $consult for an independent assessment, then check its evidence and discuss any disagreements."
