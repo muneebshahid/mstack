@@ -1,44 +1,46 @@
 # Logbook: Evaluate Skills in Disposable Runs
 
 Status: implemented
-Kind: testing
+Kind: simplification
 
 ## Problem
 
-Reading a skill file cannot establish that it activates correctly, invokes the required agents, preserves identities, respects authority, or produces the promised artifact. Testing proposed changes directly in the installed skill would contaminate both the control and the user's environment.
+Reading a skill cannot establish that it selects the right workflow, delegates successfully, or produces useful results. The original evaluation workflow protected these distinctions but repeated them across four files and required an independent judge for every run.
 
 ## Decision
 
-`skill-eval` evaluates existing skills only. New skills remain the responsibility of the bundled `skill-creator`.
+Keep [Skill Eval](../../../skills/skill-eval/SKILL.md) focused on realistic scenarios, predefined criteria, fresh runs, observed evidence, and a consistent report. Use agent judgment for scenario count, repetition, and independent judging; prefer an independent judge for subjective comparisons of revisions the evaluator authored. Evaluation leaves installed skills and live systems unchanged.
 
-Evaluation without a revision runs the current skill against realistic acceptance criteria. Evaluation with a proposed revision creates complete temporary current and proposed snapshots, runs matched scenarios, and compares observed behavior. Candidate work occurs in disposable Git repositories and temporary skill roots; the installed skill remains unchanged.
+Compare complete skill versions under matching conditions and verify which version each candidate read. Distinguish automatic selection from explicitly loaded execution. Cheap model assignments test mechanics; output-quality judgments use the skill's assigned models. Preserve failures, uncertainty, and meaningful ties.
 
-Use host-native fresh subagents for leaf skills. When the skill under test must itself spawn native agents, use one top-level ephemeral `codex exec --json` candidate process inside the disposable repository. That candidate may use native subagents but must not launch another Codex process.
+Keep the evaluator in the parent. The [execution reference](../../../skills/skill-eval/references/scenario-runs.md) selects a native candidate when its available tools and remaining nesting depth support the task. Otherwise, the evaluator launches a fresh top-level harness process. Its agent tree is separate from the desktop task's tree. Do not encode a universal nesting limit or change configuration to make a test pass.
 
-Execution smoke tests use dedicated cheap roles rather than production assignments. The packaged `multimodel` and `codex` profiles map both candidate and judge to Luna `low` with Fast; the `claude-code` profile maps both to Haiku `low`. Quality evaluation uses the production models and settings. A blinded judge reads one common temporary evidence root; launcher metadata stays outside that root so it cannot reveal candidate identity.
+Merge reporting into four sections in the main skill and remove the separate report and judge templates. Keep only the execution reference for discovery, permissions, delegation, and session-lifecycle details.
 
 ## Alternatives considered
 
-- Compare a task with and without a newly created skill. Rejected; new-skill creation and initial testing already belong to `skill-creator`.
-- Inject only proposed prose into an evaluator prompt. Rejected because it does not test a complete loadable skill and can hide dependency effects.
-- Modify the installed skill and roll it back. Rejected because failure or concurrency could leave the real installation changed.
-- Use `codex exec` for every candidate. Rejected because native subagents provide the correct boundary for leaf behavior; the external process is reserved for testing nested orchestration.
+- Require independent judging for every run: removed because direct evidence can settle simple execution checks; use a judge when requested or useful.
+- Move the old instructions into references: rejected because this would preserve the duplication and overhead.
+- Test an appended diff or modify the installed skill temporarily: rejected because neither reliably isolates complete versions.
+- Always launch candidates in a separate CLI: rejected because native candidates suffice when their tools and delegation depth support the workflow.
+- Assume Codex and Claude have identical nesting limits: rejected based on the host probe and current Claude documentation.
 
 ## Evidence
 
-- `skills/skill-eval/SKILL.md`
-- `skills/skill-eval/references/scenario-runs.md`
-- `skills/skill-eval/references/judge-prompt.md`
-- `skills/skill-eval/references/report-template.md`
+The initial record reconstructed the evaluation design from the installed stack. The parent later consolidated the main workflow and references, updated the README description, and retained existing model assignments and invocation policy.
 
-This record reconstructs the decision from the installed stack because version control begins with this public repository.
+A fresh Codex desktop Luna `low` child inspected its callable and deferred tools and reported no native spawn operation. It did not create a descendant or substitute a desktop task. The parent closed it after completion. The native tool could not request the configured Fast tier, so that setting is unverified. This establishes the observed desktop-child limitation, not a universal Codex CLI limit.
+
+The installed Claude Code version was 2.1.257. [Current Claude documentation](https://code.claude.com/docs/en/sub-agents#let-subagents-spawn-their-own-subagents) describes three nested subagent layers by default and a configurable depth limit. This was a documentation check, not a live Claude nesting trial. No harness configuration was changed.
+
+Fable reviewed the original and shortened instructions through Consult, with `claude-fable-5-1` verified and `max` requested; Claude effort is not independently verified. It approved the simplification with two proposed requirements. The parent accepted reading the execution reference before launching and clarified that tool availability must be checked at the candidate's depth. The parent narrowed mandatory independent judging for every self-authored revision to a preference for subjective comparisons, because deterministic execution evidence need not incur another model call. Duplicate authority, activation, and agent-ID instructions were removed. Existing source and reference links, skill structure, repository hygiene, and Logbook validation passed. This was an authoring review and capability probe, not a comparative behavioral evaluation of the two Skill Eval versions. Temporary consultant prompts, reports, and logs were removed after recording these findings.
 
 ## Consequences
 
-Smoke tests can establish workflow mechanics without spending production-model budgets, but they must not claim production output quality. Native lifecycle behavior passes only with trace evidence containing real identifiers and subsequent operations against them. Missing capabilities remain failed or unexercised branches rather than prose simulations.
+The skill remains useful for both execution checks and comparisons while avoiding a mandatory judging pipeline. A capability failure can leave a criterion untested. Explicitly loading a skill does not prove automatic selection, and a separate harness process does not prove desktop-level agent integration.
 
 ## Revisit when
 
-- The desktop host exposes nested native subagents directly to an evaluation child.
-- Trace formats change and no longer expose identities or lifecycle operations.
-- Repeated smoke tests show that temporary model substitution changes the orchestration behavior being measured.
+- Harness tools or nesting limits change.
+- Repeated runs show misleading conclusions from the reduced instructions.
+- A recurring evaluation needs stronger sampling or independent judgment.

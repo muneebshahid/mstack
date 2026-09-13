@@ -38,7 +38,7 @@ External consultants require the other CLI installed and logged in: Claude Code 
 | [logbook](skills/logbook/SKILL.md) | Record work, accepted and rejected approaches, reasoning, and evidence. |
 | [consult](skills/consult/SKILL.md) | Get independent judgment from Claude or Codex, with resumable follow-ups and native fallback. |
 | [setup-mstack](skills/setup-mstack/SKILL.md) | Configure model assignments and check runner availability. |
-| [skill-eval](skills/skill-eval/SKILL.md) | Evaluate skills with disposable scenarios and independent judgment. |
+| [skill-eval](skills/skill-eval/SKILL.md) | Evaluate skills and compare revisions with realistic scenarios and evidence. |
 | [gh-address-comments](skills/gh-address-comments/SKILL.md) | Address comments on the current GitHub pull request. |
 | [typescript-best-practices](skills/typescript-best-practices/SKILL.md) | Guide TypeScript types, APIs, modules, and runtime boundaries. |
 | [unslop](skills/unslop/SKILL.md) | Remove generic AI wording while preserving meaning. |
