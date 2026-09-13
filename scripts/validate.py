@@ -128,24 +128,24 @@ def validate_manifests() -> None:
 
 
 def validate_toml() -> None:
-    paths = [ROOT / "config/models.defaults.toml", *sorted((ROOT / "config/profiles").glob("*.toml"))]
+    paths = [ROOT / "config/models.defaults.toml", *sorted((ROOT / "config/presets").glob("*.toml"))]
     for path in paths:
         with path.open("rb") as stream:
             tomllib.load(stream)
     with (ROOT / "config/models.defaults.toml").open("rb") as stream:
-        profiles = tomllib.load(stream)["profiles"]
-    for profile in profiles:
+        presets = tomllib.load(stream)["presets"]
+    for preset in presets:
         run(
             [
                 sys.executable,
                 "skills/setup-mstack/scripts/models.py",
                 "resolve",
-                "--profile",
-                profile,
+                "--preset",
+                preset,
                 "--no-user-config",
             ]
         )
-    print(f"Validated {len(paths)} TOML files and all packaged profiles")
+    print(f"Validated {len(paths)} TOML files and all packaged presets")
 
 
 def validate_links(paths: list[Path]) -> None:

@@ -35,7 +35,7 @@ class Assignment:
 class ResolvedConfig:
     schema_version: int
     host: str
-    profile: str
+    preset: str
     description: str
     user_config: str | None
     roles: dict[str, Assignment]
@@ -54,9 +54,9 @@ def detect_host() -> str:
     return "claude-code" if os.environ.get("CLAUDECODE") else "codex"
 
 
-def default_profile_for(defaults: dict[str, object], host: str) -> str:
-    table = require_table(defaults, "default_profile", "defaults")
-    return require_string(table, host, "defaults.default_profile")
+def default_preset_for(defaults: dict[str, object], host: str) -> str:
+    table = require_table(defaults, "default_preset", "defaults")
+    return require_string(table, host, "defaults.default_preset")
 
 
 def default_user_config_path() -> Path:
@@ -145,7 +145,7 @@ def merge_assignment(base: dict[str, object], override: dict[str, object], owner
 
 
 def resolve_config(
-    profile_override: str | None = None,
+    preset_override: str | None = None,
     config_path: Path | None = None,
     use_user_config: bool = True,
 ) -> ResolvedConfig:
@@ -154,37 +154,39 @@ def resolve_config(
     defaults = load_toml(defaults_path)
     schema_version = require_integer(defaults, "schema_version", "defaults")
     host = detect_host()
-    default_profile = default_profile_for(defaults, host)
-    profiles = parse_string_list(defaults, "profiles", "defaults")
+    default_preset = default_preset_for(defaults, host)
+    presets = parse_string_list(defaults, "presets", "defaults")
     role_names = parse_string_list(defaults, "roles", "defaults")
     resolved_user_path = config_path or default_user_config_path()
     user: dict[str, object] = {}
     user_loaded = use_user_config and resolved_user_path.exists()
     if user_loaded:
         user = load_toml(resolved_user_path)
+        if "profile" in user:
+            raise ConfigError("replace profile with preset in the user configuration; choose codex-preset or claude-preset")
         user_schema = user.get("schema_version", schema_version)
         if user_schema != schema_version:
             raise ConfigError(f"user schema_version must be {schema_version}")
-    selected_profile = profile_override or user.get("profile") or default_profile
-    if not isinstance(selected_profile, str) or selected_profile not in profiles:
-        raise ConfigError(f"profile must be one of {', '.join(profiles)}")
-    profile_path = root / "config" / "profiles" / f"{selected_profile}.toml"
-    profile = load_toml(profile_path)
-    if require_integer(profile, "schema_version", f"profile {selected_profile}") != schema_version:
-        raise ConfigError(f"profile {selected_profile} has an incompatible schema_version")
-    if require_string(profile, "name", f"profile {selected_profile}") != selected_profile:
-        raise ConfigError(f"profile file name and declared name differ: {selected_profile}")
-    description = require_string(profile, "description", f"profile {selected_profile}")
-    profile_roles = require_table(profile, "roles", f"profile {selected_profile}")
-    missing = set(role_names) - set(profile_roles)
-    extra = set(profile_roles) - set(role_names)
+    selected_preset = preset_override or user.get("preset") or default_preset
+    if not isinstance(selected_preset, str) or selected_preset not in presets:
+        raise ConfigError(f"preset must be one of {', '.join(presets)}")
+    preset_path = root / "config" / "presets" / f"{selected_preset}.toml"
+    preset = load_toml(preset_path)
+    if require_integer(preset, "schema_version", f"preset {selected_preset}") != schema_version:
+        raise ConfigError(f"preset {selected_preset} has an incompatible schema_version")
+    if require_string(preset, "name", f"preset {selected_preset}") != selected_preset:
+        raise ConfigError(f"preset file name and declared name differ: {selected_preset}")
+    description = require_string(preset, "description", f"preset {selected_preset}")
+    preset_roles = require_table(preset, "roles", f"preset {selected_preset}")
+    missing = set(role_names) - set(preset_roles)
+    extra = set(preset_roles) - set(role_names)
     if missing or extra:
         details = []
         if missing:
             details.append(f"missing {', '.join(sorted(missing))}")
         if extra:
             details.append(f"unknown {', '.join(sorted(extra))}")
-        raise ConfigError(f"profile {selected_profile} roles differ from the registry: {'; '.join(details)}")
+        raise ConfigError(f"preset {selected_preset} roles differ from the registry: {'; '.join(details)}")
     user_roles_value = user.get("roles", {})
     if not isinstance(user_roles_value, dict):
         raise ConfigError("user roles must be a table")
@@ -193,17 +195,17 @@ def resolve_config(
         raise ConfigError(f"user configuration has unknown roles: {', '.join(sorted(unknown_user_roles))}")
     resolved: dict[str, Assignment] = {}
     for role_name in role_names:
-        base = profile_roles[role_name]
+        base = preset_roles[role_name]
         override = user_roles_value.get(role_name, {})
         if not isinstance(base, dict):
-            raise ConfigError(f"profile role {role_name} must be a table")
+            raise ConfigError(f"preset role {role_name} must be a table")
         if not isinstance(override, dict):
             raise ConfigError(f"user role {role_name} must be a table")
         resolved[role_name] = merge_assignment(base, override, f"roles.{role_name}")
     return ResolvedConfig(
         schema_version=schema_version,
         host=host,
-        profile=selected_profile,
+        preset=selected_preset,
         description=description,
         user_config=str(resolved_user_path) if user_loaded else None,
         roles=resolved,
@@ -218,7 +220,7 @@ def resolved_payload(config: ResolvedConfig, role: str | None) -> dict[str, obje
         return {
             "schema_version": config.schema_version,
             "host": config.host,
-            "profile": config.profile,
+            "preset": config.preset,
             "user_config": config.user_config,
             "role": role,
             "assignment": asdict(assignment),
@@ -226,7 +228,7 @@ def resolved_payload(config: ResolvedConfig, role: str | None) -> dict[str, obje
     return {
         "schema_version": config.schema_version,
         "host": config.host,
-        "profile": config.profile,
+        "preset": config.preset,
         "description": config.description,
         "user_config": config.user_config,
         "roles": {name: asdict(value) for name, value in config.roles.items()},
@@ -255,8 +257,8 @@ def toml_string(value: str) -> str:
     return json.dumps(value, ensure_ascii=False)
 
 
-def render_user_config(profile: str, override_values: list[str]) -> str:
-    registry = resolve_config(profile_override=profile, use_user_config=False)
+def render_user_config(preset: str, override_values: list[str]) -> str:
+    registry = resolve_config(preset_override=preset, use_user_config=False)
     overrides: dict[str, dict[str, object]] = {}
     for value in override_values:
         role, field, parsed = parse_override(value)
@@ -265,7 +267,7 @@ def render_user_config(profile: str, override_values: list[str]) -> str:
         overrides.setdefault(role, {})[field] = parsed
     for role, values in overrides.items():
         merge_assignment(asdict(registry.roles[role]), values, f"roles.{role}")
-    lines = [f"schema_version = {registry.schema_version}", f"profile = {toml_string(profile)}"]
+    lines = [f"schema_version = {registry.schema_version}", f"preset = {toml_string(preset)}"]
     for role in registry.roles:
         values = overrides.get(role)
         if not values:
@@ -296,15 +298,15 @@ def build_parser() -> argparse.ArgumentParser:
     commands = parser.add_subparsers(dest="command", required=True)
     resolve = commands.add_parser("resolve")
     resolve.add_argument("--role")
-    resolve.add_argument("--profile")
+    resolve.add_argument("--preset")
     resolve.add_argument("--config", type=Path)
     resolve.add_argument("--no-user-config", action="store_true")
     configure = commands.add_parser("configure")
-    configure.add_argument("--profile", required=True)
+    configure.add_argument("--preset", required=True)
     configure.add_argument("--set", action="append", default=[])
     configure.add_argument("--output", type=Path)
     configure.add_argument("--dry-run", action="store_true")
-    commands.add_parser("profiles")
+    commands.add_parser("presets")
     return parser
 
 
@@ -314,29 +316,29 @@ def main(arguments: list[str] | None = None) -> int:
     try:
         if options.command == "resolve":
             config = resolve_config(
-                profile_override=options.profile,
+                preset_override=options.preset,
                 config_path=options.config,
                 use_user_config=not options.no_user_config,
             )
             print(json.dumps(resolved_payload(config, options.role), indent=2))
             return 0
-        if options.command == "profiles":
+        if options.command == "presets":
             defaults = load_toml(repository_root() / "config" / "models.defaults.toml")
             host = detect_host()
-            default_profile = default_profile_for(defaults, host)
+            default_preset = default_preset_for(defaults, host)
             print(f"host: {host}")
-            for profile in parse_string_list(defaults, "profiles", "defaults"):
-                resolved = resolve_config(profile_override=profile, use_user_config=False)
-                marker = "  (default for this host)" if profile == default_profile else ""
-                print(f"{resolved.profile}\t{resolved.description}{marker}")
+            for preset in parse_string_list(defaults, "presets", "defaults"):
+                resolved = resolve_config(preset_override=preset, use_user_config=False)
+                marker = "  (default for this host)" if preset == default_preset else ""
+                print(f"{resolved.preset}\t{resolved.description}{marker}")
             return 0
-        content = render_user_config(options.profile, options.set)
+        content = render_user_config(options.preset, options.set)
         if options.dry_run:
             print(content, end="")
             return 0
         output = options.output or default_user_config_path()
         write_user_config(output, content)
-        print(json.dumps({"written": str(output), "profile": options.profile, "overrides": len(options.set)}))
+        print(json.dumps({"written": str(output), "preset": options.preset, "overrides": len(options.set)}))
         return 0
     except ConfigError as error:
         print(f"mstack-models: {error}", file=sys.stderr)

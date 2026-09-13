@@ -15,7 +15,7 @@ Use `codex` as the reciprocal launcher contract to `claude-code` ([Claude Runs a
 
 The launcher deliberately does not pass `--ephemeral`, because the JSON event stream does not name the served model and the rollout is the only provenance source. Codex does not report the served service tier, so a Fast request is recorded as requested but unverified.
 
-External launchers in both directions are read-only consultants. The resolver rejects them for `implement_worker`; that rule and the `claude-multimodel` profile are owned by [Centralize Model Role Configuration](2026-09-03-centralize-model-role-configuration.md).
+External launchers in both directions are read-only consultants. The resolver rejects them for `implement_worker`; that rule and the `claude-preset` preset are owned by [Centralize Model Role Configuration](2026-09-03-centralize-model-role-configuration.md).
 
 ## Alternatives considered
 
@@ -30,7 +30,7 @@ External launchers in both directions are read-only consultants. The resolver re
 - `skills/codex/scripts/run_codex.py`
 - `skills/codex/scripts/test_run_codex.py`
 - `skills/setup-mstack/references/runtime-resolution.md`
-- `config/profiles/claude-multimodel.toml`
+- `config/presets/claude-preset.toml`
 
 A real `gpt-5.6-luna` `low` Fast run from Claude Code on this repository returned a report, and the launcher verified `gpt-5.6-luna` and `low` from the rollout's `turn_context` record. The rollout's `turn_context` payload carries the served effort in its top-level `effort` field, not the nested `reasoning_effort`; reading the wrong field fails provenance, so the fake-Codex tests mirror the real rollout shape.
 

@@ -1,63 +1,63 @@
 schema_version = 1
-name = "codex-multimodel"
-description = "Codex-led topology with native GPT workers and external Claude judgment"
+name = "claude-preset"
+description = "Defaults for Claude Code with Codex consultation"
 
 [roles.implement_worker]
-runner = "codex-native"
-model = "gpt-5.6-luna"
+runner = "claude-native"
+model = "sonnet"
 effort = "high"
-fast = true
+fast = false
 
 [roles.explain_explorer]
-runner = "codex-native"
-model = "gpt-5.6-luna"
-effort = "max"
+runner = "claude-native"
+model = "sonnet"
+effort = "high"
 fast = false
 
 [roles.architect_candidate_a]
-runner = "claude-code"
+runner = "claude-native"
 model = "claude-fable-5-1"
 effort = "xhigh"
 fast = false
 
 [roles.architect_candidate_b]
-runner = "codex-native"
-model = "gpt-5.6-sol"
+runner = "codex"
+model = "gpt-6-astra"
 effort = "xhigh"
 fast = false
 
 [roles.review_reviewer_a]
-runner = "claude-code"
+runner = "claude-native"
 model = "claude-fable-5-1"
 effort = "max"
 fast = false
 
 [roles.review_reviewer_b]
-runner = "codex-native"
-model = "gpt-5.6-sol"
+runner = "codex"
+model = "gpt-6-astra"
 effort = "max"
 fast = false
 
 [roles.skill_eval_quality_judge]
-runner = "claude-code"
+runner = "claude-native"
 model = "claude-fable-5-1"
-effort = "xhigh"
+effort = "medium"
 fast = false
 
 [roles.skill_eval_smoke_candidate]
-runner = "codex-native"
-model = "gpt-5.6-luna"
+runner = "claude-native"
+model = "haiku"
 effort = "low"
-fast = true
+fast = false
 
 [roles.skill_eval_smoke_judge]
-runner = "codex-native"
-model = "gpt-5.6-luna"
+runner = "claude-native"
+model = "haiku"
 effort = "low"
-fast = true
+fast = false
 
 [roles.consultant_default]
-runner = "claude-code"
-model = "claude-fable-5-1"
+runner = "codex"
+model = "gpt-6-astra"
 effort = "xhigh"
 fast = false

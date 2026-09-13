@@ -30,64 +30,71 @@ class ModelsTest(unittest.TestCase):
         self.assertEqual(expected_code, result.returncode, result.stderr)
         return result
 
-    def test_every_profile_resolves(self) -> None:
-        for profile in ("codex-multimodel", "claude-multimodel"):
-            result = self.run_models("resolve", "--profile", profile, "--no-user-config")
-            self.assertIn(f'"profile": "{profile}"', result.stdout)
+    def test_every_preset_resolves(self) -> None:
+        for preset in ("codex-preset", "claude-preset"):
+            result = self.run_models("resolve", "--preset", preset, "--no-user-config")
+            self.assertIn(f'"preset": "{preset}"', result.stdout)
 
-    def test_codex_host_defaults_to_codex_multimodel(self) -> None:
+    def test_codex_host_defaults_to_codex_preset(self) -> None:
         result = self.run_models("resolve", "--role", "implement_worker", "--no-user-config")
         self.assertIn('"host": "codex"', result.stdout)
-        self.assertIn('"profile": "codex-multimodel"', result.stdout)
+        self.assertIn('"preset": "codex-preset"', result.stdout)
         self.assertIn('"model": "gpt-5.6-luna"', result.stdout)
-        self.assertIn('"effort": "high"', result.stdout)
-        self.assertIn('"fast": true', result.stdout)
+        self.assertIn('"effort": "max"', result.stdout)
+        self.assertIn('"fast": false', result.stdout)
 
-    def test_claude_code_host_defaults_to_claude_multimodel(self) -> None:
+    def test_claude_code_host_defaults_to_claude_preset(self) -> None:
         result = self.run_models(
             "resolve", "--role", "review_reviewer_b", "--no-user-config", CLAUDECODE="1"
         )
         self.assertIn('"host": "claude-code"', result.stdout)
-        self.assertIn('"profile": "claude-multimodel"', result.stdout)
+        self.assertIn('"preset": "claude-preset"', result.stdout)
         self.assertIn('"runner": "codex"', result.stdout)
-        self.assertIn('"model": "gpt-5.6-sol"', result.stdout)
+        self.assertIn('"model": "gpt-6-astra"', result.stdout)
         self.assertIn('"effort": "max"', result.stdout)
 
     def test_explicit_host_overrides_detection(self) -> None:
         result = self.run_models("resolve", "--no-user-config", MSTACK_HOST="codex", CLAUDECODE="1")
-        self.assertIn('"profile": "codex-multimodel"', result.stdout)
+        self.assertIn('"preset": "codex-preset"', result.stdout)
         result = self.run_models("resolve", "--no-user-config", MSTACK_HOST="other", expected_code=2)
         self.assertIn("MSTACK_HOST", result.stderr)
 
-    def test_user_profile_wins_over_host_default(self) -> None:
+    def test_user_preset_wins_over_host_default(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             config = Path(directory) / "models.toml"
-            config.write_text('schema_version = 1\nprofile = "codex-multimodel"\n', encoding="utf-8")
+            config.write_text('schema_version = 1\npreset = "codex-preset"\n', encoding="utf-8")
             result = self.run_models("resolve", "--config", str(config), CLAUDECODE="1")
-            self.assertIn('"profile": "codex-multimodel"', result.stdout)
+            self.assertIn('"preset": "codex-preset"', result.stdout)
 
-    def test_profiles_marks_the_host_default(self) -> None:
-        result = self.run_models("profiles", CLAUDECODE="1")
+    def test_presets_marks_the_host_default(self) -> None:
+        result = self.run_models("presets", CLAUDECODE="1")
         self.assertIn("host: claude-code", result.stdout)
-        self.assertIn("claude-multimodel\t", result.stdout)
+        self.assertIn("claude-preset\t", result.stdout)
         self.assertIn("(default for this host)", result.stdout)
 
     def test_user_override_changes_only_named_fields(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             config = Path(directory) / "models.toml"
             config.write_text(
-                'schema_version = 1\nprofile = "codex-multimodel"\n\n[roles.architect_candidate_b]\neffort = "low"\n',
+                'schema_version = 1\npreset = "codex-preset"\n\n[roles.architect_candidate_b]\neffort = "low"\n',
                 encoding="utf-8",
             )
             result = self.run_models("resolve", "--role", "architect_candidate_b", "--config", str(config))
-            self.assertIn('"model": "gpt-5.6-sol"', result.stdout)
+            self.assertIn('"model": "gpt-6-astra"', result.stdout)
             self.assertIn('"effort": "low"', result.stdout)
+
+    def test_legacy_profile_is_not_silently_ignored(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            config = Path(directory) / "models.toml"
+            config.write_text('schema_version = 1\nprofile = "codex-multimodel"\n', encoding="utf-8")
+            result = self.run_models("resolve", "--config", str(config), expected_code=2)
+            self.assertIn("replace profile with preset", result.stderr)
 
     def test_unknown_user_role_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             config = Path(directory) / "models.toml"
             config.write_text(
-                'schema_version = 1\nprofile = "codex-multimodel"\n\n[roles.unknown]\nmodel = "x"\n',
+                'schema_version = 1\npreset = "codex-preset"\n\n[roles.unknown]\nmodel = "x"\n',
                 encoding="utf-8",
             )
             result = self.run_models("resolve", "--config", str(config), expected_code=2)
@@ -98,22 +105,22 @@ class ModelsTest(unittest.TestCase):
             config = Path(directory) / "models.toml"
             self.run_models(
                 "configure",
-                "--profile",
-                "claude-multimodel",
+                "--preset",
+                "claude-preset",
                 "--set",
                 "consultant_default.effort=medium",
                 "--output",
                 str(config),
             )
             result = self.run_models("resolve", "--role", "consultant_default", "--config", str(config))
-            self.assertIn('"profile": "claude-multimodel"', result.stdout)
+            self.assertIn('"preset": "claude-preset"', result.stdout)
             self.assertIn('"effort": "medium"', result.stdout)
 
     def test_fast_rejected_for_claude_runners(self) -> None:
         result = self.run_models(
             "configure",
-            "--profile",
-            "claude-multimodel",
+            "--preset",
+            "claude-preset",
             "--set",
             "implement_worker.fast=true",
             "--dry-run",
@@ -124,8 +131,8 @@ class ModelsTest(unittest.TestCase):
     def test_external_runner_rejected_for_implement_worker(self) -> None:
         result = self.run_models(
             "configure",
-            "--profile",
-            "claude-multimodel",
+            "--preset",
+            "claude-preset",
             "--set",
             "implement_worker.runner=codex",
             "--dry-run",
@@ -136,8 +143,8 @@ class ModelsTest(unittest.TestCase):
     def test_fast_accepted_for_external_codex_runner(self) -> None:
         result = self.run_models(
             "configure",
-            "--profile",
-            "claude-multimodel",
+            "--preset",
+            "claude-preset",
             "--set",
             "consultant_default.fast=true",
             "--dry-run",

@@ -22,7 +22,7 @@ Start a new task, then run `$setup-mstack`.
 
 Start a new session, then run `/mstack:setup-mstack`.
 
-Setup selects the host's model profile and configures overrides in `~/.config/mstack/models.toml`. Defaults live in [`config/`](config/).
+Setup offers `codex-preset` and `claude-preset` with optional role customization. Your active profile combines the selected preset and overrides in `~/.config/mstack/models.toml`. Defaults live in [`config/presets/`](config/presets/).
 
 External consultants require the other CLI installed and logged in: Claude Code for Claude consultation, Codex for GPT consultation. GitHub workflows require `gh`. Explain can use connected sources such as Linear and service logs when available.
 

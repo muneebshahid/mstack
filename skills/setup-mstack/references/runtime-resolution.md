@@ -1,28 +1,32 @@
 # Runtime model resolution
 
-Before launching a model role, resolve its assignment:
+Resolve each role using the Setup MStack script from the same plugin installation as the calling skill:
 
 ```bash
 python3 <setup-mstack-directory>/scripts/models.py resolve --role <role-name>
 ```
 
-Resolve `setup-mstack` from the same installed MStack plugin as the calling skill. Do not use an identically named standalone copy from another installation. The returned assignment is authoritative for that invocation. The payload also reports the detected `host` (`codex` or `claude-code`) and the effective `profile`.
+Use the returned assignment, host, and preset for that invocation. The resolved roles form the active profile.
+
+## Configuration
+
+The user file selects `preset = "codex-preset"` or `preset = "claude-preset"` and overrides individual role fields under `[roles.<role>]`. Its location is `MSTACK_CONFIG`, otherwise `$XDG_CONFIG_HOME/mstack/models.toml`, otherwise `~/.config/mstack/models.toml`.
+
+`CLAUDECODE` identifies a Claude Code host; otherwise the resolver assumes Codex. `MSTACK_HOST=codex` or `MSTACK_HOST=claude-code` overrides detection. Without a selected preset, the resolver uses the host’s packaged default.
 
 ## Runners
 
-- `codex-native`: use Codex's native subagent operation with the resolved model and effort. Request Fast service only when `fast` is true. Available only when the host is Codex.
-- `claude-native`: use Claude Code's native Agent tool with the resolved model and effort. Available only when the host is Claude Code.
-- `claude-code`: use [Consult](../../consult/SKILL.md) with `--provider claude` and the resolved model and effort. The executable is `CLAUDE_CODE_BIN` or `claude`.
-- `codex`: use [Consult](../../consult/SKILL.md) with `--provider codex`, the resolved model and effort, and `--fast` when configured. The executable is `CODEX_BIN` or `codex`.
+| Runner | Invocation |
+| --- | --- |
+| `codex-native` | Codex's native subagent tool. |
+| `claude-native` | Claude Code's native Agent tool. |
+| `claude-code` | [Consult](../../consult/SKILL.md) with `--provider claude`. |
+| `codex` | [Consult](../../consult/SKILL.md) with `--provider codex`. |
 
-The two external runners are read-only consultants. They may hold reviewer, critic, judge, candidate, investigator, and synthesizer roles but never `implement_worker`; the resolver rejects that combination.
+Pass the resolved model and effort, requesting Fast when configured. Native runners require their corresponding host. External runners are read-only consultants and cannot serve as `implement_worker`.
 
-Start independent assignments in fresh contexts. Reuse retained workers and consultant conversations for related follow-ups. Pass a self-contained prompt, retain the real process or agent identifier, and use that identifier for monitoring, feedback, waiting, and closing.
+## Verification and failures
 
-Runner selection does not relax the calling workflow's authority. Read-only candidates and reviewers remain read-only; implementation workers retain only the bounded write authority granted by Implement.
+Report malformed configuration, unavailable assignments, and settings the harness cannot express. Consult owns external launch mechanics, follow-ups, and reported native fallback; fallback does not rewrite the saved assignment.
 
-## Failure behavior
-
-Report malformed configuration or unavailable assignments. [Consult](../../consult/SKILL.md) permits an available native subagent when the external harness cannot run; report the substitution and any lost independence. Do not rewrite saved profiles, silently change an explicit model request, or treat a degraded run as satisfying an unavailable assignment.
-
-When provenance is exposed, report the requested and served model, effective effort, runner, and Fast status. Both external launchers verify the served model; the Codex launcher also verifies effort but cannot verify the service tier. A successful cheap smoke assignment proves mechanics only, not the quality or availability of another production assignment.
+Distinguish requested settings from verified ones. A cheap smoke run verifies its own model and workflow, not another model's availability or output quality. Use the `skill_eval_smoke_candidate` assignment for runner checks. Run Claude Haiku checks outside plan mode, which can select a larger model.

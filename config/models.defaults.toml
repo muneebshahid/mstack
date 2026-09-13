@@ -1,5 +1,5 @@
 schema_version = 1
-profiles = ["codex-multimodel", "claude-multimodel"]
+presets = ["codex-preset", "claude-preset"]
 roles = [
   "implement_worker",
   "explain_explorer",
@@ -13,6 +13,6 @@ roles = [
   "consultant_default",
 ]
 
-[default_profile]
-codex = "codex-multimodel"
-claude-code = "claude-multimodel"
+[default_preset]
+codex = "codex-preset"
+claude-code = "claude-preset"

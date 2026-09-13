@@ -34,7 +34,7 @@ The mandatory Arena and cross-judge arrangement above is superseded by [Simplify
 - `skills/review/SKILL.md`
 - `skills/review/SKILL.md` now contains the parent judgment rules formerly in `references/lead-judgment.md`
 - `skills/explain/SKILL.md`
-- `config/profiles/codex-multimodel.toml` and `config/profiles/claude-multimodel.toml`
+- `config/presets/codex-preset.toml` and `config/presets/claude-preset.toml`
 
 This record reconstructs the decision from the installed stack because version control begins with this public repository.
 

@@ -1,69 +1,44 @@
 ---
 name: setup-mstack
-description: "Configure MStack's per-role models, efforts, runners, and Fast settings for the current harness. Use for first-time setup in Codex or Claude Code, inspecting effective assignments, switching between the codex-multimodel and claude-multimodel profiles, or changing model choices."
+description: Inspect or change MStack's model assignments, efforts, runners, and Fast settings for Codex or Claude Code.
 ---
 
 # Setup MStack
 
-Configure the models MStack uses without editing installed skills. Repository profiles supply complete defaults; the user-owned `~/.config/mstack/models.toml` selects one profile and stores only explicit overrides.
+The active profile is a preset plus user overrides. Packaged presets provide starting assignments; installed skills need no edits. Use judgment on capability checks and clarification.
 
-## Authority
+## Inspect
 
-This skill may inspect MStack's packaged configuration and available model metadata. Write the user configuration only when the user asks to set up or change MStack. Do not install models, change provider accounts, alter project files, or probe a paid model merely to infer entitlement.
-
-## Inspect current state
-
-Resolve this skill's directory and run:
+Run the bundled resolver:
 
 ```bash
-python3 <setup-mstack-directory>/scripts/models.py profiles
+python3 <setup-mstack-directory>/scripts/models.py presets
 python3 <setup-mstack-directory>/scripts/models.py resolve
 ```
 
-The resolver reads `MSTACK_CONFIG` when set, then `$XDG_CONFIG_HOME/mstack/models.toml` when set, otherwise `~/.config/mstack/models.toml`. A missing user file is normal: the resolver detects the host and selects that host's packaged profile. Claude Code is detected through the `CLAUDECODE` environment variable; anything else is treated as Codex. `MSTACK_HOST=codex` or `MSTACK_HOST=claude-code` overrides detection.
+Offer `codex-preset` and `claude-preset`, recommending the one matching the host. Users can accept a preset or customize any role. Without a user configuration, the host preset supplies the active profile. Read [Runtime resolution](references/runtime-resolution.md) for configuration locations, host overrides, and runner selection.
 
-MStack ships one profile per host:
+Show the selected preset, effective assignments, and any local overrides. Check model availability through exposed metadata and external CLI authentication with `codex login status` or `claude auth status`, as relevant. Report unknown availability or incompatible runners; keep configured choices intact. Login alone does not establish model access.
 
-- `codex-multimodel`: Codex-led. Native GPT roles do the work; the external `claude-code` launcher supplies independent Claude judgment.
-- `claude-multimodel`: Claude Code-led. Native Claude roles do the work; the external `codex` launcher supplies independent GPT judgment.
+If a launch check is needed, use the configured cheap smoke roles. Report what was actually verified; do not launch expensive models merely to infer access.
 
-Using the other host's profile fails at launch because its native runner does not exist here. Offer it only when the user explicitly wants it, and say why it will not run.
+## Configure
 
-## Confirm capabilities
+Write only when setup or configuration changes were requested. Show the proposed active profile; resolve missing choices without reconfirming explicit ones.
 
-Enumerate model identifiers from the current harness's callable native-agent schema or a provider command that reports the user's available models. Check required runners as well as model names:
-
-- `codex-native` needs the Codex host. `claude-native` needs the Claude Code host.
-- `claude-code` means the [Consult](../consult/SKILL.md) launcher with `--provider claude`; its executable is `CLAUDE_CODE_BIN` when set, otherwise `claude`. Do not look for a binary named `claude-code`.
-- `codex` means the [Consult](../consult/SKILL.md) launcher with `--provider codex`; its executable is `CODEX_BIN` when set, otherwise `codex`. It also needs a writable Codex home (`CODEX_HOME` or `~/.codex`) because served-model provenance is read from the session rollout.
-
-Check that the external CLI for the selected profile is on `PATH` and logged in (`codex login status` or `claude auth status`). Report a missing or unauthenticated CLI as a capability gap for every role that uses it, and tell the user how to install or log in. Consult can use a native fallback at execution time and must report the substitution; keep the saved assignment unchanged.
-
-Do not treat a packaged default, documentation example, or successful authentication as proof that a model is available. When entitlement cannot be inspected without running an expensive model, ask the user to confirm the exact identifier. If a launch probe is useful and authorized, use the cheapest suitable model: Luna `low` with Fast for Codex mechanics and Haiku `low` for Claude mechanics. Do not run a Haiku probe in Claude plan mode because the harness may route planning to a larger model. Verify served-model provenance. A cheap probe validates the runner, not a different production model.
-
-Show the selected profile's full effective mapping. Mark any unconfirmed model or runner and ask the user whether to accept the available mapping or change specific roles. Never silently replace an unavailable assignment.
-
-## Write configuration
-
-Create the whole user configuration idempotently with the bundled script. Use one `--set ROLE.FIELD=VALUE` argument per override:
+Preview the complete replacement configuration:
 
 ```bash
 python3 <setup-mstack-directory>/scripts/models.py configure \
-  --profile claude-multimodel \
-  --set consultant_default.effort=high
+  --preset <preset> \
+  --set consultant_default.effort=high \
+  --dry-run
 ```
 
-Supported assignment fields are `runner`, `model`, `effort`, and `fast`. Effort is one of `low`, `medium`, `high`, `xhigh`, or `max`. Fast is a boolean and is valid only for the `codex-native` and `codex` runners. `implement_worker` must use a native runner.
+`configure` saves the selected preset and role overrides, replacing the whole user file. Include every existing override that should survive, using one `--set ROLE.FIELD=VALUE` per field. Remove `--dry-run` to write.
 
-Before overwriting an existing user file, show the effective current mapping and the proposed mapping. If the user gave exact choices in the active request, that request is sufficient confirmation; otherwise obtain confirmation after resolving ambiguities. Do not preserve unknown keys or malformed values by copying them into the replacement.
+Supported fields are `runner`, `model`, `effort`, and `fast`; the resolver validates them. Fast applies only to Codex runners, and `implement_worker` requires a native runner.
 
 ## Verify
 
-Run `models.py resolve` after writing. Confirm:
-
-- The detected host and selected profile.
-- Every effective role assignment.
-- Every user override.
-- Any runner or entitlement that remains unverified.
-
-Configuration takes effect the next time an orchestrating skill resolves its roles. It does not require modifying the managed plugin cache. Report the written path and never print credentials or provider tokens.
+Run `models.py resolve` again. Report the configuration path, resulting assignments, and anything still unverified. Changes apply the next time a workflow resolves its roles.
