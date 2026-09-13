@@ -33,6 +33,7 @@ External consultants require the other CLI installed and logged in: Claude Code 
 | [implement](skills/implement/SKILL.md) | Make and verify changes directly or with a persistent worker; add tests where they provide useful protection. |
 | [architect](skills/architect/SKILL.md) | Design consequential changes and compare alternatives when useful. Read-only. |
 | [explain](skills/explain/SKILL.md) | Explain behavior, decisions, and changes using relevant sources, a consistent template, and useful visuals. |
+| [grill-me](skills/grill-me/SKILL.md) | Clarify what to build and deepen understanding through questions, explanations, and useful diagrams. |
 | [review](skills/review/SKILL.md) | Review correctness, simplicity, and test usefulness, directly or with independent reviewers. Read-only. |
 | [apply-principles](skills/apply-principles/SKILL.md) | Select relevant engineering standards, including simplicity, strong types, ownership, diagnosis, and verification. |
 | [logbook](skills/logbook/SKILL.md) | Record each commit’s work, decisions, rejected approaches, and verification. |

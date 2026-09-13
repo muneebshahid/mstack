@@ -24,7 +24,7 @@ The stack's workflow design was reviewed against Jesse Vincent's [Superpowers](h
 
 ## Skills for Real Engineers
 
-The removed `grill-me` skill adapted Matt Pocock's `grill-me` entry point and `grilling` interview primitive from [Skills for Real Engineers](https://github.com/mattpocock/skills). `bro` adapts the version published in [dmmulroy/skills](https://github.com/dmmulroy/skills), whose repository preserves Matt Pocock's MIT notice. The shared license is preserved at [`LICENSES/MATT-POCOCK-SKILLS-MIT.txt`](LICENSES/MATT-POCOCK-SKILLS-MIT.txt).
+`grill-me` adapts Matt Pocock’s [Grilling](https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md), combining task clarification with adaptive tutoring and a user-directed learning outline. `bro` adapts the version published in [dmmulroy/skills](https://github.com/dmmulroy/skills), whose repository preserves Matt Pocock's MIT notice. The shared license is preserved at [`LICENSES/MATT-POCOCK-SKILLS-MIT.txt`](LICENSES/MATT-POCOCK-SKILLS-MIT.txt).
 
 ## DeepSeek Harness
 

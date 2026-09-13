@@ -1,0 +1,4 @@
+interface:
+  display_name: "Grill Me"
+  short_description: "Clarify intent and deepen understanding"
+  default_prompt: "Use $grill-me to clarify what I want and help me understand the concepts and tradeoffs, starting with an overview of themes I can choose from."
