@@ -1,0 +1,4 @@
+interface:
+  display_name: "Delegate"
+  short_description: "Run scoped tasks with resumable agents"
+  default_prompt: "Use $delegate to give another agent this task with relevant context and scope, then check its result."

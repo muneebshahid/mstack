@@ -10,9 +10,5 @@ roles = [
   "skill_eval_quality_judge",
   "skill_eval_smoke_candidate",
   "skill_eval_smoke_judge",
-  "consultant_default",
+  "delegate_default",
 ]
-
-[default_preset]
-codex = "codex-preset"
-claude-code = "claude-preset"

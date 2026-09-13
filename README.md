@@ -24,7 +24,7 @@ Start a new session, then run `/mstack:setup-mstack`.
 
 Setup offers `codex-preset` and `claude-preset` with optional role customization. Your active profile combines the selected preset and overrides in `~/.config/mstack/models.toml`. Defaults live in [`config/presets/`](config/presets/).
 
-External consultants require the other CLI installed and logged in: Claude Code for Claude consultation, Codex for GPT consultation. GitHub workflows require `gh`. Explain can use connected sources such as Linear and service logs when available.
+The scripts require Python 3.12+. External delegation requires the model's CLI installed and logged in; Skill Eval always uses an external CLI. GitHub workflows require `gh`. Explain can use connected sources such as Linear and service logs when available.
 
 ## Skills
 
@@ -37,9 +37,9 @@ External consultants require the other CLI installed and logged in: Claude Code 
 | [review](skills/review/SKILL.md) | Review correctness, simplicity, and test usefulness, directly or with independent reviewers. Read-only. |
 | [apply-principles](skills/apply-principles/SKILL.md) | Select relevant engineering standards, including simplicity, strong types, ownership, diagnosis, and verification. |
 | [logbook](skills/logbook/SKILL.md) | Record each commit’s work, decisions, rejected approaches, and verification. |
-| [consult](skills/consult/SKILL.md) | Get independent judgment from Claude or Codex, with resumable follow-ups and native fallback. |
-| [setup-mstack](skills/setup-mstack/SKILL.md) | Configure model assignments and check runner availability. |
-| [skill-eval](skills/skill-eval/SKILL.md) | Evaluate skills and compare revisions with realistic scenarios and evidence. |
+| [delegate](skills/delegate/SKILL.md) | Run scoped tasks natively or through an external harness, with explicit permissions and resumable follow-ups. |
+| [setup-mstack](skills/setup-mstack/SKILL.md) | Select a preset, customize role models, and check availability. |
+| [skill-eval](skills/skill-eval/SKILL.md) | Compare inline skill variants in fresh external scenarios before adopting changes. |
 | [unslop](skills/unslop/SKILL.md) | Remove generic AI wording while preserving meaning. |
 | [bro](skills/bro/SKILL.md) | Restate the preceding answer in shorter, plain language. |
 

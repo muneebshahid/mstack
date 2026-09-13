@@ -29,7 +29,7 @@ Prompts, terminal responses, identifiers, model evidence, and a readable report 
 
 ### Persistence and results
 
-- At investigation time, the Claude runner explicitly passed `--no-session-persistence`. [Consult](../../skills/consult/SKILL.md) now owns the subsequent persistence work.
+- At investigation time, the Claude runner explicitly passed `--no-session-persistence`. [Consult](../../skills/delegate/SKILL.md) now owns the subsequent persistence work.
 - At investigation time, the Codex runner already persisted sessions and captured a thread ID, but did not expose resumption. Herdr is not required to add that capability.
 - Detaching Herdr preserves running processes. Restarting its server requires native session restoration through supported integrations; layout restoration alone cannot recover conversations.
 - Herdr 0.9.0 constructs Claude and Codex resume commands from the native session ID without replaying original model, effort, or permission arguments. Whether each harness restores those settings correctly needs a live test.

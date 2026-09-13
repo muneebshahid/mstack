@@ -19,9 +19,9 @@ Use the [Evidence](references/evidence.md) menu when choosing sources. Choose wh
 
 ## Exploration and optional review
 
-Handle simple questions directly. When exploration benefits from delegation, use one or two subagents through `explain_explorer` in [model configuration](../setup-mstack/references/runtime-resolution.md): Luna at `max` on Codex, Sonnet at `high` on Claude Code. Give each a focused read-only question and relevant context; split distinct investigations when using two. The main agent checks their evidence and writes the explanation. If delegation is unavailable, continue directly and report the limitation.
+Handle simple questions directly. Otherwise, use [Delegate](../delegate/SKILL.md) for one or two `explain_explorer` agents when useful, read-only with no further delegation. Give each a distinct question, collected findings, and source paths. Check their evidence and write the explanation. If delegation is unavailable, report it and investigate directly.
 
-Use [Consult](../consult/SKILL.md) when independent judgment would help, with `consultant_default`. Give it a focused question and relevant context; check its evidence before using the answer.
+For independent judgment, use Delegate with `delegate_default`, supplying the question and findings. Check its evidence.
 
 Use [Review](../review/SKILL.md) for requested adversarial or multi-model critique. Include the subsystem or design, its requirements, and existing findings.
 
@@ -37,7 +37,7 @@ Answer the question. State the scope or comparison baseline.
 
 Explain how it works, why it was chosen, or what changed.
 
-Help the user understand the current topic of conversation visually. Skip the preamble and keep prose brief. Pick the smallest view that makes the key point clear.
+Use the smallest visual that clarifies the point.
 
 - Show logic or an algorithm as pseudocode:
 
@@ -152,9 +152,9 @@ function expandSkill(command: string): string {
 
 #### Visual guidance
 
-Place each visual next to the short text it supports. Keep only the calls, files, props, states, and boundaries needed to answer the user's current question or the options to resolve the current discussion point.
+Place visuals beside the text they support. Include only the calls, files, props, states, and boundaries relevant to the question or decision.
 
-You may use one of these, you may use several, it is unlikely you will use all of them. Use your judgement and don't overwhelm the user.
+Use as few visuals as needed.
 
 ### Implications
 

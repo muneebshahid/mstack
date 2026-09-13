@@ -9,7 +9,7 @@ Separate Claude and Codex consultant skills duplicated instructions and process 
 
 ## Decision
 
-Consolidate the two entrypoints into [Consult](../../skills/consult/SKILL.md), using the native CLIs directly. The user explicitly deferred Herdr after its exploratory trial. Retain the existing runner names in model configuration so saved assignments keep working. Choose provider references by the consultant being launched, regardless of the parent harness; shared resumption instructions live only in the main skill.
+Consolidate the two entrypoints into [Consult](../../skills/delegate/SKILL.md), using the native CLIs directly. The user explicitly deferred Herdr after its exploratory trial. Retain the existing runner names in model configuration so saved assignments keep working. Choose provider references by the consultant being launched, regardless of the parent harness; shared resumption instructions live only in the main skill.
 
 Keep consultation read-only. Start independent assessments fresh and resume related follow-ups with the native conversation ID held in parent context. If the ID is missing or unusable, start fresh with a summary and report the restart. Native agents use the host’s conversation handles. External reports and logs default to a temporary directory; the parent removes these and temporary input prompts after review. Evaluations can retain evidence through an explicit output directory. Deleting temporary files does not delete the harness conversation.
 

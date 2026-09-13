@@ -1,63 +1,53 @@
 schema_version = 1
 name = "claude-preset"
-description = "Defaults for Claude Code with Codex consultation"
+description = "Suggested profile favoring Claude models"
 
 [roles.implement_worker]
-runner = "claude-native"
 model = "sonnet"
 effort = "high"
 fast = false
 
 [roles.explain_explorer]
-runner = "claude-native"
 model = "sonnet"
 effort = "high"
 fast = false
 
 [roles.architect_candidate_a]
-runner = "claude-native"
 model = "claude-fable-5-1"
 effort = "xhigh"
 fast = false
 
 [roles.architect_candidate_b]
-runner = "codex"
 model = "gpt-6-astra"
 effort = "xhigh"
 fast = false
 
 [roles.review_reviewer_a]
-runner = "claude-native"
 model = "claude-fable-5-1"
 effort = "max"
 fast = false
 
 [roles.review_reviewer_b]
-runner = "codex"
 model = "gpt-6-astra"
 effort = "max"
 fast = false
 
 [roles.skill_eval_quality_judge]
-runner = "claude-native"
 model = "claude-fable-5-1"
 effort = "medium"
 fast = false
 
 [roles.skill_eval_smoke_candidate]
-runner = "claude-native"
 model = "haiku"
 effort = "low"
 fast = false
 
 [roles.skill_eval_smoke_judge]
-runner = "claude-native"
 model = "haiku"
 effort = "low"
 fast = false
 
-[roles.consultant_default]
-runner = "codex"
+[roles.delegate_default]
 model = "gpt-6-astra"
 effort = "xhigh"
 fast = false

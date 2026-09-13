@@ -30,9 +30,9 @@ Use [Apply Principles](../apply-principles/SKILL.md) and [Review criteria](refer
 
 A typical panel uses the two configured reviewer roles:
 
-1. Resolve `review_reviewer_a` and `review_reviewer_b` through [model configuration](../setup-mstack/references/runtime-resolution.md). Use [Consult](../consult/SKILL.md) for external reviewers.
-2. Fill [Reviewer prompt](references/reviewer-prompt.md) with the scope, requirements, snapshot, project instructions, criteria, and selected reference paths. Exclude secrets and unrelated content. Launch both reviewers concurrently in fresh contexts with the same prompt.
-3. Retain process or agent identifiers and monitor completion. Capture reports and available model provenance; retain conversations for useful follow-ups. Keep external artifacts outside the repository.
+1. Use [Delegate](../delegate/SKILL.md) for `review_reviewer_a` and `review_reviewer_b`, with its default read-only scope and no further delegation.
+2. Fill [Reviewer prompt](references/reviewer-prompt.md) with the scope, requirements, collected findings, snapshot, project instructions, criteria, and selected reference paths. Exclude secrets and unrelated content. Launch both reviewers concurrently in fresh contexts with the same prompt.
+3. Monitor completion; retain reports, model provenance, and conversation IDs for follow-ups. Keep external artifacts outside the repository.
 4. Compare repository status and diffs before and after review. Report unexpected edits and exclude reports from reviewers that violated the read-only assignment. Do not silently keep or revert their edits.
 
 Use judgment about retrying, narrowing the review, or continuing directly after a failure. Report what ran, any substitutions, and limits; do not present an incomplete requested panel as complete. Honor explicit model choices.

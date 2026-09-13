@@ -12,7 +12,7 @@ import time
 import unittest
 from pathlib import Path
 
-RUNNER = Path(__file__).with_name("run_consult.py")
+RUNNER = Path(__file__).with_name("run_delegate.py")
 CLAUDE_SESSION_ID = "claude-session-0001"
 CODEX_THREAD_ID = "01a068d6-0000-7000-8000-000000000001"
 CODEX_TURN_ID = "01a068d6-0000-7000-8000-000000000002"
@@ -20,7 +20,42 @@ type JsonScalar = str | int | float | bool | None
 type JsonValue = JsonScalar | list[JsonValue] | dict[str, JsonValue]
 
 
-class RunConsultTest(unittest.TestCase):
+class RunDelegateTest(unittest.TestCase):
+    def test_stdin_task_is_forwarded_without_an_input_file(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            task = "Inline variant: return the fixture's last item."
+            completed, output = run_launcher(
+                root, "codex", create_fake_codex(root), inline_task=task
+            )
+            assert completed.returncode == 0, completed.stderr
+            assert not (root / "codex-prompt.md").exists()
+            assert task in (output / "prompt.md").read_text()
+            summary = read_summary(output)
+            assert summary["allow_writes"] is False
+            assert summary["allow_subagents"] is False
+
+    def test_write_and_delegation_settings_are_reapplied_on_resume(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            flags = ("--allow-writes", "--allow-subagents")
+            first, first_output = run_launcher(
+                root, "codex", create_fake_codex(root, allow_writes=True),
+                extra_arguments=flags,
+            )
+            assert first.returncode == 0, first.stderr
+            shutil.rmtree(first_output)
+            second, output = run_launcher(
+                root, "codex", create_fake_codex(root, allow_writes=True),
+                extra_arguments=(*flags, "--resume", CODEX_THREAD_ID),
+            )
+            assert second.returncode == 0, second.stderr
+            summary = read_summary(output)
+            assert summary["allow_writes"] is True
+            assert summary["allow_subagents"] is True
+            assert summary["native_session_id"] == CODEX_THREAD_ID
+            assert (root / "workspace" / "worker-result.txt").read_text() == "resumed"
+
     def test_claude_success_keeps_persistence_and_disables_memory(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory)
@@ -192,7 +227,7 @@ class RunConsultTest(unittest.TestCase):
             assert first_output != second_output
             for output in (first_output, second_output):
                 assert output.parent == root.resolve()
-                assert output.name.startswith("mstack-consult-")
+                assert output.name.startswith("mstack-delegate-")
             event = json.loads(second.stdout.splitlines()[-1])
             assert event["native_session_id"] == CODEX_THREAD_ID
 
@@ -241,7 +276,7 @@ class RunConsultTest(unittest.TestCase):
             assert "sensitive-name.txt" in raw
             progress = (output_dir / "claude.progress.log").read_text()
             assert "Reading src/auth.py" in progress
-            assert "Running a read-only shell command" in progress
+            assert "Running a shell command" in progress
             assert "Reading an external file" in progress
             assert "super-secret" not in progress
             assert "sensitive-name.txt" not in progress
@@ -343,9 +378,11 @@ def run_launcher(
     model: str = "gpt-5.6-luna",
     effort: str = "low",
     prompt_prefix_bytes: int = 0,
+    inline_task: str | None = None,
 ) -> tuple[subprocess.CompletedProcess[str], Path]:
-    prompt = root / f"{provider}-prompt.md"
-    prompt.write_text("x" * prompt_prefix_bytes + "analyze this", encoding="utf-8")
+    prompt = root / f"{provider}-prompt.md" if inline_task is None else None
+    if prompt is not None:
+        prompt.write_text("x" * prompt_prefix_bytes + "analyze this", encoding="utf-8")
     workspace = root / "workspace"
     workspace.mkdir(exist_ok=True)
     actual_output = output_dir
@@ -365,6 +402,7 @@ def run_launcher(
         model=model if provider == "codex" else "claude-fable-5-1",
         effort=effort,
         environment=environment,
+        input_text=inline_task,
     )
     if actual_output is None:
         summary_event = json.loads(completed.stdout.splitlines()[-1])
@@ -377,18 +415,20 @@ def invoke(
     provider: str,
     binary: Path,
     workspace: Path,
-    prompt: Path,
+    prompt: Path | None,
     *,
     output_dir: Path | None = None,
     extra_arguments: tuple[str, ...] = (),
     model: str = "gpt-5.6-luna",
     effort: str = "low",
     environment: dict[str, str] | None = None,
+    input_text: str | None = None,
 ) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
         launcher_command(provider, workspace, prompt, output_dir, model, effort, extra_arguments),
         capture_output=True,
         text=True,
+        input=input_text,
         env=environment or os.environ.copy(),
         check=False,
         timeout=20,
@@ -398,7 +438,7 @@ def invoke(
 def launcher_command(
     provider: str,
     workspace: Path,
-    prompt: Path,
+    prompt: Path | None,
     output_dir: Path | None,
     model: str,
     effort: str,
@@ -411,13 +451,13 @@ def launcher_command(
         provider,
         "--cwd",
         str(workspace),
-        "--prompt-file",
-        str(prompt),
         "--model",
         model,
         "--effort",
         effort,
     ]
+    if prompt is not None:
+        command.extend(("--prompt-file", str(prompt)))
     if output_dir is not None:
         command.extend(("--output-dir", str(output_dir)))
     command.extend(extra_arguments)
@@ -460,7 +500,6 @@ def create_fake_claude(
         if {pre_read_stdout_bytes}:
             print(json.dumps({{"type": "system", "payload": "x" * {pre_read_stdout_bytes}}}), flush=True)
         prompt = sys.stdin.read()
-        assert "Act only as an independent consultant" in prompt
         assert prompt.endswith("analyze this")
         if {include_session}:
             print(json.dumps({{"type": "system", "session_id": {CLAUDE_SESSION_ID!r}}}), flush=True)
@@ -485,6 +524,7 @@ def create_fake_codex(
     thread_id: str = CODEX_THREAD_ID,
     exit_code: int = 0,
     write_current_context: bool = True,
+    allow_writes: bool = False,
 ) -> Path:
     body = f"""
         #!{sys.executable}
@@ -497,10 +537,9 @@ def create_fake_codex(
         if not resumed:
             assert args[0] == "exec"
         else:
-            assert args[0:4] == ["--sandbox", "read-only", "--cd", {str((root / "workspace").resolve())!r}]
+            assert args[0:4] == ["--sandbox", {('workspace-write' if allow_writes else 'read-only')!r}, "--cd", {str((root / "workspace").resolve())!r}]
             assert args[args.index("exec") + 1] == "resume"
             assert args[args.index("resume") + 1] == "--json"
-            assert args[args.index("--sandbox") + 1] == "read-only"
             assert args[args.index("--cd") + 1] == {str((root / "workspace").resolve())!r}
             assert args[args.index("resume") + 3] == {CODEX_THREAD_ID!r}
         assert args[args.index("--model") + 1] in {{"gpt-5.6-sol", "gpt-5.6-luna"}}
@@ -510,8 +549,10 @@ def create_fake_codex(
         tier = next(value.split("=", 1)[1].strip('\\"') for value in configs if value.startswith("service_tier="))
         assert tier in {{"default", "fast"}}
         assert args[-1] == "-"
+        assert args[args.index("--sandbox") + 1] == {('workspace-write' if allow_writes else 'read-only')!r}
+        if {allow_writes!r}:
+            Path("worker-result.txt").write_text("resumed" if resumed else "first")
         prompt = sys.stdin.read()
-        assert "Act only as an independent consultant" in prompt
         print(json.dumps({{"type": "thread.started", "thread_id": {thread_id!r}}}), flush=True)
         print(json.dumps({{"type": "turn.started", "turn_id": {CODEX_TURN_ID!r}}}), flush=True)
         print(json.dumps({{"type": "item.started", "item": {{"type": "command_execution"}}}}), flush=True)

@@ -1,41 +1,41 @@
 ---
 name: skill-eval
-description: Evaluate an existing skill or compare revisions using realistic runs and observed results.
+description: Evaluate existing or proposed skill instructions and compare variants through realistic runs.
 ---
 
 # Skill Eval
 
-Check whether a skill works and whether a revision improves it. Use judgment on scenarios, repetition, and independent review.
+The parent defines success, launches scenarios, and assesses evidence before adoption.
 
-Evaluation does not authorize changing the installed skill or live systems. Run in disposable workspaces; prepare revisions as temporary copies.
+## Prepare
 
-## Frame
+Choose realistic tasks and success criteria. Keep variants and proposed role assignments in context; do not write skill files for evaluation.
 
-Read the target skill and relevant resources. Choose a few realistic scenarios and define success before running them.
+Select each scenario's model, effort, and Fast setting. Use `skill_eval_smoke_candidate` for mechanics; explicitly choose models for quality evaluation. Keep production settings unchanged; cheap runs do not establish production-model quality.
 
-Resolve models through [model configuration](../setup-mstack/references/runtime-resolution.md): use `skill_eval_smoke_candidate` for execution checks and the skill's assigned models for output quality. Apply smoke substitutions only to temporary copies and launch arguments. Report them; a cheap run does not establish production-model quality.
+Include the active profile and new or overridden roles in the brief. Resolve missing assignments before launch; proposed roles need not be saved.
 
 ## Run
 
-Use fresh candidate contexts with ordinary task prompts, without the rubric or authoring discussion. Read [Running candidates](references/scenario-runs.md) before launching candidates.
+Launch each scenario/version through [Delegate](../delegate/SKILL.md) in a fresh external process, even for natively available models. See [Running scenarios](references/scenario-runs.md).
 
-For comparisons, stage complete versions with their dependencies and hold the scenario, model settings, tools, and fixture constant. Verify which version each candidate actually read.
+Provide the task, complete variant, sources, dependencies, and model assignments. Omit the grading rubric, preferred answer, and authoring discussion. The process executes the skill directly, without another candidate layer.
 
-Capture outputs and the tool activity, artifacts, and failures needed to assess the criteria. If the chosen environment cannot exercise a behavior, report it as untested.
+Set `allow_subagents=true` when needed; children default to false. Limit authorized writes to disposable workspaces.
+
+Hold tasks, model settings, tools, and fixtures constant across variants; record intentional differences. Collect outputs, tool activity, artifacts, and failures.
 
 ## Assess
 
-Judge against the original criteria using observed evidence. Keep failures visible and allow ties; repeat when uncertainty could change the conclusion.
+Assess results against the criteria, including failures and ties. Repeat only when uncertainty could change the conclusion.
 
-Prefer an independent judge for subjective comparisons of revisions you authored; otherwise use one when useful or requested. Resolve `skill_eval_smoke_judge` or `skill_eval_quality_judge` and use [Consult](../consult/SKILL.md) for external assignments. Give the judge the criteria and accessible evidence with neutral version labels. Omit model identities and the preferred outcome. The parent checks its reasoning and decides what to accept.
+Use an independent judge when useful or requested, especially for subjective comparisons of your own revisions. Delegate to `skill_eval_smoke_judge` or `skill_eval_quality_judge`. Provide criteria and evidence under neutral variant labels; omit model identities and the preferred outcome. Check the judge's reasoning.
 
 ## Report
 
-Use these sections, keeping each as short as the findings allow:
+- **Scope:** scenario, variant, assignments, requested/served models, and mechanics or quality evaluation.
+- **Results:** outcomes, evidence, differences, failures, and untested behavior.
+- **Recommendation:** adopt, revise, or inconclusive, with reasons.
+- **Reproduction:** exact variant text, inline assignments, prompts, settings, and retained evidence paths.
 
-- **Scope:** skill/version, scenarios, criteria, and requested/served models; execution or quality check.
-- **Results:** outcomes, supporting evidence, meaningful differences, failures, and untested behavior.
-- **Recommendation:** works, needs changes, or inconclusive; for comparisons, identify improvements, regressions, or ties.
-- **Reproduction:** prompts, relevant settings, revision diff or version identifiers, and retained evidence paths.
-
-Preserve the findings, then remove temporary workspaces, prompts, and outputs unless the user wants to inspect them.
+Save the report; remove temporary artifacts unless the user wants to inspect them. Update skills and configuration only after the user selects a variant.

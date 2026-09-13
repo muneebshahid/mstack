@@ -207,7 +207,7 @@ def validate_tests() -> None:
             "unittest",
             "discover",
             "-s",
-            "skills/consult/scripts",
+            "skills/delegate/scripts",
             "-p",
             "test_*.py",
         ]

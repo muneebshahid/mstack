@@ -10,13 +10,12 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 
-SUPPORTED_RUNNERS = ("codex-native", "claude-native", "claude-code", "codex")
-FAST_RUNNERS = ("codex-native", "codex")
-SUPPORTED_HOSTS = ("codex", "claude-code")
-EXTERNAL_RUNNERS = ("claude-code", "codex")
-NATIVE_ONLY_ROLES = ("implement_worker",)
 SUPPORTED_EFFORTS = ("low", "medium", "high", "xhigh", "max")
-ASSIGNMENT_FIELDS = ("runner", "model", "effort", "fast")
+ASSIGNMENT_FIELDS = ("model", "effort", "fast")
+DEFAULT_FIELDS = ("schema_version", "presets", "roles")
+PRESET_FIELDS = ("schema_version", "name", "description", "roles")
+USER_FIELDS = ("schema_version", "preset", "roles")
+LEGACY_ROLE = "consultant_default"
 
 
 class ConfigError(ValueError):
@@ -25,7 +24,6 @@ class ConfigError(ValueError):
 
 @dataclass(frozen=True)
 class Assignment:
-    runner: str
     model: str
     effort: str
     fast: bool
@@ -34,7 +32,6 @@ class Assignment:
 @dataclass(frozen=True)
 class ResolvedConfig:
     schema_version: int
-    host: str
     preset: str
     description: str
     user_config: str | None
@@ -43,20 +40,6 @@ class ResolvedConfig:
 
 def repository_root() -> Path:
     return Path(__file__).resolve().parents[3]
-
-
-def detect_host() -> str:
-    explicit = os.environ.get("MSTACK_HOST")
-    if explicit:
-        if explicit not in SUPPORTED_HOSTS:
-            raise ConfigError(f"MSTACK_HOST must be one of {', '.join(SUPPORTED_HOSTS)}")
-        return explicit
-    return "claude-code" if os.environ.get("CLAUDECODE") else "codex"
-
-
-def default_preset_for(defaults: dict[str, object], host: str) -> str:
-    table = require_table(defaults, "default_preset", "defaults")
-    return require_string(table, host, "defaults.default_preset")
 
 
 def default_user_config_path() -> Path:
@@ -103,31 +86,36 @@ def require_table(table: dict[str, object], key: str, owner: str) -> dict[str, o
     return value
 
 
-def parse_assignment(table: dict[str, object], owner: str) -> Assignment:
-    assignment = parse_assignment_fields(table, owner)
-    role = owner.removeprefix("roles.")
-    if role in NATIVE_ONLY_ROLES and assignment.runner in EXTERNAL_RUNNERS:
-        raise ConfigError(f"{owner}.runner must be a native runner; external launchers are read-only")
-    return assignment
+def reject_unknown_fields(
+    table: dict[str, object], allowed: tuple[str, ...], owner: str
+) -> None:
+    unknown = set(table) - set(allowed)
+    if not unknown:
+        return
+    if "runner" in unknown:
+        raise ConfigError(
+            f"{owner}.runner is no longer supported; remove it and run setup-mstack"
+        )
+    raise ConfigError(f"{owner} has unknown fields: {', '.join(sorted(unknown))}")
+
+
+def reject_legacy_role(role: str, owner: str) -> None:
+    if role == LEGACY_ROLE:
+        raise ConfigError(
+            f"{owner} is no longer supported; rename {role} to delegate_default and run setup-mstack"
+        )
 
 
 def parse_assignment_fields(table: dict[str, object], owner: str) -> Assignment:
-    unknown = set(table) - set(ASSIGNMENT_FIELDS)
-    if unknown:
-        raise ConfigError(f"{owner} has unknown fields: {', '.join(sorted(unknown))}")
-    runner = require_string(table, "runner", owner)
+    reject_unknown_fields(table, ASSIGNMENT_FIELDS, owner)
     model = require_string(table, "model", owner)
     effort = require_string(table, "effort", owner)
     fast = table.get("fast")
-    if runner not in SUPPORTED_RUNNERS:
-        raise ConfigError(f"{owner}.runner must be one of {', '.join(SUPPORTED_RUNNERS)}")
     if effort not in SUPPORTED_EFFORTS:
         raise ConfigError(f"{owner}.effort must be one of {', '.join(SUPPORTED_EFFORTS)}")
     if not isinstance(fast, bool):
         raise ConfigError(f"{owner}.fast must be a boolean")
-    if runner not in FAST_RUNNERS and fast:
-        raise ConfigError(f"{owner}.fast is supported only by {' or '.join(FAST_RUNNERS)}")
-    return Assignment(runner=runner, model=model, effort=effort, fast=fast)
+    return Assignment(model=model, effort=effort, fast=fast)
 
 
 def parse_string_list(table: dict[str, object], key: str, owner: str) -> tuple[str, ...]:
@@ -138,10 +126,47 @@ def parse_string_list(table: dict[str, object], key: str, owner: str) -> tuple[s
 
 
 def merge_assignment(base: dict[str, object], override: dict[str, object], owner: str) -> Assignment:
-    unknown = set(override) - set(ASSIGNMENT_FIELDS)
-    if unknown:
-        raise ConfigError(f"{owner} has unknown fields: {', '.join(sorted(unknown))}")
-    return parse_assignment({**base, **override}, owner)
+    reject_unknown_fields(override, ASSIGNMENT_FIELDS, owner)
+    return parse_assignment_fields({**base, **override}, owner)
+
+
+def parse_defaults(defaults: dict[str, object]) -> tuple[int, tuple[str, ...], tuple[str, ...]]:
+    reject_unknown_fields(defaults, DEFAULT_FIELDS, "defaults")
+    schema_version = require_integer(defaults, "schema_version", "defaults")
+    presets = parse_string_list(defaults, "presets", "defaults")
+    role_names = parse_string_list(defaults, "roles", "defaults")
+    return schema_version, presets, role_names
+
+
+def validate_user_config(
+    user: dict[str, object], schema_version: int
+) -> dict[str, object]:
+    if "profile" in user:
+        raise ConfigError(
+            "user configuration.profile is no longer supported; replace profile with preset and run setup-mstack"
+        )
+    reject_unknown_fields(user, USER_FIELDS, "user configuration")
+    user_schema = user.get("schema_version", schema_version)
+    if user_schema != schema_version:
+        raise ConfigError(f"user schema_version must be {schema_version}")
+    if "preset" in user:
+        require_string(user, "preset", "user configuration")
+    user_roles = user.get("roles", {})
+    if not isinstance(user_roles, dict):
+        raise ConfigError("user roles must be a table")
+    for role_name in user_roles:
+        reject_legacy_role(role_name, f"roles.{role_name}")
+    return user_roles
+
+
+def complete_user_role(role_name: str, values: dict[str, object]) -> Assignment:
+    owner = f"roles.{role_name}"
+    missing = [field for field in ASSIGNMENT_FIELDS if field not in values]
+    if missing:
+        raise ConfigError(
+            f"{owner} must define all assignment fields for a new role: {', '.join(missing)}"
+        )
+    return parse_assignment_fields(values, owner)
 
 
 def resolve_config(
@@ -152,26 +177,32 @@ def resolve_config(
     root = repository_root()
     defaults_path = root / "config" / "models.defaults.toml"
     defaults = load_toml(defaults_path)
-    schema_version = require_integer(defaults, "schema_version", "defaults")
-    host = detect_host()
-    default_preset = default_preset_for(defaults, host)
-    presets = parse_string_list(defaults, "presets", "defaults")
-    role_names = parse_string_list(defaults, "roles", "defaults")
-    resolved_user_path = config_path or default_user_config_path()
+    schema_version, presets, role_names = parse_defaults(defaults)
     user: dict[str, object] = {}
-    user_loaded = use_user_config and resolved_user_path.exists()
-    if user_loaded:
+    user_loaded = False
+    if config_path is not None:
+        resolved_user_path = config_path
         user = load_toml(resolved_user_path)
-        if "profile" in user:
-            raise ConfigError("replace profile with preset in the user configuration; choose codex-preset or claude-preset")
-        user_schema = user.get("schema_version", schema_version)
-        if user_schema != schema_version:
-            raise ConfigError(f"user schema_version must be {schema_version}")
-    selected_preset = preset_override or user.get("preset") or default_preset
-    if not isinstance(selected_preset, str) or selected_preset not in presets:
+        user_loaded = True
+    else:
+        resolved_user_path = default_user_config_path()
+        if use_user_config and resolved_user_path.exists():
+            user = load_toml(resolved_user_path)
+            user_loaded = True
+    user_roles_value = validate_user_config(user, schema_version) if user_loaded else {}
+    if preset_override is not None:
+        if not preset_override.strip():
+            raise ConfigError("explicit preset must be a non-empty string")
+        selected_preset = preset_override
+    elif user_loaded and "preset" in user:
+        selected_preset = require_string(user, "preset", "user configuration")
+    else:
+        raise ConfigError("No active profile; run setup-mstack")
+    if selected_preset not in presets:
         raise ConfigError(f"preset must be one of {', '.join(presets)}")
     preset_path = root / "config" / "presets" / f"{selected_preset}.toml"
     preset = load_toml(preset_path)
+    reject_unknown_fields(preset, PRESET_FIELDS, f"preset {selected_preset}")
     if require_integer(preset, "schema_version", f"preset {selected_preset}") != schema_version:
         raise ConfigError(f"preset {selected_preset} has an incompatible schema_version")
     if require_string(preset, "name", f"preset {selected_preset}") != selected_preset:
@@ -187,12 +218,6 @@ def resolve_config(
         if extra:
             details.append(f"unknown {', '.join(sorted(extra))}")
         raise ConfigError(f"preset {selected_preset} roles differ from the registry: {'; '.join(details)}")
-    user_roles_value = user.get("roles", {})
-    if not isinstance(user_roles_value, dict):
-        raise ConfigError("user roles must be a table")
-    unknown_user_roles = set(user_roles_value) - set(role_names)
-    if unknown_user_roles:
-        raise ConfigError(f"user configuration has unknown roles: {', '.join(sorted(unknown_user_roles))}")
     resolved: dict[str, Assignment] = {}
     for role_name in role_names:
         base = preset_roles[role_name]
@@ -202,9 +227,14 @@ def resolve_config(
         if not isinstance(override, dict):
             raise ConfigError(f"user role {role_name} must be a table")
         resolved[role_name] = merge_assignment(base, override, f"roles.{role_name}")
+    for role_name, values in user_roles_value.items():
+        if role_name in role_names:
+            continue
+        if not isinstance(values, dict):
+            raise ConfigError(f"user role {role_name} must be a table")
+        resolved[role_name] = complete_user_role(role_name, values)
     return ResolvedConfig(
         schema_version=schema_version,
-        host=host,
         preset=selected_preset,
         description=description,
         user_config=str(resolved_user_path) if user_loaded else None,
@@ -216,10 +246,10 @@ def resolved_payload(config: ResolvedConfig, role: str | None) -> dict[str, obje
     if role is not None:
         assignment = config.roles.get(role)
         if assignment is None:
+            reject_legacy_role(role, f"role {role}")
             raise ConfigError(f"unknown role: {role}")
         return {
             "schema_version": config.schema_version,
-            "host": config.host,
             "preset": config.preset,
             "user_config": config.user_config,
             "role": role,
@@ -227,7 +257,6 @@ def resolved_payload(config: ResolvedConfig, role: str | None) -> dict[str, obje
         }
     return {
         "schema_version": config.schema_version,
-        "host": config.host,
         "preset": config.preset,
         "description": config.description,
         "user_config": config.user_config,
@@ -235,17 +264,22 @@ def resolved_payload(config: ResolvedConfig, role: str | None) -> dict[str, obje
     }
 
 
-def parse_override(value: str) -> tuple[str, str, object]:
+def parse_override(value: str) -> tuple[str, str, str | bool]:
     key, separator, raw = value.partition("=")
     if not separator or "." not in key:
         raise ConfigError("overrides use ROLE.FIELD=VALUE")
     role, field = key.rsplit(".", 1)
+    reject_legacy_role(role, f"role {role}")
     if field not in ASSIGNMENT_FIELDS:
+        if field == "runner":
+            raise ConfigError(
+                "runner overrides are no longer supported; remove runner and run setup-mstack"
+            )
         raise ConfigError(f"unknown assignment field: {field}")
     if field == "fast":
         if raw not in ("true", "false"):
             raise ConfigError("fast override must be true or false")
-        parsed: object = raw == "true"
+        parsed: str | bool = raw == "true"
     else:
         if not raw:
             raise ConfigError(f"{role}.{field} cannot be empty")
@@ -259,16 +293,17 @@ def toml_string(value: str) -> str:
 
 def render_user_config(preset: str, override_values: list[str]) -> str:
     registry = resolve_config(preset_override=preset, use_user_config=False)
-    overrides: dict[str, dict[str, object]] = {}
+    overrides: dict[str, dict[str, str | bool]] = {}
     for value in override_values:
         role, field, parsed = parse_override(value)
-        if role not in registry.roles:
-            raise ConfigError(f"unknown role: {role}")
         overrides.setdefault(role, {})[field] = parsed
     for role, values in overrides.items():
-        merge_assignment(asdict(registry.roles[role]), values, f"roles.{role}")
+        if role in registry.roles:
+            merge_assignment(asdict(registry.roles[role]), values, f"roles.{role}")
+        else:
+            complete_user_role(role, values)
     lines = [f"schema_version = {registry.schema_version}", f"preset = {toml_string(preset)}"]
-    for role in registry.roles:
+    for role in (*registry.roles, *[name for name in overrides if name not in registry.roles]):
         values = overrides.get(role)
         if not values:
             continue
@@ -324,13 +359,10 @@ def main(arguments: list[str] | None = None) -> int:
             return 0
         if options.command == "presets":
             defaults = load_toml(repository_root() / "config" / "models.defaults.toml")
-            host = detect_host()
-            default_preset = default_preset_for(defaults, host)
-            print(f"host: {host}")
-            for preset in parse_string_list(defaults, "presets", "defaults"):
+            _, presets, _ = parse_defaults(defaults)
+            for preset in presets:
                 resolved = resolve_config(preset_override=preset, use_user_config=False)
-                marker = "  (default for this host)" if preset == default_preset else ""
-                print(f"{resolved.preset}\t{resolved.description}{marker}")
+                print(f"{resolved.preset}\t{resolved.description}")
             return 0
         content = render_user_config(options.preset, options.set)
         if options.dry_run:

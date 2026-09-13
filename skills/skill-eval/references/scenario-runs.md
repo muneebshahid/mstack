@@ -1,15 +1,13 @@
-# Running candidates
+# Running scenarios
 
-Keep the evaluator in the parent conversation. Choose a fresh candidate environment that supports the workflow being tested:
+Use a fresh `codex exec` or `claude -p` process for each scenario.
 
-- A native subagent is sufficient when the candidate needs no further delegation.
-- If the candidate must delegate, check the tools available at the candidate's depth and its remaining nesting depth. Use a native subagent when it can still spawn the required workers.
-- Otherwise, the evaluator launches a fresh top-level harness process in the disposable workspace: `codex exec --json` or `claude -p --output-format stream-json --verbose`, with the selected model and effort. The candidate uses that process's native agent tools.
+Inject the complete variant and role assignments into the prompt. Supply existing scripts and references by path, resolving relative links from their original skill directory. Do not substitute an installed copy for the supplied variant.
 
-Nesting limits vary by harness, version, and configuration. Do not assume identical limits or silently raise them. An external process tests its own agent tree; it cannot establish integration with the calling desktop task. Test that relationship through the actual host when it matters.
+The launcher may spool prompts and results to temporary files; keep skill variants and configuration overrides inline.
 
-Give candidates the skill through the harness's discovery mechanism when testing automatic selection. Attaching a skill explicitly tests execution only. Check the loaded path or content against the intended version, especially when an installed copy remains visible.
+Check actual delegation activity. Report missing capabilities rather than adding another process layer or claiming the workflow was tested.
 
-Use read-only access for analysis and bounded write access to disposable files for writing workflows. Check access to temporary prompts, outputs, and evidence before unattended runs. Do not use Consult's read-only launcher for candidates that must edit files.
+Inline runs test supplied instructions. Check discovery and installation separately after adoption. External scenarios do not establish integration with the original desktop task.
 
-Retain the process result and material tool events. When a native operation is being tested, its returned ID and follow-up operations are the evidence. Avoid ephemeral sessions when testing resumption across process restarts.
+Test resumption with returned session IDs and follow-ups; avoid ephemeral sessions. Inspect effective prompts, access flags, result files, and served-model evidence.

@@ -22,29 +22,19 @@ Provider = Literal["claude", "codex"]
 type JsonScalar = str | int | float | bool | None
 type JsonValue = JsonScalar | list[JsonValue] | dict[str, JsonValue]
 
-CONSULTANT_BOUNDARY = """\
-## Operating Boundary
-
-Act only as an independent consultant. Read and inspect the project with the
-available tools, but do not edit project files, mutate external systems, create
-or update tickets, commit, push, or delegate implementation. If a capability,
-tool, permission, authentication, or source is missing or fails, report it in
-a "Capability and Tool Issues" section with the attempted operation, observed
-problem, affected evidence, impact, and next diagnostic step. Do not treat a
-missing or failed source as searched, do not repeatedly retry it, and redact
-secrets. Omit that section when no issue occurred.
-
-"""
+NO_SUBAGENTS = "Work directly. Do not launch other agents, even when a skill offers delegation."
 
 
 @dataclass(frozen=True)
 class Arguments:
     provider: Provider
     cwd: Path
-    prompt_file: Path
+    prompt_file: Path | None
     model: str
     effort: str
     fast: bool
+    allow_writes: bool
+    allow_subagents: bool
     output_dir: Path | None
     resume_session_id: str | None
     timeout_seconds: int
@@ -102,9 +92,17 @@ def main() -> int:
     try:
         arguments = parse_args()
         normalized = normalize_arguments(arguments)
+        task = (
+            normalized.prompt_file.read_text(encoding="utf-8")
+            if normalized.prompt_file
+            else sys.stdin.read()
+        )
+        if not task.strip():
+            raise LauncherError("Task prompt is empty")
         artifacts = prepare_artifacts(normalized)
         artifacts.prompt.write_text(
-            normalized.prompt_file.read_text(encoding="utf-8"), encoding="utf-8"
+            build_prompt(task, normalized.allow_writes, normalized.allow_subagents),
+            encoding="utf-8",
         )
         return run_turn(normalized, artifacts)
     except LauncherError as error:
@@ -114,14 +112,16 @@ def main() -> int:
 
 def parse_args() -> Arguments:
     parser = argparse.ArgumentParser(
-        description="Run a selected Claude Code or Codex consultant."
+        description="Delegate a task to Claude Code or Codex."
     )
     parser.add_argument("--provider", choices=("claude", "codex"), required=True)
     parser.add_argument("--cwd", required=True)
-    parser.add_argument("--prompt-file", required=True)
+    parser.add_argument("--prompt-file", help="Read a task file instead of stdin")
     parser.add_argument("--model", required=True)
     parser.add_argument("--effort", choices=SUPPORTED_EFFORTS, required=True)
     parser.add_argument("--fast", action="store_true")
+    parser.add_argument("--allow-writes", action="store_true")
+    parser.add_argument("--allow-subagents", action="store_true")
     parser.add_argument("--output-dir")
     parser.add_argument("--resume", dest="resume_session_id", metavar="CONVERSATION_ID")
     parser.add_argument("--timeout-seconds", type=int, default=0)
@@ -129,10 +129,12 @@ def parse_args() -> Arguments:
     return Arguments(
         provider=parsed.provider,
         cwd=Path(parsed.cwd),
-        prompt_file=Path(parsed.prompt_file),
+        prompt_file=Path(parsed.prompt_file) if parsed.prompt_file else None,
         model=parsed.model,
         effort=parsed.effort,
         fast=parsed.fast,
+        allow_writes=parsed.allow_writes,
+        allow_subagents=parsed.allow_subagents,
         output_dir=Path(parsed.output_dir) if parsed.output_dir else None,
         resume_session_id=parsed.resume_session_id,
         timeout_seconds=parsed.timeout_seconds,
@@ -141,7 +143,9 @@ def parse_args() -> Arguments:
 
 def normalize_arguments(arguments: Arguments) -> Arguments:
     cwd = arguments.cwd.expanduser().resolve()
-    prompt_file = arguments.prompt_file.expanduser().resolve()
+    prompt_file = (
+        arguments.prompt_file.expanduser().resolve() if arguments.prompt_file else None
+    )
     output_dir = (
         arguments.output_dir.expanduser().resolve()
         if arguments.output_dir is not None
@@ -157,6 +161,8 @@ def normalize_arguments(arguments: Arguments) -> Arguments:
         model=arguments.model,
         effort=arguments.effort,
         fast=arguments.fast,
+        allow_writes=arguments.allow_writes,
+        allow_subagents=arguments.allow_subagents,
         output_dir=output_dir,
         resume_session_id=arguments.resume_session_id,
         timeout_seconds=arguments.timeout_seconds,
@@ -165,15 +171,15 @@ def normalize_arguments(arguments: Arguments) -> Arguments:
 
 def validate_inputs(
     cwd: Path,
-    prompt_file: Path,
+    prompt_file: Path | None,
     output_dir: Path | None,
     timeout_seconds: int,
 ) -> None:
     if not cwd.is_dir():
         raise LauncherError(f"Working directory does not exist: {cwd}")
-    if not prompt_file.is_file():
+    if prompt_file is not None and not prompt_file.is_file():
         raise LauncherError(f"Prompt file does not exist: {prompt_file}")
-    if prompt_file.stat().st_size == 0:
+    if prompt_file is not None and prompt_file.stat().st_size == 0:
         raise LauncherError(f"Prompt file is empty: {prompt_file}")
     if output_dir is not None and is_within(output_dir, cwd):
         raise LauncherError("Output directory must be outside the working directory")
@@ -207,7 +213,7 @@ def allocate_output_directory(arguments: Arguments) -> Path:
         root = Path(tempfile.gettempdir()).resolve()
         if is_within(root, arguments.cwd):
             raise LauncherError("Output directory must be outside the working directory; choose --output-dir")
-        return Path(tempfile.mkdtemp(prefix="mstack-consult-", dir=root))
+        return Path(tempfile.mkdtemp(prefix="mstack-delegate-", dir=root))
     requested = arguments.output_dir
     if requested.exists() and not requested.is_dir():
         raise LauncherError(f"Output path is not a directory: {requested}")
@@ -219,7 +225,7 @@ def allocate_output_directory(arguments: Arguments) -> Path:
 
 
 def run_turn(arguments: Arguments, artifacts: Artifacts) -> int:
-    prompt = build_prompt(artifacts.prompt.read_text(encoding="utf-8"))
+    prompt = artifacts.prompt.read_text(encoding="utf-8")
     session_id = arguments.resume_session_id
     requested_tier = "fast" if arguments.fast else "default"
     rollout_start_offset = (
@@ -237,6 +243,7 @@ def run_turn(arguments: Arguments, artifacts: Artifacts) -> int:
             arguments.effort,
             arguments.fast,
             session_id,
+            arguments.allow_writes,
         )
         process = run_process(
             arguments.provider,
@@ -289,8 +296,18 @@ def run_turn(arguments: Arguments, artifacts: Artifacts) -> int:
     return 0 if succeeded else 1
 
 
-def build_prompt(task_prompt: str) -> str:
-    return CONSULTANT_BOUNDARY + task_prompt
+def build_prompt(task_prompt: str, allow_writes: bool, allow_subagents: bool) -> str:
+    access = (
+        "Edit only within the caller's assigned scope."
+        if allow_writes
+        else "Investigate read-only. Do not edit project files or mutate external systems."
+    )
+    delegation = (
+        "You may use Delegate to launch agents. Each new child defaults to allow_subagents=false; do not inherit this permission automatically."
+        if allow_subagents
+        else NO_SUBAGENTS
+    )
+    return f"## Assignment boundaries\n\n{access}\n{delegation}\nReport tool failures and unverified results.\n\n## Task\n\n{task_prompt}"
 
 
 def resolve_binary(provider: Provider) -> str:
@@ -311,13 +328,14 @@ def build_command(
     effort: str,
     fast: bool,
     resume_session_id: str | None,
+    allow_writes: bool,
 ) -> tuple[str, ...]:
     if provider == "claude":
         return build_claude_command(
             binary, model, effort, resume_session_id, resolve_skill_dirs()
         )
     return build_codex_command(
-        binary, cwd, model, effort, fast, resume_session_id
+        binary, cwd, model, effort, fast, resume_session_id, allow_writes
     )
 
 
@@ -366,7 +384,9 @@ def build_codex_command(
     effort: str,
     fast: bool,
     resume_session_id: str | None,
+    allow_writes: bool,
 ) -> tuple[str, ...]:
+    sandbox = "workspace-write" if allow_writes else "read-only"
     configs = (
         "--config",
         f"model_reasoning_effort={json.dumps(effort)}",
@@ -380,7 +400,7 @@ def build_codex_command(
             "--json",
             "--skip-git-repo-check",
             "--sandbox",
-            "read-only",
+            sandbox,
             "--cd",
             str(cwd),
             "--model",
@@ -391,7 +411,7 @@ def build_codex_command(
     return (
         binary,
         "--sandbox",
-        "read-only",
+        sandbox,
         "--cd",
         str(cwd),
         "--model",
@@ -472,7 +492,7 @@ def start_process(
             text=True,
         )
     except OSError as error:
-        raise LauncherError(f"Could not start consultant process: {error}") from error
+        raise LauncherError(f"Could not start delegated process: {error}") from error
     output_queue, output_thread = start_output_reader(process)
     input_thread = start_input_writer(process, prompt)
     emit_status("started", process.pid)
@@ -488,7 +508,7 @@ def process_environment(provider: Provider) -> dict[str, str]:
 
 def start_input_writer(process: subprocess.Popen[str], prompt: str) -> threading.Thread:
     if process.stdin is None:
-        raise LauncherError("Could not open consultant stdin")
+        raise LauncherError("Could not open delegated stdin")
     input_thread = threading.Thread(
         target=write_prompt, args=(process.stdin, prompt), daemon=True
     )
@@ -508,7 +528,7 @@ def start_output_reader(
     process: subprocess.Popen[str],
 ) -> tuple[queue.Queue[str], threading.Thread]:
     if process.stdout is None:
-        raise LauncherError("Could not open consultant stdout")
+        raise LauncherError("Could not open delegated stdout")
     output_queue: queue.Queue[str] = queue.Queue()
     output_thread = threading.Thread(
         target=enqueue_output, args=(process.stdout, output_queue), daemon=True
@@ -707,7 +727,7 @@ def describe_claude_activity(
     if normalized in {"glob", "find"}:
         return f"Scanning repository paths in {display_path(inputs, cwd)}"
     if normalized in {"bash", "shell"}:
-        return "Running a read-only shell command"
+        return "Running a shell command"
     if "websearch" in normalized or "web_search" in normalized:
         return "Searching the web"
     if "webfetch" in normalized or "web_fetch" in normalized:
@@ -737,7 +757,7 @@ def describe_codex_activity(
     kind: str, item: dict[str, JsonValue], cwd: Path
 ) -> str:
     if kind == "command_execution":
-        return "Running a read-only shell command"
+        return "Running a shell command"
     if kind == "file_change":
         return "Attempting a file change"
     if kind == "mcp_tool_call":
@@ -1150,6 +1170,8 @@ def write_summary(
         "effort": arguments.effort,
         "served_effort": extraction.served_effort,
         "fast": arguments.fast,
+        "allow_writes": arguments.allow_writes,
+        "allow_subagents": arguments.allow_subagents,
         "requested_service_tier": requested_tier
         if arguments.provider == "codex"
         else None,
@@ -1217,5 +1239,5 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except KeyboardInterrupt:
-        print("Consultant invocation interrupted.", file=sys.stderr)
+        print("Delegation interrupted.", file=sys.stderr)
         raise SystemExit(130) from None

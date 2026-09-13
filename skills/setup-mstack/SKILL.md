@@ -1,11 +1,11 @@
 ---
 name: setup-mstack
-description: Inspect or change MStack's model assignments, efforts, runners, and Fast settings for Codex or Claude Code.
+description: Inspect or change MStack's model assignments, efforts, and Fast settings.
 ---
 
 # Setup MStack
 
-The active profile is a preset plus user overrides. Packaged presets provide starting assignments; installed skills need no edits. Use judgment on capability checks and clarification.
+The active profile combines a preset and user overrides; installed skills need no edits. Use judgment on capability checks and clarification.
 
 ## Inspect
 
@@ -16,28 +16,28 @@ python3 <setup-mstack-directory>/scripts/models.py presets
 python3 <setup-mstack-directory>/scripts/models.py resolve
 ```
 
-Offer `codex-preset` and `claude-preset`, recommending the one matching the host. Users can accept a preset or customize any role. Without a user configuration, the host preset supplies the active profile. Read [Runtime resolution](references/runtime-resolution.md) for configuration locations, host overrides, and runner selection.
+Offer `codex-preset` and `claude-preset`, with optional role customization. Complete setup if no active profile is selected. See [Runtime resolution](references/runtime-resolution.md) for configuration locations and passing assignments to children.
 
-Show the selected preset, effective assignments, and any local overrides. Check model availability through exposed metadata and external CLI authentication with `codex login status` or `claude auth status`, as relevant. Report unknown availability or incompatible runners; keep configured choices intact. Login alone does not establish model access.
+Show the preset, effective assignments, and overrides. Check available models and relevant CLI authentication with `codex login status` or `claude auth status`. Report unknown model access without changing assignments; login alone does not verify it.
 
-If a launch check is needed, use the configured cheap smoke roles. Report what was actually verified; do not launch expensive models merely to infer access.
+Use cheap smoke roles for launch checks and report what they verified; do not launch expensive models merely to infer access.
 
 ## Configure
 
-Write only when setup or configuration changes were requested. Show the proposed active profile; resolve missing choices without reconfirming explicit ones.
+Write only when setup or changes were requested. Show the proposed profile; resolve missing choices without reconfirming explicit ones.
 
 Preview the complete replacement configuration:
 
 ```bash
 python3 <setup-mstack-directory>/scripts/models.py configure \
   --preset <preset> \
-  --set consultant_default.effort=high \
+  --set delegate_default.effort=high \
   --dry-run
 ```
 
-`configure` saves the selected preset and role overrides, replacing the whole user file. Include every existing override that should survive, using one `--set ROLE.FIELD=VALUE` per field. Remove `--dry-run` to write.
+`configure` replaces the user file with the selected preset and overrides. Preserve wanted overrides with one `--set ROLE.FIELD=VALUE` per field. Remove `--dry-run` to write.
 
-Supported fields are `runner`, `model`, `effort`, and `fast`; the resolver validates them. Fast applies only to Codex runners, and `implement_worker` requires a native runner.
+Assignments contain `model`, `effort`, and `fast`. Existing roles accept partial overrides; new roles need all three. [Delegate](../delegate/SKILL.md) chooses execution and reports unsupported settings. Remove legacy runner fields and rename `consultant_default` to `delegate_default`.
 
 ## Verify
 
