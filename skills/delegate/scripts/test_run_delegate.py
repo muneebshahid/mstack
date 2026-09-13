@@ -40,13 +40,13 @@ class RunDelegateTest(unittest.TestCase):
             root = Path(temporary_directory)
             flags = ("--allow-writes", "--allow-subagents")
             first, first_output = run_launcher(
-                root, "codex", create_fake_codex(root, allow_writes=True),
+                root, "codex", create_fake_codex(root, allow_writes=True, allow_subagents=True),
                 extra_arguments=flags,
             )
             assert first.returncode == 0, first.stderr
             shutil.rmtree(first_output)
             second, output = run_launcher(
-                root, "codex", create_fake_codex(root, allow_writes=True),
+                root, "codex", create_fake_codex(root, allow_writes=True, allow_subagents=True),
                 extra_arguments=(*flags, "--resume", CODEX_THREAD_ID),
             )
             assert second.returncode == 0, second.stderr
@@ -55,6 +55,34 @@ class RunDelegateTest(unittest.TestCase):
             assert summary["allow_subagents"] is True
             assert summary["native_session_id"] == CODEX_THREAD_ID
             assert (root / "workspace" / "worker-result.txt").read_text() == "resumed"
+
+    def test_claude_edit_permission_is_scoped_and_reapplied_on_resume(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="delegate space ") as temporary_directory:
+            root = Path(temporary_directory)
+            for resumed in (False, True):
+                flags = ("--allow-writes",)
+                if resumed:
+                    flags += ("--resume", CLAUDE_SESSION_ID)
+                completed, output = run_launcher(
+                    root, "claude",
+                    create_fake_claude(
+                        root, allow_writes=True,
+                        expected_resume=CLAUDE_SESSION_ID if resumed else None,
+                    ),
+                    extra_arguments=flags,
+                )
+                assert completed.returncode == 0, completed.stderr
+                assert read_summary(output)["allow_writes"] is True
+
+    def test_nested_runtime_access_keeps_read_only_workspace(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            completed, output = run_launcher(
+                root, "codex", create_fake_codex(root, allow_subagents=True),
+                extra_arguments=("--allow-subagents",),
+            )
+            assert completed.returncode == 0, completed.stderr
+            assert read_summary(output)["allow_writes"] is False
 
     def test_claude_success_keeps_persistence_and_disables_memory(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
@@ -390,6 +418,7 @@ def run_launcher(
     environment["CLAUDE_CODE_BIN"] = str(binary)
     environment["CODEX_BIN"] = str(binary)
     environment["CODEX_HOME"] = str(root / "codex-home")
+    environment["CLAUDE_CONFIG_DIR"] = str(root / "claude-config")
     environment["TMPDIR"] = str(root)
     completed = invoke(
         root,
@@ -477,6 +506,7 @@ def create_fake_claude(
     child_stdout_seconds: int = 0,
     delay_seconds: int = 0,
     include_session: bool = True,
+    allow_writes: bool = False,
 ) -> Path:
     body = f"""
         #!{sys.executable}
@@ -490,6 +520,11 @@ def create_fake_claude(
         assert args[args.index("--effort") + 1] == "low"
         assert "--no-session-persistence" not in args
         assert args[args.index("--output-format") + 1] == "stream-json"
+        assert args[args.index("--permission-mode") + 1] == "auto"
+        if {allow_writes!r}:
+            assert args[args.index("--allowedTools") + 1] == {f'Edit(/{(root / "workspace").resolve().as_posix()}/**)'!r}
+        else:
+            assert "--allowedTools" not in args
         assert os.environ.get("CLAUDE_CODE_DISABLE_AUTO_MEMORY") == "1"
         if {expected_resume!r} is None:
             assert "--resume" not in args
@@ -525,19 +560,20 @@ def create_fake_codex(
     exit_code: int = 0,
     write_current_context: bool = True,
     allow_writes: bool = False,
+    allow_subagents: bool = False,
 ) -> Path:
     body = f"""
         #!{sys.executable}
         import json
         import os
         import sys
+        import tomllib
         from pathlib import Path
         args = sys.argv[1:]
         resumed = "resume" in args
         if not resumed:
             assert args[0] == "exec"
         else:
-            assert args[0:4] == ["--sandbox", {('workspace-write' if allow_writes else 'read-only')!r}, "--cd", {str((root / "workspace").resolve())!r}]
             assert args[args.index("exec") + 1] == "resume"
             assert args[args.index("resume") + 1] == "--json"
             assert args[args.index("--cd") + 1] == {str((root / "workspace").resolve())!r}
@@ -549,7 +585,22 @@ def create_fake_codex(
         tier = next(value.split("=", 1)[1].strip('\\"') for value in configs if value.startswith("service_tier="))
         assert tier in {{"default", "fast"}}
         assert args[-1] == "-"
-        assert args[args.index("--sandbox") + 1] == {('workspace-write' if allow_writes else 'read-only')!r}
+        if {allow_subagents!r}:
+            assert "--sandbox" not in args
+            resolved = tomllib.loads("\\n".join(configs))
+            profile = resolved["permissions"][resolved["default_permissions"]]
+            assert profile["extends"] == {(':workspace' if allow_writes else ':read-only')!r}
+            assert profile["network"] == {{"enabled": True}}
+            filesystem = profile["filesystem"]
+            claude_root = Path(os.environ["CLAUDE_CONFIG_DIR"]).resolve()
+            expected = {{str(claude_root / name): "write" for name in ("projects", "session-env", "debug")}}
+            expected[{str(root.resolve())!r}] = "write"
+            if not {allow_writes!r}:
+                expected[{str((root / 'workspace').resolve())!r}] = "read"
+            assert filesystem == expected
+        else:
+            assert args[args.index("--sandbox") + 1] == {('workspace-write' if allow_writes else 'read-only')!r}
+            assert not any(value.startswith("permissions.") or value.startswith("default_permissions=") for value in configs)
         if {allow_writes!r}:
             Path("worker-result.txt").write_text("resumed" if resumed else "first")
         prompt = sys.stdin.read()

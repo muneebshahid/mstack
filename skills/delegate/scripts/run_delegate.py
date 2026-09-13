@@ -244,6 +244,7 @@ def run_turn(arguments: Arguments, artifacts: Artifacts) -> int:
             arguments.fast,
             session_id,
             arguments.allow_writes,
+            arguments.allow_subagents,
         )
         process = run_process(
             arguments.provider,
@@ -329,13 +330,14 @@ def build_command(
     fast: bool,
     resume_session_id: str | None,
     allow_writes: bool,
+    allow_subagents: bool,
 ) -> tuple[str, ...]:
     if provider == "claude":
         return build_claude_command(
-            binary, model, effort, resume_session_id, resolve_skill_dirs()
+            binary, model, effort, resume_session_id, resolve_skill_dirs(), cwd, allow_writes
         )
     return build_codex_command(
-        binary, cwd, model, effort, fast, resume_session_id, allow_writes
+        binary, cwd, model, effort, fast, resume_session_id, allow_writes, allow_subagents
     )
 
 
@@ -355,6 +357,8 @@ def build_claude_command(
     effort: str,
     resume_session_id: str | None,
     skill_dirs: tuple[Path, ...],
+    cwd: Path,
+    allow_writes: bool,
 ) -> tuple[str, ...]:
     command: list[str] = [binary, "-p"]
     if resume_session_id is not None:
@@ -373,6 +377,8 @@ def build_claude_command(
         )
     )
     command.extend(str(path) for path in skill_dirs)
+    if allow_writes:
+        command.extend(("--allowedTools", f"Edit(/{cwd.as_posix()}/**)"))
     command.extend(("--output-format", "stream-json", "--verbose"))
     return tuple(command)
 
@@ -385,8 +391,9 @@ def build_codex_command(
     fast: bool,
     resume_session_id: str | None,
     allow_writes: bool,
+    allow_subagents: bool,
 ) -> tuple[str, ...]:
-    sandbox = "workspace-write" if allow_writes else "read-only"
+    permissions = codex_permissions(cwd, allow_writes, allow_subagents)
     configs = (
         "--config",
         f"model_reasoning_effort={json.dumps(effort)}",
@@ -399,8 +406,7 @@ def build_codex_command(
             "exec",
             "--json",
             "--skip-git-repo-check",
-            "--sandbox",
-            sandbox,
+            *permissions,
             "--cd",
             str(cwd),
             "--model",
@@ -410,8 +416,7 @@ def build_codex_command(
         )
     return (
         binary,
-        "--sandbox",
-        sandbox,
+        *permissions,
         "--cd",
         str(cwd),
         "--model",
@@ -423,6 +428,33 @@ def build_codex_command(
         "--skip-git-repo-check",
         resume_session_id,
         "-",
+    )
+
+
+def codex_permissions(
+    cwd: Path, allow_writes: bool, allow_subagents: bool
+) -> tuple[str, ...]:
+    if not allow_subagents:
+        return ("--sandbox", "workspace-write" if allow_writes else "read-only")
+    claude_root = Path(
+        os.environ.get("CLAUDE_CONFIG_DIR", Path.home() / ".claude")
+    ).expanduser().resolve()
+    paths = {Path(tempfile.gettempdir()).resolve(): "write"}
+    paths.update(
+        {claude_root / name: "write" for name in ("projects", "session-env", "debug")}
+    )
+    if not allow_writes:
+        paths[cwd] = "read"
+    filesystem = ", ".join(
+        f"{json.dumps(str(path))}={json.dumps(access)}" for path, access in paths.items()
+    )
+    base = ":workspace" if allow_writes else ":read-only"
+    profile = f'{{extends={json.dumps(base)}, network={{enabled=true}}, filesystem={{{filesystem}}}}}'
+    return (
+        "--config",
+        'default_permissions="mstack_delegate"',
+        "--config",
+        f"permissions.mstack_delegate={profile}",
     )
 
 

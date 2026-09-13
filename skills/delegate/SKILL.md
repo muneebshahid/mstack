@@ -38,6 +38,8 @@ python3 <delegate-directory>/scripts/run_delegate.py \
 
 Add `--fast`, `--allow-writes`, or `--allow-subagents` when assigned; each defaults to false on every invocation.
 
+External flags also configure provider permissions: checkout edits for Claude writers, and network/session access for Codex processes allowed to delegate. See the provider references for scope.
+
 ## Follow up
 
 Monitor completion and check results, model evidence, and actual edits. External runs write `summary.json`; a successful process may still report blocked work.
