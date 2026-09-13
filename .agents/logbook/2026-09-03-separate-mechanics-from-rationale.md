@@ -9,7 +9,7 @@ Code can establish what a system does, but it rarely proves why a design was cho
 
 ## Decision
 
-The separate entry points and agent topology below are historical at revision `f7efaf2`. [Consolidate Explanations](2026-09-05-consolidate-explanations.md) supersedes them while preserving the distinction between mechanics and historical rationale. Current guidance lives in [Explain](../../../skills/explain/SKILL.md).
+The separate entry points and agent topology below are historical at revision `f7efaf2`. [Consolidate Explanations](2026-09-05-consolidate-explanations.md) supersedes them while preserving the distinction between mechanics and historical rationale. Current guidance lives in [Explain](../../skills/explain/SKILL.md).
 
 Use `how` for current mechanics, ownership, boundaries, data flow, failure behavior, and placement. Use `why` for design lineage, incidents, rejected alternatives, business constraints, and data-backed thresholds. Use `teach` when both views should become one explanation.
 

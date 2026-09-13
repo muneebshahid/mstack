@@ -35,7 +35,7 @@ External consultants require the other CLI installed and logged in: Claude Code 
 | [explain](skills/explain/SKILL.md) | Explain behavior, decisions, and changes using relevant sources, a consistent template, and useful visuals. |
 | [review](skills/review/SKILL.md) | Review correctness, simplicity, and test usefulness, directly or with independent reviewers. Read-only. |
 | [apply-principles](skills/apply-principles/SKILL.md) | Select relevant engineering standards, including simplicity, strong types, ownership, diagnosis, and verification. |
-| [logbook](skills/logbook/SKILL.md) | Record work, accepted and rejected approaches, reasoning, and evidence. |
+| [logbook](skills/logbook/SKILL.md) | Record each commit’s work, decisions, rejected approaches, and verification. |
 | [consult](skills/consult/SKILL.md) | Get independent judgment from Claude or Codex, with resumable follow-ups and native fallback. |
 | [setup-mstack](skills/setup-mstack/SKILL.md) | Configure model assignments and check runner availability. |
 | [skill-eval](skills/skill-eval/SKILL.md) | Evaluate skills and compare revisions with realistic scenarios and evidence. |

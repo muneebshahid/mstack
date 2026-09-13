@@ -29,3 +29,7 @@ The stack's workflow design was reviewed against Jesse Vincent's [Superpowers](h
 ## Skills for Real Engineers
 
 The removed `grill-me` skill adapted Matt Pocock's `grill-me` entry point and `grilling` interview primitive from [Skills for Real Engineers](https://github.com/mattpocock/skills). `bro` adapts the version published in [dmmulroy/skills](https://github.com/dmmulroy/skills), whose repository preserves Matt Pocock's MIT notice. The shared license is preserved at [`LICENSES/MATT-POCOCK-SKILLS-MIT.txt`](LICENSES/MATT-POCOCK-SKILLS-MIT.txt).
+
+## DeepSeek Harness
+
+Logbook was informed by DeepSeek Harness’s [Agent Notes](https://github.com/deepseek-ai/deepseek-harness/blob/c291e7961a/.agents/notes/README.md), especially recording accepted decisions, rejected alternatives, and their reasons. MStack uses a simpler entry per commit; the upstream workflow and tooling are not bundled.

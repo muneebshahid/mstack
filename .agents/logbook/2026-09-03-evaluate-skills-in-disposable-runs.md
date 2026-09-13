@@ -9,11 +9,11 @@ Reading a skill cannot establish that it selects the right workflow, delegates s
 
 ## Decision
 
-Keep [Skill Eval](../../../skills/skill-eval/SKILL.md) focused on realistic scenarios, predefined criteria, fresh runs, observed evidence, and a consistent report. Use agent judgment for scenario count, repetition, and independent judging; prefer an independent judge for subjective comparisons of revisions the evaluator authored. Evaluation leaves installed skills and live systems unchanged.
+Keep [Skill Eval](../../skills/skill-eval/SKILL.md) focused on realistic scenarios, predefined criteria, fresh runs, observed evidence, and a consistent report. Use agent judgment for scenario count, repetition, and independent judging; prefer an independent judge for subjective comparisons of revisions the evaluator authored. Evaluation leaves installed skills and live systems unchanged.
 
 Compare complete skill versions under matching conditions and verify which version each candidate read. Distinguish automatic selection from explicitly loaded execution. Cheap model assignments test mechanics; output-quality judgments use the skill's assigned models. Preserve failures, uncertainty, and meaningful ties.
 
-Keep the evaluator in the parent. The [execution reference](../../../skills/skill-eval/references/scenario-runs.md) selects a native candidate when its available tools and remaining nesting depth support the task. Otherwise, the evaluator launches a fresh top-level harness process. Its agent tree is separate from the desktop task's tree. Do not encode a universal nesting limit or change configuration to make a test pass.
+Keep the evaluator in the parent. The [execution reference](../../skills/skill-eval/references/scenario-runs.md) selects a native candidate when its available tools and remaining nesting depth support the task. Otherwise, the evaluator launches a fresh top-level harness process. Its agent tree is separate from the desktop task's tree. Do not encode a universal nesting limit or change configuration to make a test pass.
 
 Merge reporting into four sections in the main skill and remove the separate report and judge templates. Keep only the execution reference for discovery, permissions, delegation, and session-lifecycle details.
 

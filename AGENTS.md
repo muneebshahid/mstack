@@ -1,6 +1,6 @@
 # Repository instructions
 
-- Use `skills/logbook/SKILL.md` to add or update records for every non-trivial change and meaningful investigation or review outcome. Reuse the record that owns the topic; mechanical or local edits are exempt under that skill.
+- Use `skills/logbook/SKILL.md` to record each commit’s work and decisions alongside its changes. Also capture meaningful investigation and review outcomes.
 - The parent agent owns Logbook judgment and writes. Workers may return work and outcome evidence but must not edit `.agents/logbook/`.
 - Treat the ten references under `skills/apply-principles/references/` as the canonical engineering standards. Use `skills/apply-principles/SKILL.md` to select the smallest relevant references when they are not already known.
 - Validate every changed skill with the bundled Codex `skill-creator` validator. Validate Logbook records with `skills/logbook/scripts/validate_logbook.py`.

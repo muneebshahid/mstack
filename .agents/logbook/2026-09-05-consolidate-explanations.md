@@ -46,7 +46,7 @@ A fresh Luna Medium run used the same consumer-repository question and prompt wi
 
 The parent added the optional explorer role and updated both profiles, Explain, and README. Repository and skill validation passed; resolving the role on Codex returned `gpt-5.6-luna` at `max` through `codex-native`. No agents were launched to test this instruction change.
 
-The parent verified Show Me's source and MIT license in `humanlayer/skills` at revision `3c2629142c5d437428269b1b722b08c0b87f574d`. [Third-party notices](../../../THIRD_PARTY.md) now credit the incorporated guidance and examples, and [HumanLayer's license](../../../LICENSES/HUMANLAYER-SKILLS-MIT.txt) is preserved unchanged. The notices also credit the Anthropic sources used in [Review's refinement](2026-09-06-simplify-review.md).
+The parent verified Show Me's source and MIT license in `humanlayer/skills` at revision `3c2629142c5d437428269b1b722b08c0b87f574d`. [Third-party notices](../../THIRD_PARTY.md) now credit the incorporated guidance and examples, and [HumanLayer's license](../../LICENSES/HUMANLAYER-SKILLS-MIT.txt) is preserved unchanged. The notices also credit the Anthropic sources used in [Review's refinement](2026-09-06-simplify-review.md).
 
 Three entry points become one, and routine explanations require no delegated model. Caller links, model fixtures, setup examples, and historical record links migrate together. Existing user overrides for retired roles must be removed; README documents the migration. The four-section template is intentionally consistent, even for short explanations. The user's current preference for Claude Code consulting guides this editing session without becoming a permanent portable default.
 
