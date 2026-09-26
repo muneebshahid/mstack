@@ -9,7 +9,13 @@ Use this skill for every agent launch and follow-up. The caller owns scope and f
 
 ## Prepare
 
-Use the caller's model assignment or resolve its role through [model configuration](../setup-mstack/references/runtime-resolution.md). Default to `delegate_default` when neither is supplied. Run Setup if role resolution lacks an active profile.
+Use the caller's model assignment. Otherwise resolve the role before launching, using `delegate_default` when no role is named:
+
+```bash
+python3 <setup-mstack-directory>/scripts/models.py resolve --harness <claude-code|codex> --role <role>
+```
+
+If resolution fails, stop and run [Setup](../setup-mstack/SKILL.md) before launching. Never launch with harness defaults or a preset the user did not choose. See [model configuration](../setup-mstack/references/runtime-resolution.md) for locations and passing assignments to children.
 
 Give the child the task, collected findings, source and skill paths, working directory, edit scope, and desired output. Refer to MStack skills by absolute path in this installation, not by name; a child given only a name can find and follow its harness's installed copy, which may be another version. Include relevant active assignments and inline overrides; children use these rather than their own harness profile.
 
