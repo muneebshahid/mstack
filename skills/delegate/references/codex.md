@@ -4,6 +4,8 @@ Use `--provider codex`. The executable is `CODEX_BIN` or `codex`; pass the assig
 
 Fresh and resumed turns keep the checkout read-only unless `--allow-writes` enables workspace writes. The prompt supplies narrower edit scope.
 
+The launcher turns off the child's installed MStack plugin on fresh and resumed turns. Codex cannot load another MStack copy for one run, so a child launched from Claude Code would otherwise use Codex's own install, which may be an older or newer version than the parent's. The child uses the skill and reference paths the parent passes, which point into the parent's copy. Other plugins remain available. Turning off the plugin does not hide its files, so a child asked for a skill only by name can search the disk and follow Codex's cached copy instead.
+
 The launcher verifies the turn's model and effort from the native rollout under `CODEX_HOME` or `~/.codex`, which must be writable for sessions. Fast is requested; the served tier is unverified.
 
 With `--allow-subagents`, the launcher uses a per-process permission profile enabling network access, temporary files, and Claude's `projects`, `session-env`, and `debug` directories under `CLAUDE_CONFIG_DIR` or `~/.claude`. This supports nested Claude authentication and resumable sessions while preserving the checkout's write setting. User configuration is unchanged.

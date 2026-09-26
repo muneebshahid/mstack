@@ -36,12 +36,51 @@ class ModelsTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             result = self.run_models(
                 "resolve",
+                "--harness",
+                "codex",
                 "--role",
                 "implement_worker",
                 expected_code=2,
                 XDG_CONFIG_HOME=directory,
             )
-            self.assertIn("No active profile; run setup-mstack", result.stderr)
+            self.assertIn("No codex profile; run setup-mstack", result.stderr)
+
+    def test_harness_is_required_for_saved_profiles(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            result = self.run_models("resolve", expected_code=2, XDG_CONFIG_HOME=directory)
+            self.assertIn("--harness is required", result.stderr)
+
+    def test_each_harness_reads_only_its_own_profile(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            self.run_models(
+                "configure",
+                "--harness",
+                "claude-code",
+                "--preset",
+                "claude-preset",
+                XDG_CONFIG_HOME=directory,
+            )
+            profile = Path(directory) / "mstack" / "profiles" / "claude-code.toml"
+            self.assertEqual("claude-preset", tomllib.loads(profile.read_text())["preset"])
+            claude = self.run_models(
+                "resolve", "--harness", "claude-code", XDG_CONFIG_HOME=directory
+            )
+            self.assertEqual("claude-preset", json.loads(claude.stdout)["preset"])
+            codex = self.run_models(
+                "resolve", "--harness", "codex", expected_code=2, XDG_CONFIG_HOME=directory
+            )
+            self.assertIn("No codex profile", codex.stderr)
+
+    def test_shared_legacy_file_requires_per_harness_setup(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            legacy = Path(directory) / "mstack" / "models.toml"
+            legacy.parent.mkdir()
+            legacy.write_text('schema_version = 1\npreset = "codex-preset"\n', encoding="utf-8")
+            result = self.run_models(
+                "resolve", "--harness", "codex", expected_code=2, XDG_CONFIG_HOME=directory
+            )
+            self.assertIn("no longer used", result.stderr)
+            self.assertIn("run setup-mstack in codex", result.stderr)
 
     def test_explicit_presets_resolve_without_user_config(self) -> None:
         expected = {

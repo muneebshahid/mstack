@@ -22,7 +22,7 @@ Start a new task, then run `$setup-mstack`.
 
 Start a new session, then run `/mstack:setup-mstack`.
 
-Setup offers `codex-preset` and `claude-preset` with optional role customization. Your active profile combines the selected preset and overrides in `~/.config/mstack/models.toml`. Defaults live in [`config/presets/`](config/presets/).
+Setup offers `codex-preset` and `claude-preset` with optional role customization. Each harness keeps its own profile, the selected preset plus overrides, in `~/.config/mstack/profiles/claude-code.toml` or `~/.config/mstack/profiles/codex.toml`. Run setup in each harness you use. Defaults live in [`config/presets/`](config/presets/).
 
 The scripts require Python 3.12+. External delegation requires the model's CLI installed and logged in; Skill Eval always uses an external CLI. GitHub workflows require `gh`. Explain can use connected sources such as Linear and service logs when available.
 

@@ -11,7 +11,7 @@ Use this skill for every agent launch and follow-up. The caller owns scope and f
 
 Use the caller's model assignment or resolve its role through [model configuration](../setup-mstack/references/runtime-resolution.md). Default to `delegate_default` when neither is supplied. Run Setup if role resolution lacks an active profile.
 
-Give the child the task, collected findings, source and skill paths, working directory, edit scope, and desired output. Include relevant active assignments and inline overrides; keep the profile across harnesses.
+Give the child the task, collected findings, source and skill paths, working directory, edit scope, and desired output. Refer to MStack skills by absolute path in this installation, not by name; a child given only a name can find and follow its harness's installed copy, which may be another version. Include relevant active assignments and inline overrides; children use these rather than their own harness profile.
 
 `allow_writes` and `allow_subagents` default to false. The caller enables each independently; children cannot expand their own permissions.
 

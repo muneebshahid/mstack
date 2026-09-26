@@ -584,6 +584,7 @@ def create_fake_codex(
         configs = [args[index + 1] for index, value in enumerate(args) if value == "--config"]
         effort = next(value.split("=", 1)[1].strip('\\"') for value in configs if value.startswith("model_reasoning_effort="))
         tier = next(value.split("=", 1)[1].strip('\\"') for value in configs if value.startswith("service_tier="))
+        assert 'plugins={{"mstack@mstack"={{enabled=false}}}}' in configs
         assert tier in {{"default", "fast"}}
         assert args[-1] == "-"
         if {allow_subagents!r}:

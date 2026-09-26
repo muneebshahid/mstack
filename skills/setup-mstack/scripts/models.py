@@ -16,6 +16,7 @@ DEFAULT_FIELDS = ("schema_version", "presets", "roles")
 PRESET_FIELDS = ("schema_version", "name", "description", "roles")
 USER_FIELDS = ("schema_version", "preset", "roles")
 LEGACY_ROLE = "consultant_default"
+HARNESSES = ("claude-code", "codex")
 
 
 class ConfigError(ValueError):
@@ -42,14 +43,19 @@ def repository_root() -> Path:
     return Path(__file__).resolve().parents[3]
 
 
-def default_user_config_path() -> Path:
+def config_root() -> Path:
+    xdg_root = os.environ.get("XDG_CONFIG_HOME")
+    base = Path(xdg_root).expanduser() if xdg_root else Path.home() / ".config"
+    return base / "mstack"
+
+
+def default_user_config_path(harness: str | None) -> Path:
     explicit = os.environ.get("MSTACK_CONFIG")
     if explicit:
         return Path(explicit).expanduser()
-    config_root = os.environ.get("XDG_CONFIG_HOME")
-    if config_root:
-        return Path(config_root).expanduser() / "mstack" / "models.toml"
-    return Path.home() / ".config" / "mstack" / "models.toml"
+    if harness is None:
+        raise ConfigError(f"--harness is required: one of {', '.join(HARNESSES)}")
+    return config_root() / "profiles" / f"{harness}.toml"
 
 
 def load_toml(path: Path) -> dict[str, object]:
@@ -173,6 +179,7 @@ def resolve_config(
     preset_override: str | None = None,
     config_path: Path | None = None,
     use_user_config: bool = True,
+    harness: str | None = None,
 ) -> ResolvedConfig:
     root = repository_root()
     defaults_path = root / "config" / "models.defaults.toml"
@@ -184,9 +191,9 @@ def resolve_config(
         resolved_user_path = config_path
         user = load_toml(resolved_user_path)
         user_loaded = True
-    else:
-        resolved_user_path = default_user_config_path()
-        if use_user_config and resolved_user_path.exists():
+    elif use_user_config:
+        resolved_user_path = default_user_config_path(harness)
+        if resolved_user_path.exists():
             user = load_toml(resolved_user_path)
             user_loaded = True
     user_roles_value = validate_user_config(user, schema_version) if user_loaded else {}
@@ -196,8 +203,12 @@ def resolve_config(
         selected_preset = preset_override
     elif user_loaded and "preset" in user:
         selected_preset = require_string(user, "preset", "user configuration")
+    elif (config_root() / "models.toml").exists():
+        raise ConfigError(
+            f"{config_root() / 'models.toml'} is no longer used; profiles are per harness, run setup-mstack in {harness}"
+        )
     else:
-        raise ConfigError("No active profile; run setup-mstack")
+        raise ConfigError(f"No {harness or 'active'} profile; run setup-mstack")
     if selected_preset not in presets:
         raise ConfigError(f"preset must be one of {', '.join(presets)}")
     preset_path = root / "config" / "presets" / f"{selected_preset}.toml"
@@ -336,7 +347,9 @@ def build_parser() -> argparse.ArgumentParser:
     resolve.add_argument("--preset")
     resolve.add_argument("--config", type=Path)
     resolve.add_argument("--no-user-config", action="store_true")
+    resolve.add_argument("--harness", choices=HARNESSES)
     configure = commands.add_parser("configure")
+    configure.add_argument("--harness", choices=HARNESSES)
     configure.add_argument("--preset", required=True)
     configure.add_argument("--set", action="append", default=[])
     configure.add_argument("--output", type=Path)
@@ -354,6 +367,7 @@ def main(arguments: list[str] | None = None) -> int:
                 preset_override=options.preset,
                 config_path=options.config,
                 use_user_config=not options.no_user_config,
+                harness=options.harness,
             )
             print(json.dumps(resolved_payload(config, options.role), indent=2))
             return 0
@@ -368,7 +382,7 @@ def main(arguments: list[str] | None = None) -> int:
         if options.dry_run:
             print(content, end="")
             return 0
-        output = options.output or default_user_config_path()
+        output = options.output or default_user_config_path(options.harness)
         write_user_config(output, content)
         print(json.dumps({"written": str(output), "preset": options.preset, "overrides": len(options.set)}))
         return 0

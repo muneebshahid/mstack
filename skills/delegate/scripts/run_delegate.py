@@ -23,6 +23,7 @@ type JsonScalar = str | int | float | bool | None
 type JsonValue = JsonScalar | list[JsonValue] | dict[str, JsonValue]
 
 PLUGIN_ROOT = Path(__file__).resolve().parents[3]
+CODEX_WITHOUT_INSTALLED_MSTACK = 'plugins={"mstack@mstack"={enabled=false}}'
 NO_SUBAGENTS = "Work directly. Do not launch other agents, even when a skill offers delegation."
 
 
@@ -404,6 +405,8 @@ def build_codex_command(
         f"model_reasoning_effort={json.dumps(effort)}",
         "--config",
         f"service_tier={json.dumps('fast' if fast else 'default')}",
+        "--config",
+        CODEX_WITHOUT_INSTALLED_MSTACK,
     )
     if resume_session_id is None:
         return (
