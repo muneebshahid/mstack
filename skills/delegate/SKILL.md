@@ -26,7 +26,7 @@ These are prompt instructions, not tool restrictions.
 
 ## Launch
 
-Use native tools when they support the assigned model and task, unless an external process was requested. Otherwise use [Claude](references/claude.md) for Claude models or [Codex](references/codex.md) for GPT models. Report unsupported settings or unavailable execution; never silently substitute models.
+Use native tools when they support the assigned model and task, unless an external process was requested. Claude Code's Agent tool selects `fable`, `opus`, `sonnet`, or `haiku` but not effort; launch externally when the assigned effort must apply. Otherwise use [Claude](references/claude.md) for Claude models or [Codex](references/codex.md) for GPT models. Report unsupported settings or unavailable execution; never silently substitute models.
 
 For external launches, pass the task on stdin or use `--prompt-file`:
 

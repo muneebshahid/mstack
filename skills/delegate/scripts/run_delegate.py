@@ -22,6 +22,7 @@ Provider = Literal["claude", "codex"]
 type JsonScalar = str | int | float | bool | None
 type JsonValue = JsonScalar | list[JsonValue] | dict[str, JsonValue]
 
+PLUGIN_ROOT = Path(__file__).resolve().parents[3]
 NO_SUBAGENTS = "Work directly. Do not launch other agents, even when a skill offers delegation."
 
 
@@ -334,7 +335,8 @@ def build_command(
 ) -> tuple[str, ...]:
     if provider == "claude":
         return build_claude_command(
-            binary, model, effort, resume_session_id, resolve_skill_dirs(), cwd, allow_writes
+            binary, model, effort, resume_session_id, PLUGIN_ROOT, resolve_skill_dirs(), cwd,
+            allow_writes,
         )
     return build_codex_command(
         binary, cwd, model, effort, fast, resume_session_id, allow_writes, allow_subagents
@@ -342,7 +344,7 @@ def build_command(
 
 
 def resolve_skill_dirs() -> tuple[Path, ...]:
-    packaged_skills = Path(__file__).resolve().parents[2]
+    packaged_skills = PLUGIN_ROOT / "skills"
     codex_root = Path(os.environ.get("CODEX_HOME", Path.home() / ".codex"))
     user_skills = codex_root / "skills"
     resolved = [packaged_skills]
@@ -356,6 +358,7 @@ def build_claude_command(
     model: str,
     effort: str,
     resume_session_id: str | None,
+    plugin_root: Path,
     skill_dirs: tuple[Path, ...],
     cwd: Path,
     allow_writes: bool,
@@ -373,6 +376,8 @@ def build_claude_command(
             "auto",
             "--tools",
             "default",
+            "--plugin-dir",
+            str(plugin_root),
             "--add-dir",
         )
     )

@@ -6,4 +6,4 @@ Claude uses its configured tools and `auto` permissions. Read-only and edit scop
 
 `--allow-writes` adds an `Edit` allow rule scoped to the checkout, covering file creation and edits on fresh and resumed turns. Narrower file assignments remain in the prompt. It does not preapprove edits to added skill directories or arbitrary shell commands; existing deny and ask rules still apply. Report denied writes as blocked work even if the process exits successfully.
 
-The launcher exposes packaged MStack and available personal Codex skills, with auto-memory disabled. It verifies the served model; effort is recorded as requested. Fast is unsupported.
+The launcher loads the packaged MStack plugin with `--plugin-dir`, overriding any installed copy, and grants read access to personal Codex skills. Auto-memory is disabled. It verifies the served model; effort is recorded as requested. Fast is unsupported.

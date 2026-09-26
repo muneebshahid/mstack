@@ -46,19 +46,19 @@ class ModelsTest(unittest.TestCase):
     def test_explicit_presets_resolve_without_user_config(self) -> None:
         expected = {
             "codex-preset": {
-                "implement_worker": {"model": "gpt-5.6-luna", "effort": "max", "fast": False},
-                "explain_explorer": {"model": "gpt-5.6-luna", "effort": "max", "fast": False},
+                "implement_worker": {"model": "gpt-6-sol", "effort": "high", "fast": False},
+                "explain_explorer": {"model": "gpt-6-luna", "effort": "max", "fast": False},
                 "architect_candidate_a": {"model": "claude-fable-5-1", "effort": "xhigh", "fast": False},
                 "architect_candidate_b": {"model": "gpt-6-astra", "effort": "xhigh", "fast": False},
                 "review_reviewer_a": {"model": "claude-fable-5-1", "effort": "max", "fast": False},
                 "review_reviewer_b": {"model": "gpt-6-astra", "effort": "max", "fast": False},
                 "skill_eval_quality_judge": {"model": "gpt-6-astra", "effort": "medium", "fast": False},
-                "skill_eval_smoke_candidate": {"model": "gpt-5.6-luna", "effort": "low", "fast": True},
-                "skill_eval_smoke_judge": {"model": "gpt-5.6-luna", "effort": "low", "fast": True},
+                "skill_eval_smoke_candidate": {"model": "gpt-6-luna", "effort": "low", "fast": True},
+                "skill_eval_smoke_judge": {"model": "gpt-6-luna", "effort": "low", "fast": True},
                 "delegate_default": {"model": "claude-fable-5-1", "effort": "xhigh", "fast": False},
             },
             "claude-preset": {
-                "implement_worker": {"model": "sonnet", "effort": "high", "fast": False},
+                "implement_worker": {"model": "claude-opus-5-5", "effort": "high", "fast": False},
                 "explain_explorer": {"model": "sonnet", "effort": "high", "fast": False},
                 "architect_candidate_a": {"model": "claude-fable-5-1", "effort": "xhigh", "fast": False},
                 "architect_candidate_b": {"model": "gpt-6-astra", "effort": "xhigh", "fast": False},
@@ -140,7 +140,7 @@ class ModelsTest(unittest.TestCase):
             payload = json.loads(result.stdout)
             self.assertEqual("claude-preset", payload["preset"])
             self.assertEqual(
-                {"model": "sonnet", "effort": "low", "fast": False},
+                {"model": "claude-opus-5-5", "effort": "low", "fast": False},
                 payload["assignment"],
             )
 

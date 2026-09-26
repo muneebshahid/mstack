@@ -3,7 +3,7 @@ name = "claude-preset"
 description = "Suggested profile favoring Claude models"
 
 [roles.implement_worker]
-model = "sonnet"
+model = "claude-opus-5-5"
 effort = "high"
 fast = false
 

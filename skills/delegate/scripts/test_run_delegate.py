@@ -521,6 +521,7 @@ def create_fake_claude(
         assert "--no-session-persistence" not in args
         assert args[args.index("--output-format") + 1] == "stream-json"
         assert args[args.index("--permission-mode") + 1] == "auto"
+        assert args[args.index("--plugin-dir") + 1] == {str(Path(__file__).resolve().parents[3])!r}
         if {allow_writes!r}:
             assert args[args.index("--allowedTools") + 1] == {f'Edit(/{(root / "workspace").resolve().as_posix()}/**)'!r}
         else:
