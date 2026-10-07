@@ -89,6 +89,8 @@ sequenceDiagram
     Daemon-->>UI: stream result
 ```
 
+  Where the response surface shows Mermaid as code instead of rendering it, such as a Claude Code chat, draw the diagram with an available inline visual tool, such as a widget or SVG renderer. Without one, use a call tree.
+
 - Use `diff` when the point is what changes and the surrounding shape already exists. Match the diff shape to the topic.
 
 For a component change:
@@ -153,8 +155,6 @@ function expandSkill(command: string): string {
 #### Visual guidance
 
 Place visuals beside the text they support. Include only the calls, files, props, states, and boundaries relevant to the question or decision.
-
-Use as few visuals as needed.
 
 ### Implications
 
