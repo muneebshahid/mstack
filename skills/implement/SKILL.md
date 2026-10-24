@@ -24,7 +24,7 @@ Inspect the diff and verify each unit. Use [Testing](references/testing.md) to j
 
 When implementation contradicts an accepted design, return the evidence to Architect and revise the affected work. Keep an existing worker for the revised design. Local corrections need no redesign.
 
-The parent prepares a [Logbook](../logbook/SKILL.md) entry for each commit, including accepted and rejected approaches and why.
+When a change makes a decision, fixes an incident, or produces findings that future agents would need, the parent writes a [Logbook](../logbook/SKILL.md) entry, including rejected approaches and why.
 
 ## Completion
 

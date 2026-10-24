@@ -6,7 +6,7 @@ Use this menu to choose sources as the investigation develops. Search within the
 | --- | --- |
 | Code, tests, configuration, schemas | Current behavior, contracts, relationships, and ownership. |
 | Git history, blame, diffs, PRs and reviews | When behavior changed, regressions, and recorded reasons for a change. |
-| Logbook and agent work records | What agents did, what was accepted or rejected, why, and what remains unverified. |
+| Logbook | Decisions and rejected options, incidents with their causes and fixes, and investigation findings. |
 | Linear or other issue trackers | Requirements, acceptance criteria, bug reports, and scope decisions. |
 | Project docs, ADRs, Notion, or linked design documents | Design constraints, alternatives, and decisions spanning multiple changes. |
 | Relevant Slack threads or other project discussions | Clarifications and rationale missing from tickets or commits. |

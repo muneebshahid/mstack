@@ -10,4 +10,4 @@ A one-off tool can make consequential work checkable.
 
 When a failure or correction recurs, choose the lightest mechanism that prevents recurrence: a type, check, or shared implementation may suffice. Apply it or define a concrete follow-up, remove instructions it supersedes, and verify that it addresses the failure.
 
-When enforcement still requires judgment, retain a concise instruction and failure example. Do not invent an enforcement framework. Fix isolated mistakes locally; use [Logbook](../../logbook/SKILL.md) to preserve non-trivial work and meaningful investigation outcomes without turning each correction into machinery.
+When enforcement still requires judgment, retain a concise instruction and failure example. Do not invent an enforcement framework. Fix isolated mistakes locally; use [Logbook](../../logbook/SKILL.md) to preserve decisions, incidents, and investigation findings without turning each correction into machinery.

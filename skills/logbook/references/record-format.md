@@ -1,25 +1,73 @@
-# Logbook entry
+# Logbook entry templates
 
-Use these sections in order. Scale the detail to the work; state when no alternatives were considered or checks were run.
+Every entry starts with `# Logbook: <title>`. Use the sections for its class in order. Omit Gaps when nothing is left unverified.
+
+## Decision
 
 ```markdown
 # Logbook: <title>
 
-## Goal
+## Context
 
-What the work was intended to accomplish.
+The problem or finding that required a choice, with the evidence that matters.
 
-## Work and decisions
+## Decision
 
-What was investigated or tried, what happened, and why approaches or review suggestions were accepted or rejected. Include meaningful agent contributions.
+What was chosen and why. Mark preferences as "owner's call".
 
-## Result
+## Rejected
 
-What changed, why this solution was chosen, and relevant tradeoffs.
+Each option considered or tried, and why it lost. State when none were considered.
 
 ## Verification and gaps
 
-Checks performed, results, and unresolved or untested areas.
+Checks performed and what remains unverified.
 ```
 
-Link supporting files, discussions, and earlier entries where useful. Use repository-relative links for local files.
+## Incident
+
+```markdown
+# Logbook: <title>
+
+## What happened
+
+The symptom, and how it was found: issue, CI run, review, test, or report.
+
+## Cause
+
+Why it happened.
+
+## Fix
+
+What changed. Link commits other than this entry's own.
+
+## Prevention
+
+The test, check, or rule that now catches it, or why none was added.
+
+## Gaps
+
+What remains untested or unexplained.
+```
+
+## Investigation
+
+```markdown
+# Logbook: <title>
+
+## Question
+
+What was investigated and why.
+
+## Findings
+
+What was found, each with its source and date.
+
+## Conclusion
+
+What the findings mean for this repository.
+
+## Open questions
+
+What remains unknown, and what would change the conclusion.
+```

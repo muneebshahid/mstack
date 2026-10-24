@@ -14,7 +14,7 @@ The adaptation favors focused questions over asking every available question at 
 
 ## Result
 
-Added [Grill Me](../../skills/grill-me/SKILL.md) with a learning overview, task clarification, understanding probes, corrective teaching, and a closing summary. Project investigation is read-only. The user can redirect, pause, or proceed.
+Added [Grill Me](../../../skills/grill-me/SKILL.md) with a learning overview, task clarification, understanding probes, corrective teaching, and a closing summary. Project investigation is read-only. The user can redirect, pause, or proceed.
 
 The README lists the skill, and third-party notices credit Matt Pocock's Grilling. The existing MIT notice is retained. With the pending removal of the TypeScript and GitHub comment skills, the catalog has 12 skills.
 

@@ -1,5 +1,7 @@
 # Logbook: Consolidate Resumable Consultation
 
+Partly superseded by [Generalize delegation](2026-09-13-generalize-delegation.md): Consult became Delegate.
+
 Status: implemented
 Kind: simplification
 
@@ -9,13 +11,13 @@ Separate Claude and Codex consultant skills duplicated instructions and process 
 
 ## Decision
 
-Consolidate the two entrypoints into [Consult](../../skills/delegate/SKILL.md), using the native CLIs directly. The user explicitly deferred Herdr after its exploratory trial. Retain the existing runner names in model configuration so saved assignments keep working. Choose provider references by the consultant being launched, regardless of the parent harness; shared resumption instructions live only in the main skill.
+Consolidate the two entrypoints into [Consult](../../../skills/delegate/SKILL.md), using the native CLIs directly. The user explicitly deferred Herdr after its exploratory trial. Retain the existing runner names in model configuration so saved assignments keep working. Choose provider references by the consultant being launched, regardless of the parent harness; shared resumption instructions live only in the main skill.
 
 Keep consultation read-only. Start independent assessments fresh and resume related follow-ups with the native conversation ID held in parent context. If the ID is missing or unusable, start fresh with a summary and report the restart. Native agents use the host’s conversation handles. External reports and logs default to a temporary directory; the parent removes these and temporary input prompts after review. Evaluations can retain evidence through an explicit output directory. Deleting temporary files does not delete the harness conversation.
 
 When the external harness cannot run, the parent may use an available native subagent and must report the substitution and any lost cross-provider independence. The launcher reports failure; it cannot invoke the host's native agent tool or silently replace an explicitly requested model.
 
-This supersedes the separate [Claude](2026-09-03-claude-as-independent-consultant.md) and [Codex](2026-09-03-codex-as-independent-consultant.md) entrypoints. Their original rationale for independent judgment and provider-specific permission boundaries remains relevant.
+This supersedes the separate Claude (deleted entry: `git show ca96b8c:.agents/logbook/2026-09-03-claude-as-independent-consultant.md`) and [Codex](2026-09-03-codex-as-independent-consultant.md) entrypoints. Their original rationale for independent judgment and provider-specific permission boundaries remains relevant.
 
 ## Alternatives considered
 

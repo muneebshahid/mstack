@@ -1,5 +1,7 @@
 # Logbook: Package Explicit Conversation Utilities
 
+Partly superseded by [Simplify Architect](2026-09-06-simplify-architect.md): Grill Me was removed; and by [Combine task clarification and tutoring in Grill Me](2026-09-13-add-grill-me.md): it was re-added as a different skill.
+
 Status: implemented
 Kind: behavior
 

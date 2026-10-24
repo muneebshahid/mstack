@@ -2,7 +2,7 @@
 
 ## Goal
 
-Fix the two permission failures recorded in [the delegation change](2026-09-13-generalize-delegation.md): Claude denied an authorized fixture edit, and Claude launched inside Codex could not authenticate or persist its session.
+Fix the two permission failures recorded in [the delegation change](../decisions/2026-09-13-generalize-delegation.md): Claude denied an authorized fixture edit, and Claude launched inside Codex could not authenticate or persist its session.
 
 ## Work and decisions
 

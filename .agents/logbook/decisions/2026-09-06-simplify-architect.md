@@ -1,5 +1,7 @@
 # Logbook: Simplify Architect
 
+Partly superseded by [Use Judgment in Refined Workflows](2026-09-06-use-judgment-in-workflows.md): fixed panel triggers became agent judgment.
+
 Status: implemented
 Kind: simplification
 

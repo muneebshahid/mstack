@@ -1,12 +1,14 @@
 # Logbook: Generalize delegation and inline skill evaluation
 
+Partly superseded by [Per-harness profiles](2026-09-26-per-harness-profiles.md): profiles are per harness, not host-independent.
+
 ## Goal
 
 Separate model preferences from execution, generalize consultation to scoped delegation, and evaluate proposed skills without installing each variant.
 
 ## Work and decisions
 
-The user chose to rename Consult to [Delegate](../../skills/delegate/SKILL.md). A separate launch skill would duplicate consultation mechanics. Native tools remain the first choice when they support the assignment; external Claude or Codex handles other assignments and explicit external-process requests.
+The user chose to rename Consult to [Delegate](../../../skills/delegate/SKILL.md). A separate launch skill would duplicate consultation mechanics. Native tools remain the first choice when they support the assignment; external Claude or Codex handles other assignments and explicit external-process requests.
 
 Removed host detection, including `MSTACK_HOST` and `CLAUDECODE` selection, and removed runner fields from model configuration. Presets retain their model, effort, and Fast values. The active profile must be selected explicitly through Setup; changing harnesses does not select a different profile. Complete custom roles are supported. Obsolete configuration fields produce correction instructions rather than being silently ignored.
 
@@ -18,7 +20,7 @@ The launcher accepts inline task text on stdin, records the effective prompt, an
 
 Skill Eval now runs each scenario in a fresh external process with the variant and proposed role assignments in its prompt. That process executes the target skill directly. This avoids temporary skill/config installations and an extra candidate layer. The parent assesses tool activity and results before adopting changes. Explain, Architect, Review, Implement, Setup, and the README now use Delegate.
 
-This supersedes the host-selection finding in [the stack review](2026-09-13-review-consolidated-stack.md) and implements the agreed direction following [the delegation design review](2026-09-13-review-delegate-design.md). Earlier logbook accounts retain their historical text; only moved links were repaired.
+This supersedes the host-selection finding in [the stack review](../investigations/2026-09-13-review-consolidated-stack.md) and implements the agreed direction following the delegation design review (deleted entry: `git show ca96b8c:.agents/logbook/2026-09-13-review-delegate-design.md`). Earlier logbook accounts retain their historical text; only moved links were repaired.
 
 At the user's request, the parent applied Unslop to the changed skill text and references. Removed repeated instructions, shortened setup and follow-up wording, and kept test-specific permission evidence here rather than in reusable guidance. Preserved defaults, read-only boundaries, resume behavior, model selection, inline evaluation, and Explain's visual examples. No launcher or configuration behavior changed in this wording pass.
 

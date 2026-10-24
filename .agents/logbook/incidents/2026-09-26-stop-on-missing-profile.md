@@ -26,4 +26,4 @@ A skill that needs a model assignment now stops and runs Setup when the harness 
 - `scripts/validate.py` passed.
 - All runs were non-interactive `claude -p` sessions, which cannot ask questions. Behavior in an interactive session and in Codex was not tested.
 - Sonnet suggested the harness-matching preset without offering the legacy file's `codex-preset`, which Setup asks it to offer.
-- `codex plugin marketplace upgrade mstack` alone refreshed the installed Codex copy to 0.4.1. Codex's generated prompt read skills from the 0.4.1 cache. This closes an open question from [the per-harness profile entry](2026-09-26-per-harness-profiles.md).
+- `codex plugin marketplace upgrade mstack` alone refreshed the installed Codex copy to 0.4.1. Codex's generated prompt read skills from the 0.4.1 cache. This closes an open question from [the per-harness profile entry](../decisions/2026-09-26-per-harness-profiles.md).

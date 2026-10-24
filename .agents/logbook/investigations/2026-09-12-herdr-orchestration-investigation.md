@@ -9,7 +9,7 @@ Can Herdr give MStack visible, resumable external agents, separate working direc
 
 ## Decision
 
-The user selected Herdr for an initial consultant trial, then chose to leave it out of the implementation and use direct CLIs through [Consult](2026-09-12-consolidate-resumable-consultation.md). The local trial passed. Broader implementation-agent support and skill consolidation remain future work. The Herdr trial itself changed no launcher, role configuration, or skill.
+The user selected Herdr for an initial consultant trial, then chose to leave it out of the implementation and use direct CLIs through [Consult](../decisions/2026-09-12-consolidate-resumable-consultation.md). The local trial passed. Broader implementation-agent support and skill consolidation remain future work. The Herdr trial itself changed no launcher, role configuration, or skill.
 
 Herdr supports named agents in visible terminals, follow-up prompts, Git worktree creation, native conversation restoration, and SSH hosts. Recommend native subagents for ordinary delegation and an optional Herdr backend for external agents whose visibility, lifetime, or location matters. The parent still assigns work and judges results.
 
@@ -29,7 +29,7 @@ Prompts, terminal responses, identifiers, model evidence, and a readable report 
 
 ### Persistence and results
 
-- At investigation time, the Claude runner explicitly passed `--no-session-persistence`. [Consult](../../skills/delegate/SKILL.md) now owns the subsequent persistence work.
+- At investigation time, the Claude runner explicitly passed `--no-session-persistence`. [Consult](../../../skills/delegate/SKILL.md) now owns the subsequent persistence work.
 - At investigation time, the Codex runner already persisted sessions and captured a thread ID, but did not expose resumption. Herdr is not required to add that capability.
 - Detaching Herdr preserves running processes. Restarting its server requires native session restoration through supported integrations; layout restoration alone cannot recover conversations.
 - Herdr 0.9.0 constructs Claude and Codex resume commands from the native session ID without replaying original model, effort, or permission arguments. Whether each harness restores those settings correctly needs a live test.
@@ -65,7 +65,7 @@ The parent inspected both local runners, model resolution, installed native CLI 
 
 The desktop task is outside a Herdr-managed pane. The bundled skill assumes `HERDR_ENV=1`, so the initial research stayed with static help, docs, and source. The user's later explicit request authorized a trial from desktop. Explicit named-session CLI targeting worked without setting a fabricated Herdr environment or using the user's focused session. A general integration still needs to distinguish inherited pane context from explicit external targets.
 
-This extends the earlier [Claude](2026-09-03-claude-as-independent-consultant.md) and [Codex](2026-09-03-codex-as-independent-consultant.md) investigations. The subsequent Consult record owns the current launcher contracts.
+This extends the earlier Claude (deleted entry: `git show ca96b8c:.agents/logbook/2026-09-03-claude-as-independent-consultant.md`) and [Codex](../decisions/2026-09-03-codex-as-independent-consultant.md) investigations. The subsequent Consult record owns the current launcher contracts.
 
 ## Consequences
 

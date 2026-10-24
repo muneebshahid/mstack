@@ -1,5 +1,7 @@
 # Logbook: Review the consolidated stack with Astra and Fable
 
+Partly superseded by [Generalize delegation](../decisions/2026-09-13-generalize-delegation.md): host selection was removed rather than fixed.
+
 ## Goal
 
 Review the completed 12-skill consolidation for consequential defects, contradictions, unnecessary complexity, and useful verification.
@@ -10,11 +12,11 @@ The parent gave fresh Astra max and Fable max reviewers the same read-only assig
 
 Accepted findings and recommendations:
 
-- **REV-001 — Consultant host identity, P2.** Astra R-01 and Fable R-4 identified inherited parent environment markers in [process_environment](../../skills/delegate/scripts/run_delegate.py). The parent reproduced a Codex child resolving `claude-native` under `CLAUDECODE=1`, and a Claude child resolving `codex-native` under `MSTACK_HOST=codex`. This affects consultants that resolve another MStack role. Set the child's host from its provider, preserving the user's configuration. This is inherited behavior, not a newly introduced consolidation defect.
+- **REV-001 — Consultant host identity, P2.** Astra R-01 and Fable R-4 identified inherited parent environment markers in [process_environment](../../../skills/delegate/scripts/run_delegate.py). The parent reproduced a Codex child resolving `claude-native` under `CLAUDECODE=1`, and a Claude child resolving `codex-native` under `MSTACK_HOST=codex`. This affects consultants that resolve another MStack role. Set the child's host from its provider, preserving the user's configuration. This is inherited behavior, not a newly introduced consolidation defect.
 - **REV-002 — Python prerequisite, P3.** Astra R-02 identified Python 3.12 type-alias syntax in the launcher, while Setup parses under Python 3.11. The parent reproduced this using Python's versioned grammar parser. Document Python 3.12+ in setup; no compatibility layer is needed.
 - **REV-003 — Grill Me invocation, P2.** Fable R-1 identified the missing explicit-invocation policy in the reintroduced skill. The parent verified that the earlier skill disabled implicit invocation and its Logbook rejected automatic conversation-mode changes. Restore that setting and an explicit-request trigger. The missing setting is confirmed; unwanted automatic invocation has not been demonstrated in a live session.
 - **REV-004 — Release identity, P3.** Fable R-2 identified substantially different trees sharing version 0.4.0, including removed skills and incompatible configuration keys. Bump the three versioned manifests when releasing the consolidation. Stale installed copies are a known separate state; a version bump alone has not been demonstrated to refresh them.
-- **REV-005 — Historical entry correction, P3.** Fable R-3 identified pre-commit wording in [the Grill Me entry](2026-09-13-add-grill-me.md). Its references to pending removals and an uncommitted skill describe the draft, not the committed result: removals were committed as `69ad879`, followed by Grill Me as `f7bfb6d`. This entry records the correction without rewriting the historical account.
+- **REV-005 — Historical entry correction, P3.** Fable R-3 identified pre-commit wording in [the Grill Me entry](../decisions/2026-09-13-add-grill-me.md). Its references to pending removals and an uncommitted skill describe the draft, not the committed result: removals were committed as `69ad879`, followed by Grill Me as `f7bfb6d`. This entry records the correction without rewriting the historical account.
 
 Considered but not treated as blocking findings:
 

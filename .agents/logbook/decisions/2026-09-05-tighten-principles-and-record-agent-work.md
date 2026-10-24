@@ -1,5 +1,7 @@
 # Logbook: Tighten Principles and Record Agent Work
 
+Partly superseded by Record work per commit (deleted entry: `git show ca96b8c:.agents/logbook/2026-09-13-record-work-per-commit.md`), then by [Classify Logbook entries and record only what agents need](2026-10-24-classify-logbook-entries.md): the Logbook capture rules changed.
+
 Status: implemented
 Kind: process
 
@@ -13,7 +15,7 @@ The selector and ten references use shorter wording while preserving their engin
 
 Logbook covers non-trivial changes and meaningful investigation or review outcomes: work performed, accepted and rejected choices with reasons, verification, and gaps. Mechanical or routine local edits remain exempt. The parent writes records using the existing flat lifecycle folders and format. Identify consequential consultant contributions and available session references without creating a persistence subsystem.
 
-Implement, Architect, Arena, TypeScript guidance, and repository instructions follow the revised policies. This broadens the capture threshold in [Log Durable Decisions at the Parent](2026-09-03-log-durable-decisions-at-the-parent.md) and revises the typing and source-style choices in [Consolidate Principles](2026-09-05-consolidate-principles-as-references.md). Their original rationale remains recorded.
+Implement, Architect, Arena, TypeScript guidance, and repository instructions follow the revised policies. This broadens the capture threshold in Log Durable Decisions at the Parent (deleted entry: `git show ca96b8c:.agents/logbook/2026-09-03-log-durable-decisions-at-the-parent.md`) and revises the typing and source-style choices in [Consolidate Principles](2026-09-05-consolidate-principles-as-references.md). Their original rationale remains recorded.
 
 ## Alternatives considered
 

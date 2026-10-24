@@ -1,5 +1,7 @@
 # Logbook: Parent-Led Architecture and Worker-Owned Implementation
 
+Partly superseded by [Simplify Architect](2026-09-06-simplify-architect.md) and [Simplify Implement](2026-09-12-simplify-implement.md): Arena is optional and the parent may implement directly.
+
 Status: implemented
 Kind: architecture
 
