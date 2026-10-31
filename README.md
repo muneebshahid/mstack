@@ -38,5 +38,6 @@ The scripts require Python 3.12+. External delegation requires the model's CLI i
 | [setup-mstack](skills/setup-mstack/SKILL.md) | Select a preset, customize role models, and check availability. |
 | [unslop](skills/unslop/SKILL.md) | Remove generic AI wording while preserving meaning. |
 | [bro](skills/bro/SKILL.md) | Restate the preceding answer in shorter, plain language. |
+| [sharpen](skills/sharpen/SKILL.md) | Deepen a task without enlarging it, then rewrite its prompt. |
 
 MIT licensed. Upstream credits and licenses are listed in [THIRD_PARTY.md](THIRD_PARTY.md).

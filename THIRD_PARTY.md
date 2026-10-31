@@ -2,7 +2,7 @@
 
 ## PStack
 
-Several skills in this repository began as, preserve portions of, or were adapted from Cursor's [PStack](https://github.com/cursor/plugins/tree/main/pstack), including orchestration, engineering-principle, writing, teaching, and TypeScript guidance.
+Several skills in this repository began as, preserve portions of, or were adapted from Cursor's [PStack](https://github.com/cursor/plugins/tree/main/pstack), including orchestration, engineering-principle, writing, teaching, and TypeScript guidance. `sharpen` adapts PStack's skill of the same name.
 
 PStack is distributed under the MIT License. Its license is preserved at [`LICENSES/PSTACK-MIT.txt`](LICENSES/PSTACK-MIT.txt). Individual derivative skill directories also retain an upstream license where one was already present.
 
