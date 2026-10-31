@@ -1,0 +1,7 @@
+interface:
+  display_name: "Sharpen"
+  short_description: "Deepen a task and rewrite its prompt"
+  default_prompt: "Use $sharpen to make this task deeper, not bigger, and rewrite its prompt."
+
+policy:
+  allow_implicit_invocation: false
