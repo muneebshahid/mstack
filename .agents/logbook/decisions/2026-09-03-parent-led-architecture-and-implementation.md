@@ -1,5 +1,7 @@
 # Logbook: Parent-Led Architecture and Worker-Owned Implementation
 
+Superseded by [Remove Review, Implement, and Architect](2026-11-01-remove-review-implement-architect.md): the skill is removed.
+
 Partly superseded by [Simplify Architect](2026-09-06-simplify-architect.md) and [Simplify Implement](2026-09-12-simplify-implement.md): Arena is optional and the parent may implement directly.
 Partly superseded by [Implement in the running agent](2026-11-01-implement-in-the-running-agent.md): the running agent always implements; no worker remains.
 

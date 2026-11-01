@@ -1,5 +1,7 @@
 # Logbook: Implement in the running agent
 
+Superseded by [Remove Review, Implement, and Architect](2026-11-01-remove-review-implement-architect.md): the skill is removed.
+
 ## Context
 
 Implement let the parent spawn a persistent `implement_worker` through Delegate, and carried a separate testing reference. The parent had to inspect and verify every diff either way, and the worker path required a dedicated model role and rules for ownership transfer after failures.

@@ -1,6 +1,6 @@
 # MStack
 
-Engineering skills for Codex and Claude Code: understand systems, design changes, implement them, review results, and communicate clearly.
+Engineering skills for Codex and Claude Code: apply engineering standards, clarify plans, explain visually, delegate work, record decisions, and communicate clearly.
 
 ## Setup
 
@@ -30,11 +30,8 @@ The scripts require Python 3.12+. External delegation requires the model's CLI i
 
 | Skill | What it does |
 | --- | --- |
-| [implement](skills/implement/SKILL.md) | Make and verify changes in the running agent. |
-| [architect](skills/architect/SKILL.md) | Design consequential changes and compare alternatives when useful. Read-only. |
 | [show-me](skills/show-me/SKILL.md) | Explain the current topic visually with concise diagrams, code-shape sketches, and focused HTML files. |
 | [grill-me](skills/grill-me/SKILL.md) | Clarify what to build and deepen understanding through questions, explanations, and useful diagrams. |
-| [review](skills/review/SKILL.md) | Review correctness, simplicity, and test usefulness, directly or with independent reviewers. Read-only. |
 | [apply-principles](skills/apply-principles/SKILL.md) | Select relevant engineering standards, including simplicity, strong types, and ownership. |
 | [logbook](skills/logbook/SKILL.md) | Record decisions, incidents, and investigations that future agents would need. |
 | [delegate](skills/delegate/SKILL.md) | Run scoped tasks natively or through an external harness, with explicit permissions and resumable follow-ups. |

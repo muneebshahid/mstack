@@ -39,7 +39,7 @@ class ModelsTest(unittest.TestCase):
                 "--harness",
                 "codex",
                 "--role",
-                "review_reviewer_a",
+                "delegate_default",
                 expected_code=2,
                 XDG_CONFIG_HOME=directory,
             )
@@ -85,17 +85,9 @@ class ModelsTest(unittest.TestCase):
     def test_explicit_presets_resolve_without_user_config(self) -> None:
         expected = {
             "codex-preset": {
-                "architect_candidate_a": {"model": "claude-fable-5-1", "effort": "xhigh", "fast": False},
-                "architect_candidate_b": {"model": "gpt-6-astra", "effort": "xhigh", "fast": False},
-                "review_reviewer_a": {"model": "claude-fable-5-1", "effort": "max", "fast": False},
-                "review_reviewer_b": {"model": "gpt-6-astra", "effort": "max", "fast": False},
                 "delegate_default": {"model": "claude-fable-5-1", "effort": "xhigh", "fast": False},
             },
             "claude-preset": {
-                "architect_candidate_a": {"model": "claude-fable-5-1", "effort": "xhigh", "fast": False},
-                "architect_candidate_b": {"model": "gpt-6-astra", "effort": "xhigh", "fast": False},
-                "review_reviewer_a": {"model": "claude-fable-5-1", "effort": "max", "fast": False},
-                "review_reviewer_b": {"model": "gpt-6-astra", "effort": "max", "fast": False},
                 "delegate_default": {"model": "gpt-6-astra", "effort": "xhigh", "fast": False},
             },
         }
@@ -134,17 +126,17 @@ class ModelsTest(unittest.TestCase):
             config = Path(directory) / "models.toml"
             config.write_text(
                 'schema_version = 1\npreset = "codex-preset"\n\n'
-                "[roles.architect_candidate_b]\n"
+                "[roles.delegate_default]\n"
                 'effort = "low"\n',
                 encoding="utf-8",
             )
             result = self.run_models(
-                "resolve", "--role", "architect_candidate_b", "--config", str(config)
+                "resolve", "--role", "delegate_default", "--config", str(config)
             )
             payload = json.loads(result.stdout)
             self.assertEqual("codex-preset", payload["preset"])
             self.assertEqual(
-                {"model": "gpt-6-astra", "effort": "low", "fast": False},
+                {"model": "claude-fable-5-1", "effort": "low", "fast": False},
                 payload["assignment"],
             )
 
@@ -153,14 +145,14 @@ class ModelsTest(unittest.TestCase):
             config = Path(directory) / "models.toml"
             config.write_text(
                 'schema_version = 1\npreset = "codex-preset"\n\n'
-                "[roles.review_reviewer_a]\n"
+                "[roles.delegate_default]\n"
                 'effort = "low"\n',
                 encoding="utf-8",
             )
             result = self.run_models(
                 "resolve",
                 "--role",
-                "review_reviewer_a",
+                "delegate_default",
                 "--preset",
                 "claude-preset",
                 "--config",
@@ -169,7 +161,7 @@ class ModelsTest(unittest.TestCase):
             payload = json.loads(result.stdout)
             self.assertEqual("claude-preset", payload["preset"])
             self.assertEqual(
-                {"model": "claude-fable-5-1", "effort": "low", "fast": False},
+                {"model": "gpt-6-astra", "effort": "low", "fast": False},
                 payload["assignment"],
             )
 
@@ -200,7 +192,7 @@ class ModelsTest(unittest.TestCase):
             config = Path(directory) / "models.toml"
             config.write_text(
                 'schema_version = 1\npreset = "codex-preset"\n\n'
-                "[roles.review_reviewer_a]\n"
+                "[roles.delegate_default]\n"
                 'runner = "codex-native"\n',
                 encoding="utf-8",
             )
@@ -229,7 +221,7 @@ class ModelsTest(unittest.TestCase):
             config = Path(directory) / "models.toml"
             config.write_text(
                 'schema_version = 1\npreset = "codex-preset"\n\n'
-                "[roles.review_reviewer_a]\n"
+                "[roles.delegate_default]\n"
                 'provider = "codex"\n',
                 encoding="utf-8",
             )

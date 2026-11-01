@@ -1,9 +1,5 @@
 schema_version = 1
 presets = ["codex-preset", "claude-preset"]
 roles = [
-  "architect_candidate_a",
-  "architect_candidate_b",
-  "review_reviewer_a",
-  "review_reviewer_b",
   "delegate_default",
 ]

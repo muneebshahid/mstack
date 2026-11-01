@@ -1,7 +1,0 @@
-interface:
-  display_name: "Implement"
-  short_description: "Make and verify changes"
-  default_prompt: "Use $implement to make this change, inspect the result, and verify the affected behavior."
-
-policy:
-  allow_implicit_invocation: false
