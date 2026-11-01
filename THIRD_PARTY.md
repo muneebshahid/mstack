@@ -8,7 +8,7 @@ PStack is distributed under the MIT License. Its license is preserved at [`LICEN
 
 ## HumanLayer Show Me
 
-`explain` incorporates the visual guidance and examples from HumanLayer's [Show Me](https://github.com/humanlayer/skills/blob/3c2629142c5d437428269b1b722b08c0b87f574d/plugins/show-me/skills/show-me/SKILL.md), adapted to its response template and HTML preview tools. HumanLayer's MIT license is preserved at [`LICENSES/HUMANLAYER-SKILLS-MIT.txt`](LICENSES/HUMANLAYER-SKILLS-MIT.txt).
+`show-me` adapts HumanLayer's [Show Me](https://github.com/humanlayer/skills/blob/3c2629142c5d437428269b1b722b08c0b87f574d/plugins/show-me/skills/show-me/SKILL.md), including its visual guidance and examples, with a fallback where Mermaid does not render and generic HTML preview tools. HumanLayer's MIT license is preserved at [`LICENSES/HUMANLAYER-SKILLS-MIT.txt`](LICENSES/HUMANLAYER-SKILLS-MIT.txt).
 
 ## Anthropic review guidance
 

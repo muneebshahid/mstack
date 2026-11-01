@@ -24,7 +24,7 @@ Start a new session, then run `/mstack:setup-mstack`.
 
 Setup offers `codex-preset` and `claude-preset` with optional role customization. Each harness keeps its own profile, the selected preset plus overrides, in `~/.config/mstack/profiles/claude-code.toml` or `~/.config/mstack/profiles/codex.toml`. Run setup in each harness you use. Defaults live in [`config/presets/`](config/presets/).
 
-The scripts require Python 3.12+. External delegation requires the model's CLI installed and logged in; Skill Eval always uses an external CLI. GitHub workflows require `gh`. Explain can use connected sources such as Linear and service logs when available.
+The scripts require Python 3.12+. External delegation requires the model's CLI installed and logged in; Skill Eval always uses an external CLI. GitHub workflows require `gh`.
 
 ## Skills
 
@@ -32,7 +32,7 @@ The scripts require Python 3.12+. External delegation requires the model's CLI i
 | --- | --- |
 | [implement](skills/implement/SKILL.md) | Make and verify changes in the running agent. |
 | [architect](skills/architect/SKILL.md) | Design consequential changes and compare alternatives when useful. Read-only. |
-| [explain](skills/explain/SKILL.md) | Explain behavior, decisions, and changes using relevant sources, a consistent template, and useful visuals. |
+| [show-me](skills/show-me/SKILL.md) | Explain the current topic visually with concise diagrams, code-shape sketches, and focused HTML files. |
 | [grill-me](skills/grill-me/SKILL.md) | Clarify what to build and deepen understanding through questions, explanations, and useful diagrams. |
 | [review](skills/review/SKILL.md) | Review correctness, simplicity, and test usefulness, directly or with independent reviewers. Read-only. |
 | [apply-principles](skills/apply-principles/SKILL.md) | Select relevant engineering standards, including simplicity, strong types, ownership, and verification. |

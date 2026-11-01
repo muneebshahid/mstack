@@ -15,7 +15,7 @@ Architect is read-only, including when called from an implementation workflow. K
 
 ## Understand
 
-Use [Explain](../explain/SKILL.md) to understand relevant behavior, callers, ownership, and integration constraints. Reuse established findings. Distinguish observed constraints from assumptions and unanswered questions.
+Investigate relevant behavior, callers, ownership, and integration constraints. Reuse established findings. Distinguish observed constraints from assumptions and unanswered questions.
 
 Use [Apply Principles](../apply-principles/SKILL.md) for relevant standards, reusing guidance already in context. Keep design rules in those references rather than building another checklist here.
 
