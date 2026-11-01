@@ -5,9 +5,7 @@ description: "Select engineering standards when a design, implementation, or rev
 
 # Apply Principles
 
-The ten references below hold the engineering standards. Apply them with judgment to the task and its constraints; use concrete requirements and evidence over broad heuristics. Explicit user preferences still govern.
-
-Apply [Source Style](references/source-style.md) to owned-source edits; reuse it when already available in context.
+The nine references below hold the engineering standards. Apply them with judgment to the task and its constraints; use concrete requirements and evidence over broad heuristics. Explicit user preferences still govern.
 
 ## Select
 
@@ -24,7 +22,6 @@ Choose the smallest relevant set using the task and evidence, rather than loadin
 | [Verification](references/verification.md) | checking a completion claim, changed artifact, delegated result, or user path |
 | [Design Decisions](references/design-decisions.md) | choosing an experience, comparing consequential alternatives, or reconsidering a shape that fights a requirement |
 | [Automation and Learning](references/automation-and-learning.md) | considering automation or preventing a recurring correction |
-| [Source Style](references/source-style.md) | editing owned source, auditing comments, docstrings, or suppressions, or making sketches and scaffolds |
 
 ## Apply
 

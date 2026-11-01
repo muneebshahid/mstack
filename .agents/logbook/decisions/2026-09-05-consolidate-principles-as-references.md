@@ -1,5 +1,7 @@
 # Logbook: Consolidate Principles as Selective References
 
+Partly superseded by [Remove Source Style](2026-11-01-remove-source-style.md): the no-comments rule is removed.
+
 Status: implemented
 Kind: simplification
 
@@ -31,7 +33,7 @@ Callers select through the shared index and pass the relevant references to work
 
 ## Consequences
 
-The catalog and standards text are smaller. A combined reference can include nearby guidance that a task does not need, so selection remains conditional and distinct mechanisms stay identifiable. External integrations naming the removed public skills must migrate; the repository's active callers are updated. The subsequent policy review removes the temporary-sketch/scaffold comment exceptions; [Source Style](../../../skills/apply-principles/references/source-style.md) owns the current rule.
+The catalog and standards text are smaller. A combined reference can include nearby guidance that a task does not need, so selection remains conditional and distinct mechanisms stay identifiable. External integrations naming the removed public skills must migrate; the repository's active callers are updated. The subsequent policy review removes the temporary-sketch/scaffold comment exceptions; Source Style owned that rule until [Remove Source Style](2026-11-01-remove-source-style.md).
 
 ## Revisit when
 

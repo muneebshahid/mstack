@@ -10,7 +10,7 @@ State the requested outcome, relevant current behavior, and constraints. Separat
 
 Show realistic caller usage, including relevant results and failures. Derive the types and operations from it. Show who owns state, invariants, and side effects; identify boundaries and dependency direction.
 
-Use signatures, a module map, pseudocode, or diagrams where they clarify the proposal. Keep names and contracts consistent. Label sketches as proposed; describe unfinished behavior in prose rather than source comments.
+Use signatures, a module map, pseudocode, or diagrams where they clarify the proposal. Keep names and contracts consistent. Label sketches as proposed; describe unfinished behavior in prose.
 
 ## Decisions and alternatives
 

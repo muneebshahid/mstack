@@ -12,7 +12,7 @@ Give both candidates the same self-contained prompt:
 
 - The requested outcome, constraints, assumptions, collected findings, and relevant source paths.
 - Repository instructions and the parent-selected principle reference paths.
-- The [design template](design-template.md), comparison criteria, and [Source Style](../../apply-principles/references/source-style.md).
+- The [design template](design-template.md) and comparison criteria.
 - Propose a concrete design, investigate directly, and report evidence gaps or tool failures. Do not edit project files or read the other candidate's output before submitting. The parent coordinates comparison.
 
 Exclude secrets, unrelated material, and the parent's preferred solution.
