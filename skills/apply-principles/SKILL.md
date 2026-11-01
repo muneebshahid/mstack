@@ -5,11 +5,11 @@ description: "Select engineering standards when a design, implementation, or rev
 
 # Apply Principles
 
-The seven references below hold the engineering standards. Apply them with judgment to the task and its constraints; use concrete requirements and evidence over broad heuristics. Explicit user preferences still govern.
+The seven references below hold the engineering standards.
 
 ## Select
 
-Choose the smallest relevant set using the task and evidence, rather than loading the whole catalog.
+Read only the references the task needs.
 
 | Reference | Read when |
 |---|---|
@@ -23,10 +23,4 @@ Choose the smallest relevant set using the task and evidence, rather than loadin
 
 ## Apply
 
-Read the guidance needed for the decision. Reuse available context and expand the selection when new evidence warrants it.
-
-Resolve links relative to the containing MStack skill or reference in the same plugin installation, never the consumer project's working directory. Selected filenames resolve under this skill's `references/` directory.
-
-For panels and delegated work, the parent can share relevant reference paths to avoid repeated selection. Participants can consult further guidance when useful and report any resulting difference in assumptions or criteria. These are reference documents, not skill entrypoints.
-
-Report important outcomes, evidence, and tradeoffs.
+Resolve links relative to the containing MStack skill or reference in the same plugin installation, never the consumer project's working directory.

@@ -7,34 +7,30 @@ description: "Design a consequential change without implementing it. Use when ex
 
 Design a change that fits its callers and requirements. Return a proposed design and implementation handoff.
 
-Use judgment to adapt the steps, depth, delegation, and reruns. These are workflow defaults; explicit user requests and the read-only boundary still apply.
-
 ## Boundary
 
 Architect is read-only, including when called from an implementation workflow. Keep prompts and candidate artifacts outside the repository. Save a design file only when requested; this does not authorize source changes. If a decision needs executable evidence, propose a bounded experiment through [Implement](../implement/SKILL.md). Continue independent design work where useful and leave evidence-dependent choices open.
 
 ## Understand
 
-Investigate relevant behavior, callers, ownership, and integration constraints. Reuse established findings. Distinguish observed constraints from assumptions and unanswered questions.
+Investigate behavior, callers, ownership, and integration constraints; separate observed constraints from assumptions and open questions.
 
-Use [Apply Principles](../apply-principles/SKILL.md) for relevant standards, reusing guidance already in context. Keep design rules in those references rather than building another checklist here.
+Use [Apply Principles](../apply-principles/SKILL.md) for relevant standards.
 
 ## Design
 
-Start with realistic caller usage, then derive types, operations, ownership, and module boundaries. Use [Design template](references/design-template.md) for the result. Include only the sketches and diagrams needed to inspect the design.
+Start with realistic caller usage, then derive types, operations, ownership, and module boundaries. Use [Design template](references/design-template.md) for the result.
 
-Design directly when requirements or established practice settle the approach. Use [Compare designs](references/compare-designs.md) when competing proposals could resolve a consequential choice, or when the user requests them. Do not manufacture alternatives for a settled decision.
+Design directly when requirements or established practice settle the approach. Use [Compare designs](references/compare-designs.md) when competing proposals could resolve a consequential choice, or when the user requests them.
 
-The parent chooses the design and checks that usage, types, data flow, failure behavior, and implementation sequence agree. Check complexity before handoff: remove unjustified machinery while preserving required behavior and useful boundaries. Record significant rejected alternatives and why they lost.
+The parent chooses the design, checks that usage, types, data flow, failure behavior, and sequence agree, removes unjustified machinery, and records significant rejected alternatives.
 
-Use [Review](../review/SKILL.md) when critique would help or is requested. Choose its depth for the question; design comparison need not trigger another panel.
+Use [Review](../review/SKILL.md) when critique would help or is requested.
 
 ## Hand off and revise
 
-Return the design and stop. The user or calling workflow decides whether to proceed through [Implement](../implement/SKILL.md).
+Return the design and stop.
 
 Name the decisions implementation must preserve, details it may adapt, and evidence that would require revisiting the design. Put the smallest practical end-to-end check of the riskiest assumption early in the implementation sequence; identify prerequisites when it cannot come first.
 
-When implementation contradicts a required contract, ownership decision, boundary, dependency, shared-state assumption, or failure policy, reconsider the design using the affected code and evidence. Repeated workarounds can also reveal a structural problem. Routine local corrections and explicitly flexible details do not require redesign. Return the revised contract to the calling workflow.
-
-Include the reasoning, alternatives, evidence, and gaps needed for the parent to write a Logbook record. Architect does not write project records itself.
+When implementation returns evidence contradicting a decision the design must preserve, or repeated workarounds expose a structural problem, revise the design against the affected code and return the revised contract. Local corrections need no redesign.

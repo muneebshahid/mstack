@@ -1,6 +1,6 @@
 # Review criteria
 
-Use these criteria to guide judgment, focusing on the risks and tradeoffs that matter to the task. No category needs to produce a finding.
+No category needs to produce a finding.
 
 ## Behavior and contracts
 
@@ -22,8 +22,8 @@ Check meaningful coverage and whether added, changed, and relevant existing test
 
 For a questionable test, name the regression its setup and assertions should catch. Flag tests that pass with broken behavior, repeat the implementation, check mock activity while missing the required outcome, or duplicate protection without catching a different failure. Mocks, snapshots, and interaction assertions are useful when they verify the contract.
 
-Recommend a new test only for a consequential failure that existing checks miss. Name the scenario and expected failure; choose the smallest test at the level where that failure is observable. Changed lines, uncovered branches, and coverage percentages alone do not justify more tests. Direct verification can suffice when new automation would not repay its maintenance cost.
+Recommend a new test only for a consequential failure that existing checks miss, naming the scenario and expected failure and choosing the smallest test at the level where the failure is observable; changed lines, uncovered branches, coverage percentages, layers, or mechanical fixes alone do not justify one. Direct verification can suffice when automation would not repay its maintenance cost.
 
-Strengthen, replace, or consolidate weak tests. Recommend removal only with evidence that a test catches no meaningful failure, duplicates surviving protection, or covers an obsolete contract. Name the protection that must survive. Manual checks do not replace useful regression coverage. Do not require tests at every layer or for every mechanical fix.
+Strengthen, replace, or consolidate weak tests. Recommend removal only with evidence that a test catches no meaningful failure, duplicates surviving protection, or covers an obsolete contract. Name the protection that must survive. Manual checks do not replace useful regression coverage.
 
 Run focused checks when useful and permitted. Use a disposable copy if demonstrating a test's weakness requires code changes. Distinguish inspecting a test, observing it pass, and demonstrating that it catches the intended failure.

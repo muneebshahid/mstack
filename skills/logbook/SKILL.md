@@ -11,7 +11,7 @@ The Logbook is for agents that later work in the repository. Write an entry only
 - **Incident:** a bug or failure whose cause or fix is not obvious from the diff.
 - **Investigation:** research, a review, or an evaluation whose findings would otherwise be redone. An investigation that ends in a decision is a decision.
 
-Most commits need only a commit message. Decide yourself whether an entry is warranted; the parent writes it using evidence from its own work, workers, and reviewers, and commits it with the changes it explains.
+Most commits need only a commit message. The parent decides, writes it from its own and its workers' evidence, and commits it with the changes it explains.
 
 Store entries at `.agents/logbook/<class>/YYYY-MM-DD-short-description.md`, where `<class>` is `decisions`, `incidents`, or `investigations`. Use the [template](references/record-format.md) for the class. Git associates each entry with its commit; find it with `git log -- <entry>`.
 
@@ -23,4 +23,4 @@ Link where the work came from (an issue, CI run, review, or test), related entri
 
 Entries are not rewritten. When a later entry changes an earlier decision, add one line below the earlier entry's title: "Superseded by" and a link to the later entry, or "Partly superseded by", the link, and what changed. Existing entries keep their original format.
 
-Check layout with [scripts/validate_logbook.py](scripts/validate_logbook.py), passing the repository's Logbook directory. Review the content for accuracy.
+Check layout with [scripts/validate_logbook.py](scripts/validate_logbook.py), passing the repository's Logbook directory.

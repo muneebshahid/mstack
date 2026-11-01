@@ -5,7 +5,7 @@ description: "Delegate scoped tasks natively or through an external harness, wit
 
 # Delegate
 
-Use this skill for every agent launch and follow-up. The caller owns scope and final judgment.
+Use this skill for every agent launch and follow-up.
 
 ## Prepare
 
@@ -21,14 +21,14 @@ Give the child the task, collected findings, source and skill paths, working dir
 
 `allow_writes` and `allow_subagents` default to false. The caller enables each independently; children cannot expand their own permissions.
 
-Before choosing native or external execution, include these prompt boundaries:
+Native prompts must carry the boundaries the launcher adds to external ones:
 
 - With writes disabled: “Investigate read-only. Do not edit project files or mutate external systems.”
 - With writes enabled: state the authorized files or directory and requested changes.
 - With subagents disabled: **“Work directly. Do not launch other agents, even when a skill offers delegation.”**
 - With subagents enabled: permit Delegate; children still default to `allow_subagents=false`.
 
-These are prompt instructions, not tool restrictions.
+These are prompt instructions, not tool restrictions. Snapshot repository state before launching; afterward, report edits outside the assigned scope and do not silently keep or revert them.
 
 ## Launch
 
@@ -44,15 +44,15 @@ python3 <delegate-directory>/scripts/run_delegate.py \
 
 Add `--fast`, `--allow-writes`, or `--allow-subagents` when assigned; each defaults to false on every invocation.
 
-External flags also configure provider permissions: checkout edits for Claude writers, and network/session access for Codex processes allowed to delegate. See the provider references for scope.
+The provider references describe what each flag configures.
 
 ## Follow up
 
 Monitor completion and check results, model evidence, and actual edits. External runs write `summary.json`; a successful process may still report blocked work.
 
-Keep the conversation ID and settings in context. Reapply them on every native send or external `--resume <id>` unless the caller changes them. Reuse related conversations; start fresh for independent assessments. If an ID is lost or unusable, restart with relevant context and report it.
+Keep the conversation ID and settings in context. Reapply them on every native send or external `--resume <id>` unless the caller changes them. Reuse related conversations; start fresh for independent assessments.
 
-Stop an active process before redirecting it. Inspect partial edits before replacing a writer. Report failures and access gaps without repeatedly retrying them.
+Stop an active process before redirecting it. Inspect partial edits before replacing a writer.
 
 ## Cleanup
 

@@ -1,6 +1,6 @@
 # MStack
 
-Engineering skills for Codex and Claude Code: understand systems, design changes, implement them, review results, and communicate clearly. The main agent keeps final judgment and delegates when useful.
+Engineering skills for Codex and Claude Code: understand systems, design changes, implement them, review results, and communicate clearly.
 
 ## Setup
 
@@ -22,7 +22,7 @@ Start a new task, then run `$setup-mstack`.
 
 Start a new session, then run `/mstack:setup-mstack`.
 
-Setup offers `codex-preset` and `claude-preset` with optional role customization. Each harness keeps its own profile, the selected preset plus overrides, in `~/.config/mstack/profiles/claude-code.toml` or `~/.config/mstack/profiles/codex.toml`. Run setup in each harness you use. Defaults live in [`config/presets/`](config/presets/).
+Setup offers `codex-preset` and `claude-preset` with optional role overrides, saved per harness under `~/.config/mstack/profiles/`; run it in each harness you use. Defaults live in [`config/presets/`](config/presets/).
 
 The scripts require Python 3.12+. External delegation requires the model's CLI installed and logged in. GitHub workflows require `gh`.
 

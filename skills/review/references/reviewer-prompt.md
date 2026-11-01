@@ -6,8 +6,6 @@ Adapt this template to the assignment, giving independent reviewers the same req
 
 Review the supplied code or design against its requirements, complexity, and test usefulness. Report problems supported by evidence. No findings is a valid result.
 
-This is a read-only assignment in an existing panel. Do not edit project files or change external systems. Investigate directly by default, using surrounding code and relevant references as needed. Leave panel coordination to the parent.
-
 ## Scope and requirements
 
 {SCOPE_AND_REQUIREMENTS}
@@ -22,13 +20,11 @@ This is a read-only assignment in an existing panel. Do not edit project files o
 
 ## Review references
 
-Use these references as a starting point, consulting relevant sections and further guidance as needed:
-
 {REVIEW_CRITERIA_AND_PRINCIPLE_PATHS}
 
 ## Findings
 
-Use this format when useful for reporting findings:
+Report each finding with:
 
 - A local ID such as `R-1` and a verified file/line or symbol.
 - The problem, consequence, and severity based on that consequence.
@@ -38,4 +34,4 @@ Use this format when useful for reporting findings:
 
 Security and concurrency claims need demonstrated paths. Exclude invented requirements, hypothetical defenses, style preferences, and tests added merely for completeness.
 
-Report checks performed, access failures, and evidence gaps. If no findings are justified, say so.
+Report checks performed, access failures, and evidence gaps.

@@ -1,6 +1,6 @@
 # Design template
 
-Use these headings as a starting point for direct designs and candidate proposals. Adapt the detail and sketches to the decision and the implementer's needs.
+Headings for direct designs and candidate proposals; adapt detail to the decision.
 
 ## Problem and constraints
 
@@ -10,7 +10,7 @@ State the requested outcome, relevant current behavior, and constraints. Separat
 
 Show realistic caller usage, including relevant results and failures. Derive the types and operations from it. Show who owns state, invariants, and side effects; identify boundaries and dependency direction.
 
-Use signatures, a module map, pseudocode, or diagrams where they clarify the proposal. Keep names and contracts consistent. Label sketches as proposed; describe unfinished behavior in prose.
+Use signatures, a module map, pseudocode, or diagrams where they clarify the proposal.
 
 ## Decisions and alternatives
 
@@ -22,6 +22,6 @@ For a comparison, name the selected proposal, compatible ideas adopted from othe
 
 Give each implementation unit an observable outcome, owned surface, dependencies, and verification target. Identify the riskiest assumption and the earliest practical unit that tests it.
 
-Separate decisions that must hold from adaptable details. Name concrete observations that would invalidate the design, including contradictory runtime or type evidence and repeated workarounds that expose a structural problem. State what implementation should return: affected unit and symbols, expected versus required behavior or shape, and the failed check or observation.
+Separate decisions that must hold from adaptable details. Name concrete observations that would invalidate the design, including contradictory runtime or type evidence and repeated workarounds that expose a structural problem.
 
 Report open questions, unverified assumptions, and access gaps. For an unresolved empirical choice, specify the bounded experiment and evidence needed before choosing.
