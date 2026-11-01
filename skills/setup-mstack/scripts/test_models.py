@@ -39,7 +39,7 @@ class ModelsTest(unittest.TestCase):
                 "--harness",
                 "codex",
                 "--role",
-                "implement_worker",
+                "explain_explorer",
                 expected_code=2,
                 XDG_CONFIG_HOME=directory,
             )
@@ -85,7 +85,6 @@ class ModelsTest(unittest.TestCase):
     def test_explicit_presets_resolve_without_user_config(self) -> None:
         expected = {
             "codex-preset": {
-                "implement_worker": {"model": "gpt-6-sol", "effort": "high", "fast": False},
                 "explain_explorer": {"model": "gpt-6-luna", "effort": "max", "fast": False},
                 "architect_candidate_a": {"model": "claude-fable-5-1", "effort": "xhigh", "fast": False},
                 "architect_candidate_b": {"model": "gpt-6-astra", "effort": "xhigh", "fast": False},
@@ -97,7 +96,6 @@ class ModelsTest(unittest.TestCase):
                 "delegate_default": {"model": "claude-fable-5-1", "effort": "xhigh", "fast": False},
             },
             "claude-preset": {
-                "implement_worker": {"model": "claude-opus-5-5", "effort": "high", "fast": False},
                 "explain_explorer": {"model": "sonnet", "effort": "high", "fast": False},
                 "architect_candidate_a": {"model": "claude-fable-5-1", "effort": "xhigh", "fast": False},
                 "architect_candidate_b": {"model": "gpt-6-astra", "effort": "xhigh", "fast": False},
@@ -163,14 +161,14 @@ class ModelsTest(unittest.TestCase):
             config = Path(directory) / "models.toml"
             config.write_text(
                 'schema_version = 1\npreset = "codex-preset"\n\n'
-                "[roles.implement_worker]\n"
+                "[roles.explain_explorer]\n"
                 'effort = "low"\n',
                 encoding="utf-8",
             )
             result = self.run_models(
                 "resolve",
                 "--role",
-                "implement_worker",
+                "explain_explorer",
                 "--preset",
                 "claude-preset",
                 "--config",
@@ -179,7 +177,7 @@ class ModelsTest(unittest.TestCase):
             payload = json.loads(result.stdout)
             self.assertEqual("claude-preset", payload["preset"])
             self.assertEqual(
-                {"model": "claude-opus-5-5", "effort": "low", "fast": False},
+                {"model": "sonnet", "effort": "low", "fast": False},
                 payload["assignment"],
             )
 
@@ -210,7 +208,7 @@ class ModelsTest(unittest.TestCase):
             config = Path(directory) / "models.toml"
             config.write_text(
                 'schema_version = 1\npreset = "codex-preset"\n\n'
-                "[roles.implement_worker]\n"
+                "[roles.explain_explorer]\n"
                 'runner = "codex-native"\n',
                 encoding="utf-8",
             )
@@ -239,7 +237,7 @@ class ModelsTest(unittest.TestCase):
             config = Path(directory) / "models.toml"
             config.write_text(
                 'schema_version = 1\npreset = "codex-preset"\n\n'
-                "[roles.implement_worker]\n"
+                "[roles.explain_explorer]\n"
                 'provider = "codex"\n',
                 encoding="utf-8",
             )

@@ -1,5 +1,7 @@
 # Logbook: Simplify Implement
 
+Partly superseded by [Implement in the running agent](2026-11-01-implement-in-the-running-agent.md): the worker option and testing guidance are removed.
+
 Status: implemented
 Kind: simplification
 

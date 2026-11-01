@@ -1,11 +1,11 @@
 ---
 name: implement
-description: "Implement features, fixes, refactors, and experiments. Work directly or delegate, then inspect and verify the result."
+description: "Implement features, fixes, refactors, and experiments, then inspect and verify the result."
 ---
 
 # Implement
 
-Make the requested change. Use judgment on planning, delegation, and verification depth.
+Make the requested change. Use judgment on planning and verification depth.
 
 ## Approach
 
@@ -18,13 +18,13 @@ Make the requested change. Use judgment on planning, delegation, and verificatio
 
 ## Implement and verify
 
-Work directly when delegation would cost more than it saves. Otherwise use a [persistent worker](references/implementation-worker.md). Start larger changes with the smallest useful end-to-end slice.
+Make the edits yourself; do not spawn an implementation worker. Start larger changes with the smallest useful end-to-end slice.
 
-Inspect the diff and verify each unit. Use [Testing](references/testing.md) to judge whether new tests would help and [Verification](../apply-principles/references/verification.md) for required checks and the affected runtime surface.
+Inspect the diff and verify each unit. Use [Verification](../apply-principles/references/verification.md) for required checks and the affected runtime surface.
 
-When implementation contradicts an accepted design, return the evidence to Architect and revise the affected work. Keep an existing worker for the revised design. Local corrections need no redesign.
+When implementation contradicts an accepted design, return the evidence to Architect and revise the affected work. Local corrections need no redesign.
 
-When a change makes a decision, fixes an incident, or produces findings that future agents would need, the parent writes a [Logbook](../logbook/SKILL.md) entry, including rejected approaches and why.
+When a change makes a decision, fixes an incident, or produces findings that future agents would need, write a [Logbook](../logbook/SKILL.md) entry, including rejected approaches and why.
 
 ## Completion
 

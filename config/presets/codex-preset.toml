@@ -2,11 +2,6 @@ schema_version = 1
 name = "codex-preset"
 description = "Suggested profile favoring GPT models"
 
-[roles.implement_worker]
-model = "gpt-6-sol"
-effort = "high"
-fast = false
-
 [roles.explain_explorer]
 model = "gpt-6-luna"
 effort = "max"

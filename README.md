@@ -30,7 +30,7 @@ The scripts require Python 3.12+. External delegation requires the model's CLI i
 
 | Skill | What it does |
 | --- | --- |
-| [implement](skills/implement/SKILL.md) | Make and verify changes directly or with a persistent worker; add tests where they provide useful protection. |
+| [implement](skills/implement/SKILL.md) | Make and verify changes in the running agent. |
 | [architect](skills/architect/SKILL.md) | Design consequential changes and compare alternatives when useful. Read-only. |
 | [explain](skills/explain/SKILL.md) | Explain behavior, decisions, and changes using relevant sources, a consistent template, and useful visuals. |
 | [grill-me](skills/grill-me/SKILL.md) | Clarify what to build and deepen understanding through questions, explanations, and useful diagrams. |

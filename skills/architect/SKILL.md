@@ -35,6 +35,6 @@ Return the design and stop. The user or calling workflow decides whether to proc
 
 Name the decisions implementation must preserve, details it may adapt, and evidence that would require revisiting the design. Put the smallest practical end-to-end check of the riskiest assumption early in the implementation sequence; identify prerequisites when it cannot come first.
 
-When implementation contradicts a required contract, ownership decision, boundary, dependency, shared-state assumption, or failure policy, reconsider the design using the affected code and evidence. Repeated workarounds can also reveal a structural problem. Routine local corrections and explicitly flexible details do not require redesign. Return the revised contract to the calling workflow, which retains any existing implementation worker.
+When implementation contradicts a required contract, ownership decision, boundary, dependency, shared-state assumption, or failure policy, reconsider the design using the affected code and evidence. Repeated workarounds can also reveal a structural problem. Routine local corrections and explicitly flexible details do not require redesign. Return the revised contract to the calling workflow.
 
 Include the reasoning, alternatives, evidence, and gaps needed for the parent to write a Logbook record. Architect does not write project records itself.
