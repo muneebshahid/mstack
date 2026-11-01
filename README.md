@@ -35,7 +35,7 @@ The scripts require Python 3.12+. External delegation requires the model's CLI i
 | [explain](skills/explain/SKILL.md) | Explain behavior, decisions, and changes using relevant sources, a consistent template, and useful visuals. |
 | [grill-me](skills/grill-me/SKILL.md) | Clarify what to build and deepen understanding through questions, explanations, and useful diagrams. |
 | [review](skills/review/SKILL.md) | Review correctness, simplicity, and test usefulness, directly or with independent reviewers. Read-only. |
-| [apply-principles](skills/apply-principles/SKILL.md) | Select relevant engineering standards, including simplicity, strong types, ownership, diagnosis, and verification. |
+| [apply-principles](skills/apply-principles/SKILL.md) | Select relevant engineering standards, including simplicity, strong types, ownership, and verification. |
 | [logbook](skills/logbook/SKILL.md) | Record decisions, incidents, and investigations that future agents would need. |
 | [delegate](skills/delegate/SKILL.md) | Run scoped tasks natively or through an external harness, with explicit permissions and resumable follow-ups. |
 | [setup-mstack](skills/setup-mstack/SKILL.md) | Select a preset, customize role models, and check availability. |

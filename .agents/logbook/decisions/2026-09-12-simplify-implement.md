@@ -2,6 +2,8 @@
 
 Partly superseded by [Implement in the running agent](2026-11-01-implement-in-the-running-agent.md): the worker option and testing guidance are removed.
 
+Partly superseded by [Remove Diagnosis](2026-11-01-remove-diagnosis.md): the Diagnosis reference cited here is removed.
+
 Status: implemented
 Kind: simplification
 

@@ -12,7 +12,7 @@ Make the requested change. Use judgment on planning and verification depth.
 - Use [Explain](../explain/SKILL.md) when the affected system needs investigation; reuse existing findings.
 - Apply relevant [principles](../apply-principles/SKILL.md).
 - Use [Architect](../architect/SKILL.md) when a consequential design choice needs work. Architect stays read-only; Implement owns the edits.
-- For failures, follow [Diagnosis](../apply-principles/references/diagnosis.md). Add targeted logs when the failing path is unclear, then remove temporary instrumentation.
+- For failures, add targeted logs when the failing path is unclear, then remove temporary instrumentation.
 - For refactors, establish which behavior must stay the same and use existing checks or a focused comparison to verify it.
 - For experiments, name the question and measure it with a small disposable artifact outside the repository.
 

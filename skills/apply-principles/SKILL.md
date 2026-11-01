@@ -5,7 +5,7 @@ description: "Select engineering standards when a design, implementation, or rev
 
 # Apply Principles
 
-The nine references below hold the engineering standards. Apply them with judgment to the task and its constraints; use concrete requirements and evidence over broad heuristics. Explicit user preferences still govern.
+The eight references below hold the engineering standards. Apply them with judgment to the task and its constraints; use concrete requirements and evidence over broad heuristics. Explicit user preferences still govern.
 
 ## Select
 
@@ -18,7 +18,6 @@ Choose the smallest relevant set using the task and evidence, rather than loadin
 | [Ownership and Contracts](references/ownership-and-contracts.md) | assigning responsibility, changing public contracts, parsing or validating boundary data, translating errors, or correcting dependencies and cycles |
 | [Concurrency and Retries](references/concurrency-and-retries.md) | actors may write concurrently, or operations may repeat or partially fail |
 | [Delivery and Migration](references/delivery-and-migration.md) | sequencing multi-step work or migrating APIs and callers |
-| [Diagnosis](references/diagnosis.md) | investigating a bug, failed check, crash, or workaround |
 | [Verification](references/verification.md) | checking a completion claim, changed artifact, delegated result, or user path |
 | [Design Decisions](references/design-decisions.md) | choosing an experience, comparing consequential alternatives, or reconsidering a shape that fights a requirement |
 | [Automation and Learning](references/automation-and-learning.md) | considering automation or preventing a recurring correction |
