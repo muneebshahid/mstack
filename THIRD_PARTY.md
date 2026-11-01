@@ -26,6 +26,10 @@ The stack's workflow design was reviewed against Jesse Vincent's [Superpowers](h
 
 `grill-me` adapts Matt Pocock’s [Grilling](https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md), combining task clarification with adaptive tutoring and a user-directed learning outline. `bro` adapts the version published in [dmmulroy/skills](https://github.com/dmmulroy/skills), whose repository preserves Matt Pocock's MIT notice. The shared license is preserved at [`LICENSES/MATT-POCOCK-SKILLS-MIT.txt`](LICENSES/MATT-POCOCK-SKILLS-MIT.txt).
 
+## A Philosophy of Software Design
+
+The deep-module and general-purpose guidance in [Simplicity](skills/apply-principles/references/simplicity.md) paraphrases ideas from John Ousterhout's *A Philosophy of Software Design*.
+
 ## DeepSeek Harness
 
 Logbook was informed by DeepSeek Harness’s [Agent Notes](https://github.com/deepseek-ai/deepseek-harness/blob/c291e7961a/.agents/notes/README.md), especially recording accepted decisions, rejected alternatives, and their reasons. MStack keeps its dated entries in decision, incident, and investigation folders without the upstream lifecycle, archive, or translation workflow; that tooling is not bundled.
