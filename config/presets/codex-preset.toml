@@ -22,21 +22,6 @@ model = "gpt-6-astra"
 effort = "max"
 fast = false
 
-[roles.skill_eval_quality_judge]
-model = "gpt-6-astra"
-effort = "medium"
-fast = false
-
-[roles.skill_eval_smoke_candidate]
-model = "gpt-6-luna"
-effort = "low"
-fast = true
-
-[roles.skill_eval_smoke_judge]
-model = "gpt-6-luna"
-effort = "low"
-fast = true
-
 [roles.delegate_default]
 model = "claude-fable-5-1"
 effort = "xhigh"

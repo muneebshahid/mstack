@@ -20,4 +20,4 @@ Pass effective assignments and inline overrides to children. For a specific conf
 
 Preserve model settings; report controls the harness cannot express.
 
-Use `skill_eval_smoke_candidate` for cheap execution checks; results do not establish another model's availability or quality. Run Haiku checks outside plan mode, which can select a larger model.
+Cheap execution checks do not establish another model's availability or quality. Run Haiku checks outside plan mode, which can select a larger model.

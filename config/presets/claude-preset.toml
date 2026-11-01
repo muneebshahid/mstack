@@ -22,21 +22,6 @@ model = "gpt-6-astra"
 effort = "max"
 fast = false
 
-[roles.skill_eval_quality_judge]
-model = "claude-fable-5-1"
-effort = "medium"
-fast = false
-
-[roles.skill_eval_smoke_candidate]
-model = "haiku"
-effort = "low"
-fast = false
-
-[roles.skill_eval_smoke_judge]
-model = "haiku"
-effort = "low"
-fast = false
-
 [roles.delegate_default]
 model = "gpt-6-astra"
 effort = "xhigh"

@@ -24,7 +24,7 @@ Start a new session, then run `/mstack:setup-mstack`.
 
 Setup offers `codex-preset` and `claude-preset` with optional role customization. Each harness keeps its own profile, the selected preset plus overrides, in `~/.config/mstack/profiles/claude-code.toml` or `~/.config/mstack/profiles/codex.toml`. Run setup in each harness you use. Defaults live in [`config/presets/`](config/presets/).
 
-The scripts require Python 3.12+. External delegation requires the model's CLI installed and logged in; Skill Eval always uses an external CLI. GitHub workflows require `gh`.
+The scripts require Python 3.12+. External delegation requires the model's CLI installed and logged in. GitHub workflows require `gh`.
 
 ## Skills
 
@@ -39,7 +39,6 @@ The scripts require Python 3.12+. External delegation requires the model's CLI i
 | [logbook](skills/logbook/SKILL.md) | Record decisions, incidents, and investigations that future agents would need. |
 | [delegate](skills/delegate/SKILL.md) | Run scoped tasks natively or through an external harness, with explicit permissions and resumable follow-ups. |
 | [setup-mstack](skills/setup-mstack/SKILL.md) | Select a preset, customize role models, and check availability. |
-| [skill-eval](skills/skill-eval/SKILL.md) | Compare inline skill variants in fresh external scenarios before adopting changes. |
 | [unslop](skills/unslop/SKILL.md) | Remove generic AI wording while preserving meaning. |
 | [bro](skills/bro/SKILL.md) | Restate the preceding answer in shorter, plain language. |
 

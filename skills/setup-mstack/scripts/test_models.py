@@ -89,9 +89,6 @@ class ModelsTest(unittest.TestCase):
                 "architect_candidate_b": {"model": "gpt-6-astra", "effort": "xhigh", "fast": False},
                 "review_reviewer_a": {"model": "claude-fable-5-1", "effort": "max", "fast": False},
                 "review_reviewer_b": {"model": "gpt-6-astra", "effort": "max", "fast": False},
-                "skill_eval_quality_judge": {"model": "gpt-6-astra", "effort": "medium", "fast": False},
-                "skill_eval_smoke_candidate": {"model": "gpt-6-luna", "effort": "low", "fast": True},
-                "skill_eval_smoke_judge": {"model": "gpt-6-luna", "effort": "low", "fast": True},
                 "delegate_default": {"model": "claude-fable-5-1", "effort": "xhigh", "fast": False},
             },
             "claude-preset": {
@@ -99,9 +96,6 @@ class ModelsTest(unittest.TestCase):
                 "architect_candidate_b": {"model": "gpt-6-astra", "effort": "xhigh", "fast": False},
                 "review_reviewer_a": {"model": "claude-fable-5-1", "effort": "max", "fast": False},
                 "review_reviewer_b": {"model": "gpt-6-astra", "effort": "max", "fast": False},
-                "skill_eval_quality_judge": {"model": "claude-fable-5-1", "effort": "medium", "fast": False},
-                "skill_eval_smoke_candidate": {"model": "haiku", "effort": "low", "fast": False},
-                "skill_eval_smoke_judge": {"model": "haiku", "effort": "low", "fast": False},
                 "delegate_default": {"model": "gpt-6-astra", "effort": "xhigh", "fast": False},
             },
         }

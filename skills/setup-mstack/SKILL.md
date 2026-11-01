@@ -22,7 +22,7 @@ Offer `codex-preset` and `claude-preset`, suggesting `claude-preset` in Claude C
 
 Show the preset, effective assignments, and overrides. Check available models and relevant CLI authentication with `codex login status` or `claude auth status`. Report unknown model access without changing assignments; login alone does not verify it.
 
-Use cheap smoke roles for launch checks and report what they verified; do not launch expensive models merely to infer access.
+Use a cheap model for launch checks and report what they verified; do not launch expensive models merely to infer access.
 
 ## Configure
 
