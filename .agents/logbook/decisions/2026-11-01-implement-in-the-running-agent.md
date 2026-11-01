@@ -8,7 +8,7 @@ Implement let the parent spawn a persistent `implement_worker` through Delegate,
 
 Owner's call: the running agent makes the edits itself. Implement no longer delegates, and the `implement_worker` role is gone from the registry and both presets. Delegate stays available for other scoped tasks.
 
-Owner's call: remove `skills/implement/references/testing.md`. Verification remains the standard for choosing evidence, including when regression value justifies automation. Version 0.4.5.
+Owner's call: remove `skills/implement/references/testing.md`. Version 0.4.5.
 
 ## Rejected
 

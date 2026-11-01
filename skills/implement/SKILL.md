@@ -17,9 +17,9 @@ Make the requested change. Use judgment on planning and verification depth.
 
 ## Implement and verify
 
-Make the edits yourself; do not spawn an implementation worker. Start larger changes with the smallest useful end-to-end slice.
+Start larger changes with the smallest useful end-to-end slice.
 
-Inspect the diff and verify each unit. Use [Verification](../apply-principles/references/verification.md) for required checks and the affected runtime surface.
+Inspect the diff. Always verify your changes are working if possible.
 
 When implementation contradicts an accepted design, return the evidence to Architect and revise the affected work. Local corrections need no redesign.
 
