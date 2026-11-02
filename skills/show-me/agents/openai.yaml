@@ -1,0 +1,7 @@
+interface:
+  display_name: "Show Me"
+  short_description: "Explain the current topic visually"
+  default_prompt: "Use $show-me to show this visually with concise diagrams and code-shape sketches."
+
+policy:
+  allow_implicit_invocation: false

@@ -1,6 +1,7 @@
 # Logbook: Tighten Principles and Record Agent Work
 
 Partly superseded by Record work per commit (deleted entry: `git show ca96b8c:.agents/logbook/2026-09-13-record-work-per-commit.md`), then by [Classify Logbook entries and record only what agents need](2026-10-24-classify-logbook-entries.md): the Logbook capture rules changed.
+Partly superseded by [Remove Source Style](2026-11-01-remove-source-style.md): the no-comments rule is removed.
 
 Status: implemented
 Kind: process

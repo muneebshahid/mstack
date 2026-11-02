@@ -2,7 +2,7 @@
 
 ## Clear ownership
 
-Give each invariant and its mutations, effects, lifecycle, and failure policy an obvious owner. Keep responsibilities together when they share invariants and change for the same reason; separate them when their policies or lifecycles differ. Put behavior beside the concept that owns it instead of forwarding through managers or hiding it in generic utilities.
+Give each invariant and its mutations, effects, lifecycle, and failure policy an obvious owner. Keep responsibilities together when they share invariants and change for the same reason; separate them when their policies or lifecycles differ. Combine code when that simplifies the interface or removes duplication, and separate general-purpose code from special-purpose code. Put behavior beside the concept that owns it instead of forwarding through managers or hiding it in generic utilities.
 
 ## Boundary discipline
 

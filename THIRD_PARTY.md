@@ -2,17 +2,13 @@
 
 ## PStack
 
-Several skills in this repository began as, preserve portions of, or were adapted from Cursor's [PStack](https://github.com/cursor/plugins/tree/main/pstack), including orchestration, engineering-principle, review, writing, teaching, testing, and TypeScript guidance.
+Several skills in this repository began as, preserve portions of, or were adapted from Cursor's [PStack](https://github.com/cursor/plugins/tree/main/pstack), including orchestration, engineering-principle, writing, teaching, and TypeScript guidance.
 
 PStack is distributed under the MIT License. Its license is preserved at [`LICENSES/PSTACK-MIT.txt`](LICENSES/PSTACK-MIT.txt). Individual derivative skill directories also retain an upstream license where one was already present.
 
 ## HumanLayer Show Me
 
-`explain` incorporates the visual guidance and examples from HumanLayer's [Show Me](https://github.com/humanlayer/skills/blob/3c2629142c5d437428269b1b722b08c0b87f574d/plugins/show-me/skills/show-me/SKILL.md), adapted to its response template and HTML preview tools. HumanLayer's MIT license is preserved at [`LICENSES/HUMANLAYER-SKILLS-MIT.txt`](LICENSES/HUMANLAYER-SKILLS-MIT.txt).
-
-## Anthropic review guidance
-
-`review` draws on Anthropic's [Code Review](https://github.com/anthropics/claude-code/blob/main/plugins/code-review/README.md) and [Code Simplifier](https://github.com/anthropics/claude-plugins-official/blob/main/plugins/code-simplifier/agents/code-simplifier.md): cite applicable project rules, consult relevant history, and favor clarity over compact rewrites. The upstream plugins and agents are not bundled here.
+`show-me` adapts HumanLayer's [Show Me](https://github.com/humanlayer/skills/blob/3c2629142c5d437428269b1b722b08c0b87f574d/plugins/show-me/skills/show-me/SKILL.md), including its visual guidance and examples, with a fallback where Mermaid does not render and generic HTML preview tools. HumanLayer's MIT license is preserved at [`LICENSES/HUMANLAYER-SKILLS-MIT.txt`](LICENSES/HUMANLAYER-SKILLS-MIT.txt).
 
 ## Unslop
 
@@ -25,6 +21,10 @@ The stack's workflow design was reviewed against Jesse Vincent's [Superpowers](h
 ## Skills for Real Engineers
 
 `grill-me` adapts Matt Pocock’s [Grilling](https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md), combining task clarification with adaptive tutoring and a user-directed learning outline. `bro` adapts the version published in [dmmulroy/skills](https://github.com/dmmulroy/skills), whose repository preserves Matt Pocock's MIT notice. The shared license is preserved at [`LICENSES/MATT-POCOCK-SKILLS-MIT.txt`](LICENSES/MATT-POCOCK-SKILLS-MIT.txt).
+
+## A Philosophy of Software Design
+
+The deep-module and general-purpose guidance in [Simplicity](skills/apply-principles/references/simplicity.md) paraphrases ideas from John Ousterhout's *A Philosophy of Software Design*.
 
 ## DeepSeek Harness
 

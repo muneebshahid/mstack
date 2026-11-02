@@ -2,51 +2,6 @@ schema_version = 1
 name = "codex-preset"
 description = "Suggested profile favoring GPT models"
 
-[roles.implement_worker]
-model = "gpt-6-sol"
-effort = "high"
-fast = false
-
-[roles.explain_explorer]
-model = "gpt-6-luna"
-effort = "max"
-fast = false
-
-[roles.architect_candidate_a]
-model = "claude-fable-5-1"
-effort = "xhigh"
-fast = false
-
-[roles.architect_candidate_b]
-model = "gpt-6-astra"
-effort = "xhigh"
-fast = false
-
-[roles.review_reviewer_a]
-model = "claude-fable-5-1"
-effort = "max"
-fast = false
-
-[roles.review_reviewer_b]
-model = "gpt-6-astra"
-effort = "max"
-fast = false
-
-[roles.skill_eval_quality_judge]
-model = "gpt-6-astra"
-effort = "medium"
-fast = false
-
-[roles.skill_eval_smoke_candidate]
-model = "gpt-6-luna"
-effort = "low"
-fast = true
-
-[roles.skill_eval_smoke_judge]
-model = "gpt-6-luna"
-effort = "low"
-fast = true
-
 [roles.delegate_default]
 model = "claude-fable-5-1"
 effort = "xhigh"

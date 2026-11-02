@@ -1,6 +1,0 @@
-interface:
-  display_name: "Skill Eval"
-  short_description: "Evaluate skills and inline variants"
-  default_prompt: "Use $skill-eval to compare these skill instructions in fresh external scenarios and report the evidence."
-policy:
-  allow_implicit_invocation: false

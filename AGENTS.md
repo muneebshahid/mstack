@@ -1,9 +1,7 @@
 # Repository instructions
 
-- Use `skills/logbook/SKILL.md` to record decisions, incidents, and investigations that future agents would need. Most commits need only a commit message.
-- The parent agent owns Logbook judgment and writes. Workers may return work and outcome evidence but must not edit `.agents/logbook/`.
-- Treat the ten references under `skills/apply-principles/references/` as the canonical engineering standards. Use `skills/apply-principles/SKILL.md` to select the smallest relevant references when they are not already known.
-- Validate every changed skill with the bundled Codex `skill-creator` validator. Validate Logbook records with `skills/logbook/scripts/validate_logbook.py`.
-- Resolve Skill Eval's dedicated smoke roles for execution checks; packaged defaults use GPT-6 Luna `low` with Fast for Codex mechanics and Haiku `low` for Claude mechanics. Keep production assignments unchanged, record every substitution, and do not treat smoke results as production-quality evidence. Verify the served model through the launcher's `summary.json` and do not use plan mode for a Haiku smoke run because plan mode may route the work to a larger model.
+- Record decisions, incidents, and investigations that future agents would need with `skills/logbook/SKILL.md`. The parent agent decides and writes; workers return evidence and never edit `.agents/logbook/`.
+- Engineering standards: `skills/apply-principles/SKILL.md` and its references.
+- Before release, run `python3 scripts/validate.py` (skills, manifests, presets, links, hygiene, tests, Logbook). In Codex, also run the bundled `skill-creator` validator on changed skills.
 - Do not commit credentials, private keys, access tokens, personal data, private repository material, machine-specific absolute paths, or generated caches.
 - Keep cross-skill links repository-relative so the stack remains portable.

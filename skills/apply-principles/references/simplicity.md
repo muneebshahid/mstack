@@ -4,7 +4,7 @@
 
 Reduce the layers readers must trace and the hidden state they must remember to understand behavior. Prefer direct calls, local state, pure functions, and names that expose intent. Preserve differences required by the domain, correctness, or performance.
 
-Keep abstractions that express domain meaning, isolate volatility, enforce contracts, or simplify callers. Remove forwarding layers and duplicated decisions when they add traversal without reducing complexity elsewhere. File size or a single caller or implementation does not prove a boundary unnecessary.
+Keep abstractions that express domain meaning, isolate volatility, enforce contracts, or simplify callers. Each layer should offer a different abstraction from its neighbors; remove forwarding layers and duplicated decisions when they add traversal without reducing complexity elsewhere. File size or a single caller or implementation does not prove a boundary unnecessary.
 
 ## Subtract before you add
 
@@ -12,4 +12,19 @@ Look for obsolete paths and redundant machinery before adding more. Inspect call
 
 Complexity needs a concrete requirement, reachable failure, operational constraint, or material risk. Examine the states, failure modes, and maintenance obligations it adds.
 
-Check existing repository, standard-library, platform, and installed capabilities before writing custom code. Simplify interfaces before polishing implementation; neither line count nor reduced product scope is a substitute for a clearer design.
+Check existing repository, standard-library, platform, and installed capabilities before writing custom code. Prefer a simpler interface over a simpler implementation when the two conflict; neither line count nor reduced product scope is a substitute for a clearer design.
+
+## Prefer deep modules
+
+A module should hide more than it exposes: a small interface over substantial functionality. An interface nearly as complex as its implementation gives callers little; move the complexity inside or merge the module with its neighbor. Many small pieces are not a goal in themselves, because each one adds an interface to learn.
+
+If a change to one design decision forces edits in several modules, that knowledge has leaked; give it one home.
+
+## Prefer general-purpose modules
+
+Build only what today's needs require, behind an interface that is not tied to today's caller. When designing a module or API, ask:
+
+- Is this the simplest interface that will cover my needs?
+- In how many situations will this module or function be used? If only one, it is likely too specialized.
+
+Specialization is fine when it is necessary; avoid only the unnecessary kind. Redesign when the result is both more general and simpler. Keep the specialized form when generalizing would add parameters, modes, or speculative features.

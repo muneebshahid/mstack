@@ -8,8 +8,8 @@
   "plugins": [
     {
       "name": "mstack",
-      "description": "Rigorous engineering workflows, reusable principles, and multi-model review for coding agents.",
-      "version": "0.4.4",
+      "description": "Engineering principles, plan clarification, visual explanation, delegation, and decision records for coding agents.",
+      "version": "0.4.5",
       "source": "./",
       "author": {
         "name": "Muneeb",

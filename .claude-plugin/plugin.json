@@ -1,7 +1,7 @@
 {
   "name": "mstack",
-  "description": "Rigorous engineering workflows, reusable principles, and multi-model review for coding agents.",
-  "version": "0.4.4",
+  "description": "Engineering principles, plan clarification, visual explanation, delegation, and decision records for coding agents.",
+  "version": "0.4.5",
   "author": {
     "name": "Muneeb",
     "email": "5444273+muneebshahid@users.noreply.github.com"
@@ -12,9 +12,6 @@
   "keywords": [
     "engineering",
     "skills",
-    "multi-model",
-    "architecture",
-    "implementation",
-    "code-review"
+    "multi-model"
   ]
 }
