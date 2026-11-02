@@ -1,5 +1,7 @@
 # Logbook: Use Judgment in Refined Workflows
 
+Partly superseded by [Trim instructions capable models follow anyway](2026-11-01-trim-instructions-capable-models-follow.md): the workflow-default disclaimers are removed.
+
 Status: implemented
 Kind: process
 

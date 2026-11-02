@@ -1,5 +1,7 @@
 # Logbook: Use Model Diversity for Consequential Design and Review
 
+Partly superseded by [Remove Review, Implement, and Architect](2026-11-01-remove-review-implement-architect.md): the design and review panels are removed.
+
 Partly superseded by [Consolidate Explanations](2026-09-05-consolidate-explanations.md), [Simplify Architect](2026-09-06-simplify-architect.md), [Simplify Review](2026-09-06-simplify-review.md), and [Use Judgment in Refined Workflows](2026-09-06-use-judgment-in-workflows.md): panels are optional and Interrogate became Review.
 
 Status: implemented

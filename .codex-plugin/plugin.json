@@ -1,7 +1,7 @@
 {
   "name": "mstack",
-  "version": "0.4.4",
-  "description": "Rigorous engineering workflows, reusable principles, and multi-model review for coding agents.",
+  "version": "0.4.5",
+  "description": "Engineering principles, plan clarification, visual explanation, delegation, and decision records for coding agents.",
   "author": {
     "name": "Muneeb",
     "email": "5444273+muneebshahid@users.noreply.github.com",
@@ -13,16 +13,13 @@
   "keywords": [
     "engineering",
     "skills",
-    "multi-model",
-    "architecture",
-    "implementation",
-    "code-review"
+    "multi-model"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "MStack",
-    "shortDescription": "Rigorous multi-model engineering workflows",
-    "longDescription": "Design consequential changes, implement them in verifiable units, investigate rationale, challenge code with independent models, and apply reusable engineering principles.",
+    "shortDescription": "Reusable multi-model engineering skills",
+    "longDescription": "Apply reusable engineering principles, clarify plans through questions, explain topics visually, delegate scoped tasks to other models, and record decisions for future agents.",
     "developerName": "Muneeb",
     "category": "Developer Tools",
     "capabilities": [
@@ -35,9 +32,8 @@
     "termsOfServiceURL": "https://github.com/muneebshahid/mstack/blob/main/TERMS.md",
     "defaultPrompt": [
       "Use $setup-mstack to configure model assignments for my available harnesses.",
-      "Use $implement to make this change in small, verified units.",
-      "Use $architect to design this change without implementing it.",
-      "Use $review to run an adversarial review of these changes."
+      "Use $grill-me to clarify this plan before we build it.",
+      "Use $show-me to show how this works visually."
     ],
     "brandColor": "#315C91",
     "screenshots": []

@@ -1,5 +1,7 @@
 # Logbook: Consolidate Explanations
 
+Superseded by [Replace Explain with Show Me](2026-11-01-replace-explain-with-show-me.md): only the visual guidance remains, as `show-me`.
+
 Status: implemented
 Kind: simplification
 

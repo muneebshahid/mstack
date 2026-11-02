@@ -2,9 +2,7 @@
 
 ## Build the lever
 
-Build a small rerunnable tool when repetition, scale, error risk, or auditability repays its cost. Use existing capabilities before custom machinery. Make the tool deterministic and safe to rerun, then use it to perform or verify the work.
-
-A one-off tool can make consequential work checkable.
+Build a small rerunnable tool when repetition, scale, error risk, or auditability repays its cost. Make the tool deterministic and safe to rerun, then use it to perform or verify the work.
 
 ## Encode lessons in structure
 

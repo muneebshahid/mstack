@@ -1,6 +1,7 @@
 # Logbook: Centralize Model Role Configuration
 
 Partly superseded by [Generalize delegation](2026-09-13-generalize-delegation.md): host detection and runner fields were removed; and by [Per-harness profiles](2026-09-26-per-harness-profiles.md): profiles are per harness and the shared `models.toml` is no longer read.
+Partly superseded by [Implement in the running agent](2026-11-01-implement-in-the-running-agent.md): the `implement_worker` role is removed.
 
 Status: implemented
 Kind: architecture

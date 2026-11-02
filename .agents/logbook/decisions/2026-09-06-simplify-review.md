@@ -1,5 +1,7 @@
 # Logbook: Simplify Review
 
+Superseded by [Remove Review, Implement, and Architect](2026-11-01-remove-review-implement-architect.md): the skill is removed.
+
 Partly superseded by [Use Judgment in Refined Workflows](2026-09-06-use-judgment-in-workflows.md): fixed panel triggers became agent judgment.
 
 Status: implemented
