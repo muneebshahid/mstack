@@ -9,7 +9,7 @@
     {
       "name": "mstack",
       "description": "Engineering principles, plan clarification, visual explanation, delegation, and decision records for coding agents.",
-      "version": "0.4.5",
+      "version": "0.4.6",
       "source": "./",
       "author": {
         "name": "Muneeb",
