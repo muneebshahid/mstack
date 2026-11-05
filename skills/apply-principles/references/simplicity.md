@@ -12,6 +12,10 @@ Look for obsolete paths and redundant machinery before adding more. Inspect call
 
 Complexity needs a concrete requirement, reachable failure, operational constraint, or material risk. Examine the states, failure modes, and maintenance obligations it adds.
 
+A hypothetical edge case, including one a reviewer raises, is not a reachable failure until you can name the input or state that triggers it. Weigh how likely it is against what it costs when it happens. When both are low, leave the code as it is and say why instead of adding branches.
+
+Keep production code free of flags, parameters, branches, or state that exist only for tests. Test through the public interface, or through a seam that production also uses. If code can't be tested without a test-only hook, treat that as a design problem.
+
 Check existing repository, standard-library, platform, and installed capabilities before writing custom code. Prefer a simpler interface over a simpler implementation when the two conflict; neither line count nor reduced product scope is a substitute for a clearer design.
 
 ## Prefer deep modules
