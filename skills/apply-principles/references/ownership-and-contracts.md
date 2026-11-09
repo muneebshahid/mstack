@@ -10,6 +10,8 @@ Validate external and untrusted input where it enters, including persisted, cach
 
 Make inputs, outputs, effects, failures, and compatibility explicit where ambiguity creates risk. Keep storage and transport representations private; translate mechanism-specific errors into the application's contract. Do not turn invalid input or failed checks into successful defaults that bypass required validation. Avoid repeating established checks inside business logic.
 
+Let the store enforce what it can state declaratively about a record's own fields (presence, keys, value lists, ranges, non-blank text), and keep content rules at the boundary that parses the value, which may be stricter than the store but never looser.
+
 ## Dependency direction
 
 Keep stable policy independent of volatile frameworks and infrastructure. Runtime calls may flow outward to mechanisms while source dependencies point inward toward policy. At a real architectural seam, define a narrow contract and connect its implementation through an adapter or composition root. Do not hide a dependency cycle behind dynamic lookup or add interfaces solely to satisfy a pattern.
