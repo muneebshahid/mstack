@@ -13,7 +13,7 @@ Read only the references the task needs.
 
 | Reference | Read when |
 |---|---|
-| [Simplicity](references/simplicity.md) | adding or removing complexity, reducing the work needed to trace behavior, or designing a module or API |
+| [Simplicity](references/simplicity.md) | adding or removing complexity, reducing the work needed to trace behavior, designing a module or API, or deciding which tests to write |
 | [Modeling and Types](references/modeling-and-types.md) | designing domain values, states, transitions, or type constraints |
 | [Ownership and Contracts](references/ownership-and-contracts.md) | assigning responsibility, changing public contracts, parsing or validating boundary data, translating errors, or correcting dependencies and cycles |
 | [Concurrency and Retries](references/concurrency-and-retries.md) | actors may write concurrently, or operations may repeat or partially fail |

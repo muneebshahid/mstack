@@ -16,6 +16,8 @@ A hypothetical edge case, including one a reviewer raises, is not a reachable fa
 
 Keep production code free of flags, parameters, branches, or state that exist only for tests. Test through the public interface, or through a seam that production also uses. If code can't be tested without a test-only hook, treat that as a design problem.
 
+Hold tests to the same bar as code: each must earn its place. Keep a test when it fails because logic this project wrote is wrong, and write it once, at the layer that owns that logic. Don't test that a library, language, or database honors a declaration, don't repeat a check another layer already makes, and don't guard a failure you can't name. When a coverage rule seems to demand such a test, change what the rule measures instead.
+
 Check existing repository, standard-library, platform, and installed capabilities before writing custom code. Prefer a simpler interface over a simpler implementation when the two conflict; neither line count nor reduced product scope is a substitute for a clearer design.
 
 ## Prefer deep modules
