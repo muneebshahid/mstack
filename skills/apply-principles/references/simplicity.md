@@ -6,6 +6,10 @@ Reduce the layers readers must trace and the hidden state they must remember to 
 
 Keep abstractions that express domain meaning, isolate volatility, enforce contracts, or simplify callers. Each layer should offer a different abstraction from its neighbors; remove forwarding layers and duplicated decisions when they add traversal without reducing complexity elsewhere. File size or a single caller or implementation does not prove a boundary unnecessary.
 
+Order a file so it reads top-down: its public entry points and main flow first, then each helper below the code that calls it, so the details come after the step that needs them. Values the module reads while it loads stay above their first use.
+
+A comment says what the code does and why. Leave out what it doesn't do, what it used to do, and options it didn't take; record those in the decision log if anyone needs them. When a comment is questioned, fix its wording instead of adding a sentence that answers the question.
+
 ## Subtract before you add
 
 Look for obsolete paths and redundant machinery before adding more. Inspect callers, exports, and contracts: deletion requires evidence of non-use or redundancy, or user-authorized removal or replacement of live behavior. Preserve required validation, compatibility, and behavior; keep unrelated cleanup out of the change.
