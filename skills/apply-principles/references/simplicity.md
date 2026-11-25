@@ -8,7 +8,13 @@ Keep abstractions that express domain meaning, isolate volatility, enforce contr
 
 Order a file so it reads top-down: its public entry points and main flow first, then each helper below the code that calls it, so the details come after the step that needs them. Values the module reads while it loads stay above their first use.
 
-A comment says what the code does and why. Leave out what it doesn't do, what it used to do, and options it didn't take; record those in the decision log if anyone needs them. When a comment is questioned, fix its wording instead of adding a sentence that answers the question.
+Write comments for a reader who opens the file cold and reads it from the top. How long a comment is follows how high its function sits:
+- An entry point or other high-level function gets a comment that tells its whole story: a plain lead sentence on what it does, then a bullet for each step or case and what happens in it, and why the function exists when that isn't obvious. Name conditions by what they mean, such as "no step for 10 minutes", not only by a constant.
+- The lower the function, the shorter its comment. A helper whose name and signature say what it does needs one line or none. A low-level function still explains a rule a reader couldn't guess: a race, a security or tenant boundary, or a surprising choice.
+- A comment inside a function says why a line is as it is, not what it does.
+- A test's name is one plain sentence a reader follows without opening the test: the situation and what should happen. It claims only what the test asserts.
+
+Use plain words and full sentences, not dense clauses or chains of colons. A comment says what the code does and why. Leave out what it doesn't do, what it used to do, and options it didn't take; record those in the decision log if anyone needs them. When a comment is questioned, fix its wording instead of adding a sentence that answers the question; if the reader needed it explained, the comment was unclear.
 
 ## Subtract before you add
 
