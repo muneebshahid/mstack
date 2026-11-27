@@ -16,7 +16,7 @@ Read only the references the task needs.
 | [Simplicity](references/simplicity.md) | adding or removing complexity, reducing the work needed to trace behavior, designing a module or API, ordering a file, writing comments or test names, or deciding which tests to write |
 | [Modeling and Types](references/modeling-and-types.md) | designing domain values, states, transitions, or type constraints |
 | [Ownership and Contracts](references/ownership-and-contracts.md) | assigning responsibility, changing public contracts, parsing or validating boundary data, translating errors, or correcting dependencies and cycles |
-| [Concurrency and Retries](references/concurrency-and-retries.md) | actors may write concurrently, or operations may repeat or partially fail |
+| [Concurrency and Retries](references/concurrency-and-retries.md) | actors may write concurrently, a read decides a later write, or operations may repeat or partially fail |
 | [Delivery and Migration](references/delivery-and-migration.md) | sequencing multi-step work or migrating APIs and callers |
 | [Design Decisions](references/design-decisions.md) | choosing an experience, comparing consequential alternatives, or reconsidering a shape that fights a requirement |
 | [Automation and Learning](references/automation-and-learning.md) | considering automation or preventing a recurring correction |
