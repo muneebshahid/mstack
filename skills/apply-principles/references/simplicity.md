@@ -16,6 +16,13 @@ Write comments for a reader who opens the file cold and reads it from the top. H
 
 Use plain words and full sentences, not dense clauses or chains of colons. A comment says what the code does and why. Leave out what it doesn't do, what it used to do, and options it didn't take; record those in the decision log if anyone needs them. When a comment is questioned, fix its wording instead of adding a sentence that answers the question; if the reader needed it explained, the comment was unclear.
 
+Write a comment the way you would explain the code to someone who asked about it, not as notes for a reviewer:
+- Start with the plain job, and put edge cases, races and retries after it, however much effort they took.
+- Give several actions as separate steps in order, not one sentence that joins them.
+- Make an abstract phrase concrete with a short example, such as "V9 or null" for "a handle that names no vessel".
+- Use the reader's words. A term the code coined while it was written, such as "attempt", "fence" or "resolved", needs a few plain words the first time.
+- When a review adds a detail, rewrite the comment so it still reads in that order. Don't wedge the detail into an existing sentence.
+
 ## Subtract before you add
 
 Look for obsolete paths and redundant machinery before adding more. Inspect callers, exports, and contracts: deletion requires evidence of non-use or redundancy, or user-authorized removal or replacement of live behavior. Preserve required validation, compatibility, and behavior; keep unrelated cleanup out of the change.
